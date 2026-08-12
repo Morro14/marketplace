@@ -1,0 +1,5 @@
+@reference tailwindcss; 
+
+.content-container {
+  @apply bg-amber-300 bg-amber-300 2xl:w-[1280px] md:w-[698px] w-[352px];
+}
