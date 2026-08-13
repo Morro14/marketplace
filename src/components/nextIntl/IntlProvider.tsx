@@ -17,7 +17,7 @@ export default function IntlProviderCustom({
         }
       }}
       getMessageFallback={({ namespace, key }) => {
-        return `${namespace}.${key}`;
+        return `${key}`;
       }}
     >
       {children}

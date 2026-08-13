@@ -5,7 +5,6 @@ import { hasLocale } from "next-intl";
 import { routing } from "./routing";
 
 export default getRequestConfig(async ({ locale }) => {
-  console.log("locale intl", locale);
   if (!locale) {
     const paramValue = await rootParams.locale();
     if (hasLocale(routing.locales, paramValue)) {

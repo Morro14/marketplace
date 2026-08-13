@@ -1,6 +1,7 @@
 import Link from "next/link";
 import HeaderNav from "./HeaderNav";
 import { useTranslations } from "next-intl";
+import HeaderNavRight from "./HeaderNavRight";
 
 export default function Header() {
   const t = useTranslations();
@@ -12,8 +13,9 @@ export default function Header() {
       >
         {t("Marketplace")}
       </Link>
-      <div className="content-container h-full mx-auto">
+      <div className="content-container h-full mx-auto flex justify-between">
         <HeaderNav></HeaderNav>
+        <HeaderNavRight></HeaderNavRight>
       </div>
     </header>
   );
