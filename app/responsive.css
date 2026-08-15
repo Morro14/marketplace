@@ -1,5 +1,9 @@
-@reference tailwindcss; 
+@reference "tailwindcss";
 
 .content-container {
-  @apply bg-amber-300 bg-amber-300 2xl:w-[1280px] md:w-[698px] w-[352px];
+  @apply 2xl:w-[1410px] md:w-[698px] w-[352px];
+}
+
+.products-cats-modal {
+  @apply 2xl:w-[640px] w-[352px] 2xl:h-[474px] h-full
 }

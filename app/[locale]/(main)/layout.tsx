@@ -12,7 +12,7 @@ export default function MarketLayout({
   return (
     <div className="flex flex-col h-full gap-3">
       <Header></Header>
-      <div className="content-container flex flex-col gap-3 mx-auto">
+      <div className="content-container flex flex-col gap-4 mx-auto">
         <Hero></Hero>
         <ProductsNav></ProductsNav>
         <div className="size-full flex flex-col items-center mx-auto">
