@@ -3,6 +3,12 @@
 import { useRef, useState } from "react";
 import { categories as categoriesData } from "@/src/data/products";
 import { useTranslations } from "next-intl";
+import { useAppDispatch, useAppSelector } from "@/src/state/hooks";
+import {
+  setCategoriesSelected,
+  setCategoriesConfirmed,
+  selectCategoriesConfirmed,
+} from "@/src/state/productsSlice";
 import plusIcon from "@/src/assets/plus-icon-tiny.svg";
 import crossIcon from "@/src/assets/cross-icon-tiny.svg";
 import Image from "next/image";
@@ -11,7 +17,7 @@ import ProductsCatModal from "./ProductsCatModal";
 export default function ProductsCarFilter() {
   const t = useTranslations();
   const categories = Array.from(categoriesData);
-  const [confirmedCats, setConfirmedCats] = useState<string[]>([]);
+  // const [confirmedCats, setConfirmedCats] = useState<string[]>([]);
   const [openCatsModal, setOpenCatsModal] = useState(false);
   const modalRef = useRef<HTMLDialogElement | null>(null);
   const handleCatButtonClick = () => {
@@ -28,23 +34,30 @@ export default function ProductsCarFilter() {
     modalRef.current?.close();
     setOpenCatsModal(false);
   };
-  const isCatConfirmed = confirmedCats.length > 0;
+  const catsConfirmed = useAppSelector(selectCategoriesConfirmed);
+  const dispatch = useAppDispatch();
+  const isCatConfirmed = catsConfirmed.length > 0;
   return (
     <div className="flex flex-wrap h-8">
       <div className="flex flex-wrap gap-1 items-end font-medium">
         <button
-          className={`h-7 text-sm shrink-0 flex gap-1 items-center rounded-2xl pl-2 
+          className={`h-7 text-sm shrink-0 flex gap-1 items-center rounded-2xl pl-2 border 
           ${
             isCatConfirmed
-              ? "bg-accent-2 hover:bg-accent-2-hl "
-              : "bg-bg hover:bg-gray-light-hover border border-primary"
+              ? "bg-accent-2 hover:bg-accent-2-hl border-accent-2"
+              : "bg-bg hover:bg-accent-2-hl border border-primary"
           } 
           transition-colors duration-150`}
         >
           <div
             className="w-7 h-full"
             onClick={
-              isCatConfirmed ? () => setConfirmedCats([]) : handleCatButtonClick
+              isCatConfirmed
+                ? () => {
+                    dispatch(setCategoriesConfirmed([]));
+                    dispatch(setCategoriesSelected([]));
+                  }
+                : handleCatButtonClick
             }
           >
             <div
@@ -64,13 +77,6 @@ export default function ProductsCarFilter() {
             <span className="pr-4">{t("Categories")}</span>
           </span>
         </button>
-        {/* {confirmedCats.length === 0 ? ( */}
-        {/*   <div className="h-7 border-gray-400 text-sm rounded-full text-gray-400 flex items-center px-2"> */}
-        {/*     {t("Show all categories")} */}
-        {/*   </div> */}
-        {/* ) : ( */}
-        {/*   "" */}
-        {/* )} */}
       </div>
       {/* responsive */}
       <dialog
@@ -81,8 +87,6 @@ export default function ProductsCarFilter() {
       >
         <ProductsCatModal
           cats={categories}
-          confirmedCats={confirmedCats}
-          setConfirmedCatsAction={setConfirmedCats}
           closeModalAction={closeModal}
         ></ProductsCatModal>
       </dialog>

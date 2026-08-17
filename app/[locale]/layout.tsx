@@ -3,6 +3,7 @@ import { Inika, Source_Sans_3, Inter } from "next/font/google";
 import "../globals.css";
 import { ReactNode } from "react";
 import IntlProviderCustom from "@/src/components/nextIntl/IntlProvider";
+import { StoreProvider } from "@/src/state/StoreProvider";
 
 const inika = Inika({
   weight: ["400", "700"],
@@ -37,7 +38,9 @@ export default async function RootLayout({
       className={`${inika.variable} ${sourceSans.variable} text-primary h-full antialiased`}
     >
       <body className="size-full flex flex-col mx-auto">
-        <IntlProviderCustom locale={locale}>{children}</IntlProviderCustom>
+        <IntlProviderCustom locale={locale}>
+          <StoreProvider>{children}</StoreProvider>
+        </IntlProviderCustom>
       </body>
     </html>
   );

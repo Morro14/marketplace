@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "./store";
 
 export type SortBy =
   | "category-asc"
@@ -16,6 +17,9 @@ export interface ProductFilters {
 
 interface ProductsState {
   filters: ProductFilters;
+  interface: {
+    categoriesSelected: string[];
+  };
   sortBy: SortBy;
 }
 
@@ -25,6 +29,7 @@ const initialState: ProductsState = {
     minPrice: null,
     maxPrice: null,
   },
+  interface: { categoriesSelected: [] },
   sortBy: "name-asc",
 };
 
@@ -32,8 +37,12 @@ const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    setCategories(state, action: PayloadAction<string[]>) {
+    setCategoriesConfirmed(state, action: PayloadAction<string[]>) {
       state.filters.categories = action.payload;
+    },
+
+    setCategoriesSelected(state, action: PayloadAction<string[]>) {
+      state.interface.categoriesSelected = action.payload;
     },
 
     setPriceRange(
@@ -58,7 +67,20 @@ const productsSlice = createSlice({
   },
 });
 
-export const { setCategories, setPriceRange, setSortBy, resetFilters } =
-  productsSlice.actions;
+export const selectCategoriesConfirmed = (state: RootState) =>
+  state.products.filters.categories;
+
+export const selectCategoriesSelected = (state: RootState) =>
+  state.products.interface.categoriesSelected;
+
+export const selectProductFilter = (state: RootState) => state.products.filters;
+
+export const {
+  setCategoriesConfirmed,
+  setCategoriesSelected,
+  setPriceRange,
+  setSortBy,
+  resetFilters,
+} = productsSlice.actions;
 
 export default productsSlice.reducer;

@@ -1,30 +1,41 @@
 "use client";
 import { useTranslations } from "next-intl";
-import { Dispatch, SetStateAction, useState } from "react";
 import Chip from "./Chip";
+import { useAppDispatch, useAppSelector } from "@/src/state/hooks";
+import {
+  setCategoriesSelected,
+  setCategoriesConfirmed,
+  // selectCategoriesConfirmed,
+  selectCategoriesSelected,
+} from "@/src/state/productsSlice";
 
 export default function ProductsCatModal({
   cats,
-  confirmedCats,
-  setConfirmedCatsAction,
+  // confirmedCats,
+  // setConfirmedCatsAction,
   closeModalAction,
 }: {
   cats: string[];
-  confirmedCats: string[];
-  setConfirmedCatsAction: Dispatch<SetStateAction<string[]>>;
+  // confirmedCats: string[];
+  // setConfirmedCatsAction: Dispatch<SetStateAction<string[]>>;
   closeModalAction: () => void;
 }) {
   const t = useTranslations();
-  const [selectedCats, setSelectedCats] = useState<string[]>(confirmedCats);
-  const nonSelectedCats = cats.filter((cat) => !selectedCats.includes(cat));
+  // const [selectedCats, setSelectedCats] = useState<string[]>(confirmedCats);
+  const dispatch = useAppDispatch();
+  // const catsConfirmed = useAppSelector(selectCategoriesConfirmed);
+  const catsSelected = useAppSelector(selectCategoriesSelected);
+  const nonSelectedCats = cats.filter((cat) => !catsSelected.includes(cat));
   const addCat = (cat: string) => {
-    setSelectedCats([...selectedCats, cat]);
+    dispatch(setCategoriesSelected([...catsSelected, cat]));
   };
   const removeCat = (catRemove: string) => {
-    setSelectedCats(selectedCats.filter((cat) => cat !== catRemove));
+    dispatch(
+      setCategoriesSelected(catsSelected.filter((cat) => cat !== catRemove)),
+    );
   };
   const confirm = () => {
-    setConfirmedCatsAction(selectedCats);
+    dispatch(setCategoriesConfirmed(catsSelected));
     closeModalAction();
   };
   return (
@@ -35,12 +46,12 @@ export default function ProductsCatModal({
       </h4>
       <div className="flex flex-col gap-3 h-45">
         <div className="flex flex-wrap gap-2">
-          {selectedCats.length === 0 ? (
+          {catsSelected.length === 0 ? (
             <span className="text-gray-400 italic">
               {t("Show products from all categories")}
             </span>
           ) : (
-            selectedCats.map((cat, i) => (
+            catsSelected.map((cat, i) => (
               <Chip
                 key={`product-cat-modal-chip-${i}`}
                 variant={{ bg: "accent", shape: "rounded", icon: "cross" }}
