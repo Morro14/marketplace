@@ -1,9 +1,3 @@
-export default async function Market() {
-  return (
-    <div className="h-full grid grid-cols-4 w-full">
-      {/* {posts.slice(0, 10).map((post, i) => ( */}
-      {/*   <div key={`key-post-${i}`}>{post.title}</div> */}
-      {/* ))} */}
-    </div>
-  );
+export default async function SearchResults() {
+  return <div className="h-full grid 2xl:grid-cols-5 w-full bg-gray-200"></div>;
 }

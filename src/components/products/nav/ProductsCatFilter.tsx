@@ -4,8 +4,8 @@ import { useRef, useState } from "react";
 import { categories as categoriesData } from "@/src/data/products";
 import { useTranslations } from "next-intl";
 import plusIcon from "@/src/assets/plus-icon-tiny.svg";
+import crossIcon from "@/src/assets/cross-icon-tiny.svg";
 import Image from "next/image";
-import Chip from "./Chip";
 import ProductsCatModal from "./ProductsCatModal";
 
 export default function ProductsCarFilter() {
@@ -28,30 +28,50 @@ export default function ProductsCarFilter() {
     modalRef.current?.close();
     setOpenCatsModal(false);
   };
+  const isCatConfirmed = confirmedCats.length > 0;
   return (
-    <div className="flex gap-1 h-8">
-      <div className="flex gap-1">
-        {confirmedCats.length === 0 ? (
-          <div className="h-8 border border-gray-400 rounded-full text-gray-400 flex items-center px-2">
-            {t("All categories")}
+    <div className="flex flex-wrap h-8">
+      <div className="flex flex-wrap gap-1 items-end font-medium">
+        <button
+          className={`h-7 text-sm shrink-0 flex gap-1 items-center rounded-2xl pl-2 
+          ${
+            isCatConfirmed
+              ? "bg-accent-2 hover:bg-accent-2-hl "
+              : "bg-bg hover:bg-gray-light-hover border border-primary"
+          } 
+          transition-colors duration-150`}
+        >
+          <div
+            className="w-7 h-full"
+            onClick={
+              isCatConfirmed ? () => setConfirmedCats([]) : handleCatButtonClick
+            }
+          >
+            <div
+              className={`size-full flex items-center justify-center stroke-accent-2-darker ${isCatConfirmed ? "hover:stroke-accent-2-darker-hl" : ""}`}
+            >
+              {isCatConfirmed ? (
+                <Image src={crossIcon} alt="cross-icon-tiny"></Image>
+              ) : (
+                <Image src={plusIcon} alt="plus-icon-tiny"></Image>
+              )}
+            </div>
           </div>
-        ) : (
-          confirmedCats.map((cat, i) => (
-            <Chip
-              key={`category-chip-${i}`}
-              variant={{ bg: "accent", shape: "rounded", icon: "cross" }}
-              label={t(cat)}
-            ></Chip>
-          ))
-        )}
+          <span
+            onClick={handleCatButtonClick}
+            className="text-nowrap size-full flex items-center"
+          >
+            <span className="pr-4">{t("Categories")}</span>
+          </span>
+        </button>
+        {/* {confirmedCats.length === 0 ? ( */}
+        {/*   <div className="h-7 border-gray-400 text-sm rounded-full text-gray-400 flex items-center px-2"> */}
+        {/*     {t("Show all categories")} */}
+        {/*   </div> */}
+        {/* ) : ( */}
+        {/*   "" */}
+        {/* )} */}
       </div>
-      <button
-        onClick={handleCatButtonClick}
-        className="h-8 flex gap-3 items-center border border-primary rounded-2xl pr-4 pl-2"
-      >
-        <Image src={plusIcon} alt="plus-icon-tiny"></Image>
-        <span>{t("Select category")}</span>
-      </button>
       {/* responsive */}
       <dialog
         onClose={() => setOpenCatsModal(false)}
@@ -69,3 +89,36 @@ export default function ProductsCarFilter() {
     </div>
   );
 }
+
+// const chipSelected = (
+//   <Chip
+//     key={`category-chip-${i}`}
+//     variant={{ bg: "accent", shape: "rounded", icon: "none" }}
+//     label={t(cat)}
+//     attrs={{ onClick: handleCatButtonClick }}
+//   ></Chip>
+// );
+const cross = (
+  <svg
+    width="15"
+    height="15"
+    viewBox="0 0 15 15"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <line
+      x1="3.53548"
+      y1="3.53553"
+      x2="10.6065"
+      y2="10.6066"
+      stroke-width="2"
+    />
+    <line
+      x1="3.53557"
+      y1="10.6066"
+      x2="10.6066"
+      y2="3.53554"
+      stroke-width="2"
+    />
+  </svg>
+);

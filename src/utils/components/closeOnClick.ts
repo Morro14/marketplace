@@ -1,22 +1,28 @@
 import { useEffect } from "react";
 
 export function useCloseOnClick<T extends any[]>(
-  nonClickableRef: React.RefObject<null | HTMLDivElement>,
+  nonClickableRefs: React.RefObject<null | HTMLDivElement>[],
   callback: ((...args: any) => any) | null = null,
   callBackArgs: T | [] = [],
 ) {
   useEffect(() => {
-    if (!nonClickableRef.current) return;
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as Node;
-      if (!nonClickableRef.current?.contains(target)) {
-        if (callback) {
-          callback(...callBackArgs);
+      let blockClick = false;
+      nonClickableRefs?.forEach((ref) => {
+        if (!ref.current) return;
+        if (ref.current?.contains(target)) {
+          blockClick = true;
+          return;
         }
+      });
+      if (blockClick) return;
+      if (callback) {
+        callback(...callBackArgs);
       }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [nonClickableRef, callback, callBackArgs]);
+  }, [nonClickableRefs, callback, callBackArgs]);
 }

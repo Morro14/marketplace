@@ -10,13 +10,17 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-serif: var(--font-inika);
-  --font-sans: var(--font-source-sanse-3);
+  --font-sans: var(--font-source-sans-3);
   --color-bg: #fff;
   --color-primary: #3e3e3e;
   --color-primary-darker: #1D1D1D;
   --color-accent: #FFE100;
   --color-accent-2: #A7ECFF;
+  --color-accent-2-hl: #A7ECFFCC;
+  --color-accent-2-darker: #00A6D3;
+  --color-accent-2-darker-hl: #00A6D3CC;
   --color-gray-light: #EAEAEA;
+  --color-gray-light-hover: #EAEAEACC;
 
 }
 
@@ -30,7 +34,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Source Sans 3, Arial, Helvetica, sans-serif;
 }
 button {
   @apply cursor-pointer

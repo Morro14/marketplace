@@ -1,13 +1,37 @@
 import plusIcon from "@/src/assets/plus-icon-tiny.svg";
 import crossIcon from "@/src/assets/cross-icon-tiny.svg";
 import Image from "next/image";
+import { CSSProperties } from "react";
 
 interface ChipVariant {
-  bg: "gray" | "accent" | "transparent";
-  shape: "square" | "rounded";
-  icon: "cross" | "plus";
-  border?: boolean;
+  bg?: "gray" | "accent" | "transparent";
+  shape?: "rect" | "rounded";
+  icon?: "cross" | "plus" | "none";
+  border?: "none" | "thin";
 }
+const variantDefault: ChipVariant = {
+  bg: "gray",
+  shape: "rounded",
+  icon: "none",
+  border: "none",
+};
+// type StyleVariants<K extends keyof CSSProperties, T> = { [P in K]: T };
+// type StyleRules<K extends keyof ChipVariant> = {
+//   [CSSProp in keyof CSSProperties]?: Record<
+//     NonNullable<ChipVariant[K]> extends string | number | symbol
+//       ? NonNullable<ChipVariant[K]>
+//       : never,
+//     string
+//   >;
+// };
+type ChipVariantStyles = {
+  [P in keyof ChipVariant]?: {
+    [V in NonNullable<ChipVariant[P]>]?: CSSProperties;
+  };
+};
+// type ChipStyles = {
+//   [K in keyof ChipVariant]: Array<StyleRules<K>>;
+// };
 export default function Chip({
   variant,
   label,
@@ -17,23 +41,64 @@ export default function Chip({
   label: string;
   attrs?: React.HTMLAttributes<HTMLDivElement>;
 }) {
-  const bgColors = {
-    gray: "bg-gray-light",
-    accent: "bg-accent-2",
-    transparent: "bg-transparent",
+  const variantsMerged = { ...variantDefault, ...variant };
+  const styles: ChipVariantStyles = {
+    bg: {
+      gray: {
+        backgroundColor: "var(--color-gray-light)",
+      },
+
+      accent: { backgroundColor: "var(--color-accent-2)" },
+      transparent: { backgroundColor: "#00000000" },
+    },
+    shape: {
+      rounded: { borderRadius: "16px" },
+      rect: { borderRadius: "0px" },
+    },
+    border: {
+      thin: { border: "1px solid var(--color-primary)" },
+      none: { border: "none" },
+    },
   };
-  const icons = { cross: crossIcon, plus: plusIcon, none: "" };
-  const rounded = { square: "rounded-0", rounded: "rounded-full" };
+  type Icons = Record<NonNullable<ChipVariant["icon"]>, any>;
+  const icons: Icons = {
+    cross: crossIcon,
+    plus: plusIcon,
+    none: "",
+  };
+
+  const applyStyle = () => {
+    const keys = Object.keys(styles) as Array<keyof ChipVariant>;
+    const stylesAcc = keys.reduce((prev, key) => {
+      const selectedVariant = variantsMerged[key];
+      const propStyle = styles[key] as
+        Record<string, CSSProperties | undefined> | undefined;
+      if (selectedVariant && propStyle) {
+        const style = propStyle[selectedVariant];
+        return { ...prev, ...style };
+      }
+      return prev;
+    }, {});
+    return stylesAcc;
+  };
   return (
     <div
       {...attrs}
-      className={`cursor-pointer ${variant.border ? "border border-primary" : ""} flex items-center gap-2 ${bgColors[variant.bg]} h-7 md:h-8 text-sm md:text-base ${rounded[variant.shape]} font-medium pr-4 pl-2`}
+      className={`cursor-pointer  
+        flex items-center gap-2 h-7 
+        text-sm font-semibold pr-4 
+        ${variant.icon !== "none" ? "pl-2" : "pl-4"}`}
+      style={applyStyle()}
     >
-      <Image
-        src={icons[variant.icon]}
-        alt={variant.icon === "cross" ? "chip-cross-tiny" : "chip-plus-tiny"}
-      ></Image>
-      <span>{label}</span>
+      {variant.icon === "none" ? (
+        ""
+      ) : (
+        <Image
+          src={icons[variantsMerged.icon as NonNullable<keyof Icons>]}
+          alt={variant.icon === "cross" ? "chip-cross-tiny" : "chip-plus-tiny"}
+        ></Image>
+      )}
+      <span className="text-nowrap">{label}</span>
     </div>
   );
 }

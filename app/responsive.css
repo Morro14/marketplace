@@ -5,5 +5,5 @@
 }
 
 .products-cats-modal {
-  @apply 2xl:w-[640px] w-[352px] 2xl:h-[474px] h-full
+  @apply 2xl:w-[640px] w-[352px] 
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inika, Source_Sans_3 } from "next/font/google";
+import { Inika, Source_Sans_3, Inter } from "next/font/google";
 import "../globals.css";
 import { ReactNode } from "react";
 import IntlProviderCustom from "@/src/components/nextIntl/IntlProvider";
@@ -9,9 +9,13 @@ const inika = Inika({
   variable: "--font-inika",
   subsets: ["latin"],
 });
-
 const sourceSans = Source_Sans_3({
   variable: "--font-source-sans-3",
+  weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
+  subsets: ["latin"],
+});
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 

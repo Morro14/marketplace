@@ -22,13 +22,14 @@ export default function ProductSearch() {
   const handleInputChange = (e: SyntheticEvent<HTMLInputElement>) => {
     const value = e.currentTarget?.value;
     const results = fuse.search(value);
-    console.log("results", results);
     setInputItems(results);
   };
   const suggestionsRef = useRef<HTMLDivElement | null>(null);
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
 
-  useCloseOnClick(suggestionsRef, () => setShowSuggestions(false));
-
+  useCloseOnClick([suggestionsRef, searchInputRef], () =>
+    setShowSuggestions(false),
+  );
   return (
     <div className="relative w-90 h-8">
       <input
@@ -39,6 +40,7 @@ export default function ProductSearch() {
           setShowSuggestions(true);
         }}
         placeholder={t("search products...")}
+        ref={searchInputRef}
       />
       <div
         className={`absolute drop-shadow bg-white flex-col text-nowrap overflow-hidden w-full top-9 left-0 ${showSuggestions ? "flex" : "hidden"} starting:opacity-0 opacity-100 transition-opacity duration-100`}
