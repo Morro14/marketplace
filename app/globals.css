@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./responsive.css";
+@import "./styles/embla.css";
 
 :root {
   --background: #ffffff;
@@ -16,6 +17,8 @@
   --color-primary-darker: #1D1D1D;
   --color-accent: #FFE100;
   --color-accent-2: #A7ECFF;
+  --color-accent-red: #FF4800;
+  --color-accent-green: #008729;
   --color-accent-2-hl: #A7ECFFCC;
   --color-accent-2-darker: #00A6D3;
   --color-accent-2-darker-hl: #00A6D3CC;

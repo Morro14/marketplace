@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
+import { Product } from "../data/products";
 
 export type SortBy =
   | "category-asc"
@@ -19,6 +20,10 @@ interface ProductsState {
   filters: ProductFilters;
   interface: {
     categoriesSelected: string[];
+    addModal: {
+      show: boolean;
+      product: Product | null;
+    };
   };
   sortBy: SortBy;
 }
@@ -29,7 +34,10 @@ const initialState: ProductsState = {
     minPrice: null,
     maxPrice: null,
   },
-  interface: { categoriesSelected: [] },
+  interface: {
+    categoriesSelected: [],
+    addModal: { show: false, product: null },
+  },
   sortBy: "name-asc",
 };
 
@@ -64,6 +72,14 @@ const productsSlice = createSlice({
       state.filters = initialState.filters;
       state.sortBy = initialState.sortBy;
     },
+    openAddModal(state, action: PayloadAction<Product | null>) {
+      state.interface.addModal.show = true;
+      state.interface.addModal.product = action.payload;
+    },
+    closeAddModal(state) {
+      state.interface.addModal.show = false;
+      state.interface.addModal.product = null;
+    },
   },
 });
 
@@ -75,11 +91,16 @@ export const selectCategoriesSelected = (state: RootState) =>
 
 export const selectProductFilter = (state: RootState) => state.products.filters;
 
+export const selectAddModal = (state: RootState) =>
+  state.products.interface.addModal;
+
 export const {
   setCategoriesConfirmed,
   setCategoriesSelected,
   setPriceRange,
   setSortBy,
+  openAddModal,
+  closeAddModal,
   resetFilters,
 } = productsSlice.actions;
 

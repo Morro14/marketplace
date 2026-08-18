@@ -45,7 +45,7 @@ export default function ProductsCarFilter() {
           ${
             isCatConfirmed
               ? "bg-accent-2 hover:bg-accent-2-hl border-accent-2"
-              : "bg-bg hover:bg-accent-2-hl border border-primary"
+              : "bg-bg hover:bg-gray-light border border-primary"
           } 
           transition-colors duration-150`}
         >

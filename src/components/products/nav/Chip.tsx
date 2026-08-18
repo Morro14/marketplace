@@ -15,23 +15,11 @@ const variantDefault: ChipVariant = {
   icon: "none",
   border: "none",
 };
-// type StyleVariants<K extends keyof CSSProperties, T> = { [P in K]: T };
-// type StyleRules<K extends keyof ChipVariant> = {
-//   [CSSProp in keyof CSSProperties]?: Record<
-//     NonNullable<ChipVariant[K]> extends string | number | symbol
-//       ? NonNullable<ChipVariant[K]>
-//       : never,
-//     string
-//   >;
-// };
 type ChipVariantStyles = {
   [P in keyof ChipVariant]?: {
     [V in NonNullable<ChipVariant[P]>]?: CSSProperties;
   };
 };
-// type ChipStyles = {
-//   [K in keyof ChipVariant]: Array<StyleRules<K>>;
-// };
 export default function Chip({
   variant,
   label,

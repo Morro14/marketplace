@@ -1,4 +1,6 @@
-export type Product = {
+import { slugify } from "../utils/general";
+
+export type Product_ = {
   name: string;
   description: string;
   price: number;
@@ -10,7 +12,7 @@ export type Product = {
 export const categories = [
   "Dairy & Eggs",
   "Poultry",
-  "Red meat",
+  "Red Meat",
   "Farm Fresh",
   "Vegetables",
   "Herbs & Spices",
@@ -23,7 +25,7 @@ export const categories = [
   "Bundles",
 ] as const;
 
-export const products: Product[] = [
+export const products_: Product_[] = [
   {
     name: "Free-Range Chicken",
     description:
@@ -256,3 +258,19 @@ export const products: Product[] = [
     categories: ["Vegetables", "Seasonal", "Bundles"],
   },
 ];
+
+export type Product = {
+  id: number;
+  slug: string;
+  name: string;
+  description: string;
+  price: number;
+  quantity: number;
+  price_unit: "unit" | "kg" | "g" | "l" | "ml" | "bunch" | "dozen";
+  categories: string[];
+};
+export const products = structuredClone(products_) as Product[];
+products.map((p, i) => {
+  p["id"] = i;
+  p["slug"] = slugify(p.name);
+});
