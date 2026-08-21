@@ -24,10 +24,12 @@ export default function Chip({
   variant,
   label,
   attrs,
+  styleProps,
 }: {
   variant: ChipVariant;
   label: string;
   attrs?: React.HTMLAttributes<HTMLDivElement>;
+  styleProps?: React.CSSProperties;
 }) {
   const variantsMerged = { ...variantDefault, ...variant };
   const styles: ChipVariantStyles = {
@@ -76,7 +78,7 @@ export default function Chip({
         flex items-center gap-2 h-7 
         text-sm font-semibold pr-4 
         ${variant.icon !== "none" ? "pl-2" : "pl-4"}`}
-      style={applyStyle()}
+      style={{ ...applyStyle(), ...styleProps }}
     >
       {variant.icon === "none" ? (
         ""

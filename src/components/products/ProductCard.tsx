@@ -29,8 +29,9 @@ export default function ProductCard({ product }: { product: Product }) {
       dialogEl.showModal();
     }
   };
+  const handleAddToCardCLick = () => {};
   return (
-    <div className="flex flex-col md:w-[230px] w-45 md:h-[396px] h-90 border border-gray-400 justify-between pb-3 group">
+    <div className="flex flex-col md:w-[230px] w-45 md:h-[396px] h-90 border border-gray-400 justify-between pb-2 group">
       <div className="relative">
         <Image
           src={demoImg}
@@ -45,11 +46,6 @@ export default function ProductCard({ product }: { product: Product }) {
       </div>
       <div className="flex flex-col gap-1 mb-1">
         <div className="flex flex-col gap-0.5 px-2 py-1.5">
-          {/* PRICE */}
-          <div className="flex items-center gap-1">
-            <div className="font-medium text-lg text-accent-green">{`${currency} ${product.price}`}</div>
-            <div>{`(${product.price_unit})`}</div>
-          </div>
           <div>
             {/* NAME */}
             <div className="font-serif">{product.name}</div>
@@ -70,15 +66,25 @@ export default function ProductCard({ product }: { product: Product }) {
             </div>
           </div>
           {/* DESCRIPTION */}
-          <div className="text-sm font-serif text-ellipsis overflow-hidden h-10">
+          <div className="text-sm font-serif text-ellipsis overflow-hidden h-5">
             {product.description}
           </div>
         </div>
       </div>
-      <button className="mx-2 flex gap-0.5 items-center justify-center bg-accent md:h-7 md:border md:border-primary">
-        <Image width={19} height={15} src={cartIcon} alt={`card-icon`}></Image>
-        <span>{t("Add to cart")}</span>
-      </button>
+      <div className="flex flex-col gap-1">
+        {/* PRICE */}
+        <div className="flex px-2.5 items-center gap-1">
+          <div className="font-medium text-lg text-accent-green">{`${currency} ${product.price}`}</div>
+          <div>{`(${product.price_unit})`}</div>
+        </div>
+        <button
+          onClick={handleAddToCardCLick}
+          className="mx-2 flex gap-0.5 items-center justify-center bg-accent md:h-8 md:border md:border-primary"
+        >
+          <Image src={cartIcon} alt={`card-icon`}></Image>
+          <span>{t("Add to cart")}</span>
+        </button>
+      </div>
     </div>
   );
 }

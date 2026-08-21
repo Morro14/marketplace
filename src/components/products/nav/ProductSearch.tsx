@@ -43,12 +43,12 @@ export default function ProductSearch() {
         ref={searchInputRef}
       />
       <div
-        className={`absolute drop-shadow bg-white flex-col text-nowrap overflow-hidden w-full top-9 left-0 ${showSuggestions ? "flex" : "hidden"} starting:opacity-0 opacity-100 transition-opacity duration-100`}
+        className={`absolute z-20 drop-shadow bg-white flex-col text-nowrap overflow-hidden w-full top-9 left-0 ${showSuggestions ? "flex" : "hidden"} starting:opacity-0 opacity-100 transition-opacity duration-100`}
         ref={suggestionsRef}
       >
-        {inputItems.map((item, i) => (
+        {inputItems.slice(0, 5).map((item, i) => (
           <option
-            className="px-2 py-2 border-b border-gray-300"
+            className="px-2 py-2 border-b border-gray-300 cursor-pointer hover:bg-gray-light"
             value={item.item.name}
             key={`products-search-item-${i}`}
             onClick={() =>

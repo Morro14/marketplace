@@ -2,10 +2,11 @@
 import { Product } from "@/src/data/products";
 import { CURRENCY, CURRENCY_SIGNS } from "@/src/utils/appVars";
 import useEmblaCarousel from "embla-carousel-react";
-import QuickViewBtn from "./QuickViewBtn";
 import { useTranslations } from "next-intl";
 import CountBtn from "../CountBtn";
 import { useState } from "react";
+import Chip from "./nav/Chip";
+import { crossMediumNoBg, heartEmpty } from "../svg/assets";
 
 export default function ProductAddModal({
   product,
@@ -14,9 +15,7 @@ export default function ProductAddModal({
   product: Product;
   closeModalAction: () => void;
 }) {
-  const catLength = product.categories.length;
   const currency = CURRENCY_SIGNS[CURRENCY];
-  const catDivider = "/";
   const [emblaRef] = useEmblaCarousel({ loop: true });
   const [count, setCount] = useState(1);
   const addCount = () => {
@@ -29,18 +28,43 @@ export default function ProductAddModal({
   };
   const t = useTranslations();
   return (
-    <div className="md:w-180">
+    <div className="flex justify-between md:w-[970px] outline outline-primary -outline-offset-8 p-4 md:h-150">
       {/* MEDIA CAROUSEL */}
-      <div className="embla__viewport h-70 w-full" ref={emblaRef}>
-        <div className="embla__container h-full">
-          <div className="embla__slide relative w-[266px] bg-linear-65 from-gray-200 to-gray-100"></div>
-          <div className="embla__slide relative w-[266px] bg-linear-65 from-gray-200 to-gray-100"></div>
-          <div className="embla__slide relative w-[266px] bg-linear-65 from-gray-200 to-gray-100"></div>
-          <div className="embla__slide relative w-[266px] bg-linear-65 from-gray-200 to-gray-100"></div>
+      <div className="embla__viewport w-[464px] h-full" ref={emblaRef}>
+        <div className="embla__container h-full w-full">
+          <div className="embla__slide relative bg-linear-65 from-gray-200 to-gray-100"></div>
+          <div className="embla__slide relative bg-linear-65 from-gray-200 to-gray-100"></div>
+          <div className="embla__slide relative bg-linear-65 from-gray-200 to-gray-100"></div>
+          <div className="embla__slide relative bg-linear-65 from-gray-200 to-gray-100"></div>
         </div>
       </div>
 
-      <div className="p-4 flex flex-col gap-4">
+      <div className="p-0 pl-0! flex flex-col gap-4 w-[464px]">
+        {/* NAV */}
+        <div className="flex w-full items-start justify-between">
+          <div className="flex gap-1">
+            {product.categories.map((cat, i) => (
+              <Chip
+                key={`product-quickview-cat-${i}`}
+                variant={{ shape: "rect", bg: "gray", icon: "none" }}
+                label={cat}
+                styleProps={{ height: "20px", fontWeight: 400 }}
+              ></Chip>
+            ))}
+          </div>
+          <div className="flex gap-2 items-center">
+            <div className="h-4">
+              {/* placeholder for add to favorite function*/}
+              {heartEmpty}
+            </div>
+            <div
+              onClick={closeModalAction}
+              className="stroke-gray-500 hover:stroke-primary cursor-pointer h-3.5"
+            >
+              {crossMediumNoBg}
+            </div>
+          </div>
+        </div>
         {/* CONTENT */}
         <div className="flex flex-col gap-2">
           {/* PRICE */}
@@ -49,23 +73,7 @@ export default function ProductAddModal({
             <div>{`(${product.price_unit})`}</div>
           </div>
           {/* NAME & CATEGORIES */}
-          <div>
-            <div className="font-serif text-lg">{product.name}</div>
-            <div className="flex font-sans text-xs text-gray-500 italic">
-              {product.categories.map((cat, i) => {
-                return (
-                  <span
-                    className="whitespace-pre-wrap"
-                    key={`product-card-${product.slug}-cat-${i}`}
-                  >
-                    {catLength > 1 && i < catLength - 1
-                      ? `${cat} ${catDivider} `
-                      : cat}
-                  </span>
-                );
-              })}
-            </div>
-          </div>
+          <div className="font-serif text-xl">{product.name}</div>
           {/* DESCRIPTION */}
           <div className="text-sm font-serif text-ellipsis">
             {product.description}
@@ -73,7 +81,7 @@ export default function ProductAddModal({
         </div>
 
         {/* COUNT */}
-        <div className="">
+        <div className="space-y-1">
           <div className="text-sm text-gray-500">{t("Unit number")}</div>
           <div className="flex gap-4 items-center">
             <CountBtn
@@ -102,7 +110,10 @@ export default function ProductAddModal({
           <button className="h-8 px-9 border border-primary bg-accent">
             {t("Confirm")}
           </button>
-          <button className="h-8 px-9 border border-primary bg-gray-light">
+          <button
+            onClick={closeModalAction}
+            className="h-8 px-9 border border-primary bg-gray-light"
+          >
             {t("Cancel")}
           </button>
         </div>

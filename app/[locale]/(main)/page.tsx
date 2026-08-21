@@ -46,7 +46,7 @@ export default function SearchResults() {
         onClose={() => dispatch(closeAddModal())}
         closedby="any"
         ref={modalRef}
-        className="bg-bg m-auto"
+        className="bg-bg m-auto starting:opacity-0"
       >
         {selectModal.product ? (
           <ProductAddModal

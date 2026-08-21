@@ -19,8 +19,8 @@ export default function CountBtn({
     minus: minusIcon,
   };
   const bg = {
-    active: "bg-accent-2 hover:bg-accent-2-hl",
-    inactive: "bg-gray-light hover:bg-gray-light-hover",
+    active: "bg-accent hover:opacity-80",
+    inactive: "bg-gray-light opacity-50",
   };
   return (
     <button {...params} onClick={callback} className={`${bg[status]} h-7 w-7`}>

@@ -21,8 +21,16 @@ export function useCloseOnClick<T extends any[]>(
         callback(...callBackArgs);
       }
     };
-
+    // TODO separate key press logic
+    const handleEscapePress = (e: KeyboardEvent) => {
+      const key = e.code;
+      if (callback && key === "Escape") callback();
+    };
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscapePress);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscapePress);
+    };
   }, [nonClickableRefs, callback, callBackArgs]);
 }

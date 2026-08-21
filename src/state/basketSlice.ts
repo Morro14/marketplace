@@ -4,7 +4,7 @@ import { Product } from "../data/products";
 
 type BasketPayload = [{ product: Product; count: number }];
 
-interface BasketState {
+export interface BasketState {
   entries: BasketPayload[];
 }
 
