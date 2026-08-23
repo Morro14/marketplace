@@ -1,5 +1,5 @@
 "use client";
-import { Product } from "@/src/data/products";
+import type { Product } from "@/src/data/productTypes";
 import demoImg from "@/src/assets/product-demo.jpeg";
 import Image from "next/image";
 import { slugify } from "@/src/utils/general";
@@ -58,8 +58,8 @@ export default function ProductCard({ product }: { product: Product }) {
                     key={`product-card-${nameSlug}-cat-${i}`}
                   >
                     {catLength > 1 && i < catLength - 1
-                      ? `${cat} ${catDivider} `
-                      : cat}
+                      ? `${cat.name} ${catDivider} `
+                      : cat.name}
                   </span>
                 );
               })}
@@ -75,7 +75,7 @@ export default function ProductCard({ product }: { product: Product }) {
         {/* PRICE */}
         <div className="flex px-2.5 items-center gap-1">
           <div className="font-medium text-lg text-accent-green">{`${currency} ${product.price}`}</div>
-          <div>{`(${product.price_unit})`}</div>
+          <div>{`(${product.priceUnit})`}</div>
         </div>
         <button
           onClick={handleAddToCardCLick}

@@ -1,5 +1,5 @@
 "use client";
-import { Product } from "@/src/data/products";
+import type { Product } from "@/src/data/productTypes";
 import { CURRENCY, CURRENCY_SIGNS } from "@/src/utils/appVars";
 import useEmblaCarousel from "embla-carousel-react";
 import { useTranslations } from "next-intl";
@@ -47,7 +47,7 @@ export default function ProductAddModal({
               <Chip
                 key={`product-quickview-cat-${i}`}
                 variant={{ shape: "rect", bg: "gray", icon: "none" }}
-                label={cat}
+                label={cat.name}
                 styleProps={{ height: "20px", fontWeight: 400 }}
               ></Chip>
             ))}
@@ -70,7 +70,7 @@ export default function ProductAddModal({
           {/* PRICE */}
           <div className="flex items-center gap-1">
             <div className="font-medium text-lg text-accent-green">{`${currency} ${product.price}`}</div>
-            <div>{`(${product.price_unit})`}</div>
+            <div>{`(${product.priceUnit})`}</div>
           </div>
           {/* NAME & CATEGORIES */}
           <div className="font-serif text-xl">{product.name}</div>

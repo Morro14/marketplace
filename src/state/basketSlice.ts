@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
-import { Product } from "../data/products";
+import type { Product } from "../data/productTypes";
 
 type BasketPayload = [{ product: Product; count: number }];
 

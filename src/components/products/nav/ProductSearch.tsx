@@ -2,11 +2,11 @@
 import { useTranslations } from "next-intl";
 import { SyntheticEvent, useRef, useState } from "react";
 import Fuse from "fuse.js";
-import { products } from "@/src/data/products";
+import type { Product } from "@/src/data/productTypes";
 import { useMemo } from "react";
 import { useCloseOnClick } from "@/src/utils/components/closeOnClick";
 
-export default function ProductSearch() {
+export default function ProductSearch({ products }: { products: Product[] }) {
   const t = useTranslations();
   const [showSuggestions, setShowSuggestions] = useState(false);
   const fuse = useMemo(() => {
@@ -16,7 +16,7 @@ export default function ProductSearch() {
       ignoreLocation: true,
       includeScore: true,
     });
-  }, []);
+  }, [products]);
   const searchItemsInit = fuse.search("");
   const [inputItems, setInputItems] = useState(searchItemsInit);
   const handleInputChange = (e: SyntheticEvent<HTMLInputElement>) => {

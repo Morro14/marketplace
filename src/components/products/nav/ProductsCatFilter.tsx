@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { categories as categoriesData } from "@/src/data/products";
+import type { Category } from "@/src/data/productTypes";
 import { useTranslations } from "next-intl";
 import { useAppDispatch, useAppSelector } from "@/src/state/hooks";
 import {
@@ -14,9 +14,12 @@ import crossIcon from "@/src/assets/cross-icon-tiny.svg";
 import Image from "next/image";
 import ProductsCatModal from "./ProductsCatModal";
 
-export default function ProductsCarFilter() {
+export default function ProductsCarFilter({
+  categories,
+}: {
+  categories: Category[];
+}) {
   const t = useTranslations();
-  const categories = Array.from(categoriesData);
   // const [confirmedCats, setConfirmedCats] = useState<string[]>([]);
   const [openCatsModal, setOpenCatsModal] = useState(false);
   const modalRef = useRef<HTMLDialogElement | null>(null);
@@ -86,7 +89,7 @@ export default function ProductsCarFilter() {
         className="bg-bg m-auto"
       >
         <ProductsCatModal
-          cats={categories}
+          cats={categories.map((category) => category.name)}
           closeModalAction={closeModal}
         ></ProductsCatModal>
       </dialog>

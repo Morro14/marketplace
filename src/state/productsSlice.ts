@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
-import { Product } from "../data/products";
+import type { Product } from "../data/productTypes";
 
 export type SortBy =
   | "category-asc"

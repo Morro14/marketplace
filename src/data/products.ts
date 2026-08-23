@@ -1,4 +1,4 @@
-import { slugify } from "../utils/general";
+import { products, categories } from "@/db/schema";
 
 export type Product_ = {
   name: string;
@@ -8,8 +8,7 @@ export type Product_ = {
   price_unit: "unit" | "kg" | "g" | "l" | "ml" | "bunch" | "dozen";
   categories: string[];
 };
-
-export const categories = [
+export const categories_ = [
   "Dairy & Eggs",
   "Poultry",
   "Red Meat",
@@ -25,7 +24,7 @@ export const categories = [
   "Bundles",
 ] as const;
 
-export const products_: Product_[] = [
+export const productsData: Product_[] = [
   {
     name: "Free-Range Chicken",
     description:
@@ -259,18 +258,6 @@ export const products_: Product_[] = [
   },
 ];
 
-export type Product = {
-  id: number;
-  slug: string;
-  name: string;
-  description: string;
-  price: number;
-  quantity: number;
-  price_unit: "unit" | "kg" | "g" | "l" | "ml" | "bunch" | "dozen";
-  categories: string[];
+export type ProductWithCategories = typeof products.$inferSelect & {
+  categories: (typeof categories.$inferSelect)[];
 };
-export const products = structuredClone(products_) as Product[];
-products.map((p, i) => {
-  p["id"] = i;
-  p["slug"] = slugify(p.name);
-});

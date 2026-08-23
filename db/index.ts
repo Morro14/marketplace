@@ -1,6 +1,5 @@
-import Database from "better-sqlite3";
-import "dotenv/config";
-import { drizzle } from "drizzle-orm/libsql";
+import { drizzle } from "drizzle-orm/better-sqlite3";
+import { relations } from "./relations";
 
-const sqlite = new Database(process.env.DATABASE_URL);
-export const db = drizzle(sqlite);
+export const db = drizzle(process.env.DATABASE_URL!, { relations });
+// export const db = drizzle(sqlite, { relations });
