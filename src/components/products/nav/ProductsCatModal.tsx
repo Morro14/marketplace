@@ -8,6 +8,7 @@ import {
   // selectCategoriesConfirmed,
   selectCategoriesSelected,
 } from "@/src/state/productsSlice";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function ProductsCatModal({
   cats,
@@ -21,6 +22,9 @@ export default function ProductsCatModal({
   closeModalAction: () => void;
 }) {
   const t = useTranslations();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   // const [selectedCats, setSelectedCats] = useState<string[]>(confirmedCats);
   const dispatch = useAppDispatch();
   // const catsConfirmed = useAppSelector(selectCategoriesConfirmed);
@@ -36,6 +40,13 @@ export default function ProductsCatModal({
   };
   const confirm = () => {
     dispatch(setCategoriesConfirmed(catsSelected));
+    const params = new URLSearchParams(searchParams.toString());
+    if (catsSelected.length > 0) {
+      params.set("filter", catsSelected.join(","));
+    } else {
+      params.delete("filter");
+    }
+    router.push(`${pathname}?${params.toString()}`);
     closeModalAction();
   };
   return (

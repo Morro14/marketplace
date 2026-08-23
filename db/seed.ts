@@ -1,7 +1,12 @@
 import { categories_, productsData } from "../src/data/products";
 import { slugify } from "../src/utils/general";
 import { db } from "./index";
-import { basketEntries, categories, products } from "./schema";
+import {
+  basketEntries,
+  categories,
+  productCategories,
+  products,
+} from "./schema";
 
 function randomStock() {
   return Math.floor(Math.random() * 96) + 5;
@@ -9,6 +14,7 @@ function randomStock() {
 function clearDB() {
   db.transaction((tx) => {
     tx.delete(basketEntries).run();
+    tx.delete(productCategories).run();
     tx.delete(products).run();
     tx.delete(categories).run();
   });
@@ -41,6 +47,31 @@ function seed() {
           stock: randomStock(),
           priceUnit: product.price_unit,
         })),
+      )
+      .run();
+
+    const seededProducts = tx
+      .select({ id: products.id, name: products.name })
+      .from(products)
+      .all();
+    const seededCategories = tx
+      .select({ id: categories.id, name: categories.name })
+      .from(categories)
+      .all();
+    const productIdByName = new Map(
+      seededProducts.map((product) => [product.name, product.id]),
+    );
+    const categoryIdByName = new Map(
+      seededCategories.map((category) => [category.name, category.id]),
+    );
+    tx.insert(productCategories)
+      .values(
+        productsData.flatMap((product) =>
+          product.categories.map((categoryName) => ({
+            productId: productIdByName.get(product.name)!,
+            categoryId: categoryIdByName.get(categoryName)!,
+          })),
+        ),
       )
       .run();
   });

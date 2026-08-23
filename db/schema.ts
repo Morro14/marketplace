@@ -1,4 +1,10 @@
-import { integer, real, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import {
+  integer,
+  primaryKey,
+  real,
+  sqliteTable,
+  text,
+} from "drizzle-orm/sqlite-core";
 
 export const products = sqliteTable("products", {
   id: integer("id").primaryKey({ autoIncrement: true }),
@@ -19,27 +25,20 @@ export const categories = sqliteTable("categories", {
   name: text("name").notNull().unique(),
 });
 
-// export const productCategories = sqliteTable(
-//   "product_categories",
-//   {
-//     productId: integer("product_id")
-//       .notNull()
-//       .references(() => products.id, {
-//         onDelete: "cascade",
-//       }),
-//
-//     categoryId: integer("category_id")
-//       .notNull()
-//       .references(() => categories.id, {
-//         onDelete: "cascade",
-//       }),
-//   },
-//   (table) => [
-//     primaryKey({
-//       columns: [table.productId, table.categoryId],
-//     }),
-//   ],
-// );
+export const productCategories = sqliteTable(
+  "product_categories",
+  {
+    productId: integer("product_id")
+      .notNull()
+      .references(() => products.id, { onDelete: "cascade" }),
+    categoryId: integer("category_id")
+      .notNull()
+      .references(() => categories.id, { onDelete: "cascade" }),
+  },
+  (table) => [
+    primaryKey({ columns: [table.productId, table.categoryId] }),
+  ],
+);
 
 export const baskets = sqliteTable("baskets", {
   id: integer("id").primaryKey({ autoIncrement: true }),

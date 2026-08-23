@@ -13,6 +13,7 @@ import plusIcon from "@/src/assets/plus-icon-tiny.svg";
 import crossIcon from "@/src/assets/cross-icon-tiny.svg";
 import Image from "next/image";
 import ProductsCatModal from "./ProductsCatModal";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function ProductsCarFilter({
   categories,
@@ -20,6 +21,9 @@ export default function ProductsCarFilter({
   categories: Category[];
 }) {
   const t = useTranslations();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   // const [confirmedCats, setConfirmedCats] = useState<string[]>([]);
   const [openCatsModal, setOpenCatsModal] = useState(false);
   const modalRef = useRef<HTMLDialogElement | null>(null);
@@ -40,6 +44,15 @@ export default function ProductsCarFilter({
   const catsConfirmed = useAppSelector(selectCategoriesConfirmed);
   const dispatch = useAppDispatch();
   const isCatConfirmed = catsConfirmed.length > 0;
+  const updateCategoryQuery = (nextCategories: string[]) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (nextCategories.length > 0) {
+      params.set("filter", nextCategories.join(","));
+    } else {
+      params.delete("filter");
+    }
+    router.push(`${pathname}?${params.toString()}`);
+  };
   return (
     <div className="flex flex-wrap h-8">
       <div className="flex flex-wrap gap-1 items-end font-medium">
@@ -59,6 +72,7 @@ export default function ProductsCarFilter({
                 ? () => {
                     dispatch(setCategoriesConfirmed([]));
                     dispatch(setCategoriesSelected([]));
+                    updateCategoryQuery([]);
                   }
                 : handleCatButtonClick
             }
@@ -96,36 +110,3 @@ export default function ProductsCarFilter({
     </div>
   );
 }
-
-// const chipSelected = (
-//   <Chip
-//     key={`category-chip-${i}`}
-//     variant={{ bg: "accent", shape: "rounded", icon: "none" }}
-//     label={t(cat)}
-//     attrs={{ onClick: handleCatButtonClick }}
-//   ></Chip>
-// );
-const cross = (
-  <svg
-    width="15"
-    height="15"
-    viewBox="0 0 15 15"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <line
-      x1="3.53548"
-      y1="3.53553"
-      x2="10.6065"
-      y2="10.6066"
-      stroke-width="2"
-    />
-    <line
-      x1="3.53557"
-      y1="10.6066"
-      x2="10.6066"
-      y2="3.53554"
-      stroke-width="2"
-    />
-  </svg>
-);
