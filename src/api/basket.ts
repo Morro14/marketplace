@@ -1,59 +1,34 @@
-import { Product } from "../data/products";
-import { objDeepMerge, objDeepSubtract } from "../utils/general";
-import type { DeepPartial } from "../utils/general";
-
-type BasketState = {
-  entries: Record<string, { product: Product; count: number }>[];
-};
-
-interface Store {
-  basket: BasketState;
-}
-const defaultState: DeepPartial<Store> = { basket: { entries: [] } };
-
-class StoreStateManager {
-  store: Store;
-  constructor(store: Store) {
-    this.store = store;
-  }
-  updateStore(payload: DeepPartial<Store>) {
-    return objDeepMerge(this.store, payload);
-  }
-  deleteEntries(payload: DeepPartial<Store>) {
-    return objDeepSubtract(this.store, payload, defaultState);
-  }
-}
-class StoreManager {
-  store: Store;
-  stateManager: StoreStateManager;
-  constructor(storeName: string) {
-    this.store = this.getOrCreateStore(storeName);
-    this.stateManager = new StoreStateManager(this.store);
-  }
-  updateStore(payload: Partial<Store>) {
-    this.stateManager.updateStore(payload);
-  }
-  getStore(payload: DeepPartial<Store>) {
-    this.stateManager.deleteEntries(payload);
-  }
-  getOrCreateStore(name: string) {
-    let store = window.localStorage.getitem(name);
-    if (!store) {
-      const defaultValue = { basket: [] };
-      window.localStorage.setItem(name, JSON.stringify(defaultValue));
-      store = defaultValue;
-    }
-    return store;
-  }
-}
-
-// temp api requests with LocalStorage backend
-export function addToBasket(product: Product, count: number) {
-  const store = new StoreManager("test_store");
-  store.stateManager.updateStore({
-    basket: {
-      entries: [{ [product.slug]: { product: product, count: count } }],
-    },
-  });
-  return;
-}
+// import { Product } from "../data/products";
+// import { StoreManager } from "../utils/storeManagment";
+//
+// // temp api requests with LocalStorage backend
+// const store = new StoreManager("test_store");
+// export function updateBasket(product: Product, count: number) {
+//   store.stateManager.updateStore({
+//     basket: {
+//       entries: [{ id: product.slug, product: product, count: count }],
+//     },
+//   });
+//   console.log(`${count} "${product.slug}" has been added to the basket store`);
+// }
+//
+// export function deleteFromBasket(product: Product, count: number) {
+//   const currentEntry = store.store.basket.entries.find(
+//     (item) => item.id === product.slug,
+//   );
+//   if (!currentEntry) return;
+//   const currentCount = currentEntry.count;
+//   const newCount = Math.max(0, currentCount - count);
+//   if (newCount > 0) {
+//     store.stateManager.updateStore({
+//       basket: {
+//         entries: [{ id: product.slug, product: product, count: newCount }],
+//       },
+//     });
+//   } else {
+//
+//   }
+//   console.log(
+//     `${count} "${product.slug}" has been deleted from the basket store`,
+//   );
+// }
