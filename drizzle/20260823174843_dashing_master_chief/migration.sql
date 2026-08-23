@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX `basket_entries_basket_product_unique` ON `basket_entries` (`basket_id`,`product_id`);

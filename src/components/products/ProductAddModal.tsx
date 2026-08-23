@@ -7,6 +7,9 @@ import CountBtn from "../CountBtn";
 import { useState } from "react";
 import Chip from "./nav/Chip";
 import { crossMediumNoBg, heartEmpty } from "../svg/assets";
+import { useAppDispatch } from "@/src/state/hooks";
+import { setProductCount } from "@/src/state/basketSlice";
+import { setProductBasketCount } from "@/src/api/basket";
 
 export default function ProductAddModal({
   product,
@@ -27,6 +30,18 @@ export default function ProductAddModal({
     }
   };
   const t = useTranslations();
+  const dispatch = useAppDispatch();
+  const [isSaving, setIsSaving] = useState(false);
+  const confirm = async () => {
+    setIsSaving(true);
+    try {
+      const status = await setProductBasketCount(product.id, count);
+      dispatch(setProductCount(status));
+      closeModalAction();
+    } finally {
+      setIsSaving(false);
+    }
+  };
   return (
     <div className="flex justify-between md:w-[970px] outline outline-primary -outline-offset-8 p-4 md:h-150">
       {/* MEDIA CAROUSEL */}
@@ -107,7 +122,11 @@ export default function ProductAddModal({
         </div>
         {/* BUTTONS */}
         <div className="flex gap-3">
-          <button className="h-8 px-9 border border-primary bg-accent">
+          <button
+            onClick={confirm}
+            disabled={isSaving || count > product.stock}
+            className="h-8 px-9 border border-primary bg-accent"
+          >
             {t("Confirm")}
           </button>
           <button

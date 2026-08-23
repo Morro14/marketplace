@@ -4,6 +4,7 @@ import {
   real,
   sqliteTable,
   text,
+  uniqueIndex,
 } from "drizzle-orm/sqlite-core";
 
 export const products = sqliteTable("products", {
@@ -57,4 +58,9 @@ export const basketEntries = sqliteTable("basket_entries", {
       onDelete: "cascade",
     }),
   count: integer("count").notNull(),
-});
+}, (table) => [
+  uniqueIndex("basket_entries_basket_product_unique").on(
+    table.basketId,
+    table.productId,
+  ),
+]);

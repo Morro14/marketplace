@@ -1,29 +1,29 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
-import type { Product } from "../data/productTypes";
-
-type BasketPayload = [{ product: Product; count: number }];
-
 export interface BasketState {
-  entries: BasketPayload[];
+  counts: Record<number, number>;
 }
 
 const initialState: BasketState = {
-  entries: [],
+  counts: {},
 };
 
 const basketSlice = createSlice({
   name: "basket",
   initialState,
   reducers: {
-    addProduct(state, action: PayloadAction<BasketPayload>) {
-      state.entries.push(action.payload);
+    setProductCount(
+      state,
+      action: PayloadAction<{ productId: number; count: number }>,
+    ) {
+      state.counts[action.payload.productId] = action.payload.count;
     },
   },
 });
 
-export const selectBasketContent = (state: RootState) => state.basket.entries;
+export const selectProductBasketCount = (productId: number) => (state: RootState) =>
+  state.basket.counts[productId] ?? 0;
 
-export const { addProduct } = basketSlice.actions;
+export const { setProductCount } = basketSlice.actions;
 
 export default basketSlice.reducer;

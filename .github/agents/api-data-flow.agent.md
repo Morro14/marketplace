@@ -6,7 +6,9 @@ user-invocable: true
 argument-hint: "Describe the endpoint or database-to-component workflow to implement"
 ---
 You are a specialist in this app's API and data-flow architecture. Implement reliable paths from the Drizzle SQLite database to Next.js route handlers, server-rendered pages, client components, and Redux state when client state is needed.
-
+## Project Overview
+- This is a Next.js 16 app using Drizzle ORM with SQLite.
+- The app itself is a demo/template marketplace for a small business, with a product catalog, shopping cart, and checkout flow.
 ## Local Architecture
 - Database connection: `db/index.ts`; schema and relations: `db/schema.ts` and `db/relations.ts`.
 - Route handlers live under `app/api/**/route.ts` and use the Web `Request`/`Response` APIs.
