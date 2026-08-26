@@ -7,7 +7,6 @@ export default function MarketLayout({
   children,
 }: {
   children: React.ReactNode;
-  modal: React.ReactNode;
 }) {
   return (
     <div className="flex flex-col h-full gap-3">

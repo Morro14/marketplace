@@ -1,9 +1,17 @@
 import ProductsResults from "@/src/components/products/ProductsResults";
-import { getProducts } from "@/src/data/productQueries";
+import {
+  getProducts,
+  getProductsFromSearchParams,
+} from "@/src/data/productQueries";
 
-export default async function Products() {
-  const result = await getProducts();
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+export default async function Products({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
+  const params = await searchParams;
+  const result = await getProductsFromSearchParams(params);
 
-  console.log("products query data", result);
   return <div>{<ProductsResults data={result}></ProductsResults>}</div>;
 }

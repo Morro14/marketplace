@@ -9,9 +9,7 @@ export async function GET(
   { params }: { params: Promise<{ category: string }> },
 ) {
   const { category } = await params;
-
   const { searchParams } = new URL(request.url);
-
   const sort = (searchParams.get("sort") as SortOption | null) ?? "name";
 
   const categoryRecord = await db.query.categories.findFirst({

@@ -16,12 +16,15 @@
   --color-primary: #3e3e3e;
   --color-primary-darker: #1D1D1D;
   --color-accent: #FFE100;
+  --color-accent-hl: #FFEA4B;
   --color-accent-2: #A7ECFF;
   --color-accent-red: #FF4800;
   --color-accent-green: #008729;
+  --color-accent-red: #FF1D15;
   --color-accent-2-hl: #A7ECFFCC;
   --color-accent-2-darker: #00A6D3;
   --color-accent-2-darker-hl: #00A6D3CC;
+  --color-gray-mid: #959595;
   --color-gray-light: #F3F3F3;
   --color-gray-light-hover: #EAEAEACC;
 

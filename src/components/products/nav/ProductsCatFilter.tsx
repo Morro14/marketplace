@@ -1,19 +1,22 @@
 "use client";
 
-import { useRef, useState } from "react";
-import type { Category } from "@/src/data/productTypes";
+import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useAppDispatch, useAppSelector } from "@/src/state/hooks";
 import {
   setCategoriesSelected,
-  setCategoriesConfirmed,
-  selectCategoriesConfirmed,
+  setFilters,
+  selectFilters,
 } from "@/src/state/productsSlice";
 import plusIcon from "@/src/assets/plus-icon-tiny.svg";
 import crossIcon from "@/src/assets/cross-icon-tiny.svg";
 import Image from "next/image";
 import ProductsCatModal from "./ProductsCatModal";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "@/src/i18n/navigations";
+import { Category } from "@/src/data/productTypes";
+import type { ProductFilters } from "@/src/state/productsSlice";
+import { parseProductQuery } from "@/src/utils/parseParams";
 
 export default function ProductsCarFilter({
   categories,
@@ -22,9 +25,21 @@ export default function ProductsCarFilter({
 }) {
   const t = useTranslations();
   const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
-  // const [confirmedCats, setConfirmedCats] = useState<string[]>([]);
+  const dispatch = useAppDispatch();
+  const categoriesParams = categories;
+  useEffect(() => {
+    const params = parseProductQuery(searchParams);
+    const { categories, ...rest } = params;
+    console.log("cat filter cats", categories);
+    const filters: ProductFilters = {
+      ...rest,
+      categories: categoriesParams.filter((cat) =>
+        params.categories?.includes(cat.slug),
+      ),
+    };
+    dispatch(setFilters(filters));
+  }, []);
   const [openCatsModal, setOpenCatsModal] = useState(false);
   const modalRef = useRef<HTMLDialogElement | null>(null);
   const handleCatButtonClick = () => {
@@ -41,17 +56,12 @@ export default function ProductsCarFilter({
     modalRef.current?.close();
     setOpenCatsModal(false);
   };
-  const catsConfirmed = useAppSelector(selectCategoriesConfirmed);
-  const dispatch = useAppDispatch();
-  const isCatConfirmed = catsConfirmed.length > 0;
-  const updateCategoryQuery = (nextCategories: string[]) => {
+  const filters = useAppSelector(selectFilters);
+  const isCatConfirmed = filters.categories && filters.categories.length > 0;
+  const clearCategoryQuery = () => {
     const params = new URLSearchParams(searchParams.toString());
-    if (nextCategories.length > 0) {
-      params.set("filter", nextCategories.join(","));
-    } else {
-      params.delete("filter");
-    }
-    router.push(`${pathname}?${params.toString()}`);
+    params.delete("cat");
+    router.replace(`/products?${params.toString()}`);
   };
   return (
     <div className="flex flex-wrap h-8">
@@ -70,9 +80,9 @@ export default function ProductsCarFilter({
             onClick={
               isCatConfirmed
                 ? () => {
-                    dispatch(setCategoriesConfirmed([]));
+                    dispatch(setFilters({ ...filters, categories: [] }));
                     dispatch(setCategoriesSelected([]));
-                    updateCategoryQuery([]);
+                    clearCategoryQuery();
                   }
                 : handleCatButtonClick
             }
@@ -103,7 +113,7 @@ export default function ProductsCarFilter({
         className="bg-bg m-auto"
       >
         <ProductsCatModal
-          cats={categories.map((category) => category.name)}
+          cats={categories}
           closeModalAction={closeModal}
         ></ProductsCatModal>
       </dialog>

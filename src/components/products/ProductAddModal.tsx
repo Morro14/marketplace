@@ -7,9 +7,10 @@ import CountBtn from "../CountBtn";
 import { useState } from "react";
 import Chip from "./nav/Chip";
 import { crossMediumNoBg, heartEmpty } from "../svg/assets";
-import { useAppDispatch } from "@/src/state/hooks";
-import { setProductCount } from "@/src/state/basketSlice";
-import { setProductBasketCount } from "@/src/api/basket";
+import { useAppDispatch, useAppSelector } from "@/src/state/hooks";
+import { selectProductCount, setProductCount } from "@/src/state/basketSlice";
+import { deleteProductBasket, setProductBasketCount } from "@/src/api/basket";
+import Image from "next/image";
 
 export default function ProductAddModal({
   product,
@@ -20,18 +21,52 @@ export default function ProductAddModal({
 }) {
   const currency = CURRENCY_SIGNS[CURRENCY];
   const [emblaRef] = useEmblaCarousel({ loop: true });
-  const [count, setCount] = useState(1);
-  const addCount = () => {
-    setCount(count + 1);
-  };
-  const subtractCount = () => {
-    if (count > 1) {
-      setCount(count - 1);
+  const count = useAppSelector(selectProductCount(product.id));
+  const basketCount = useAppSelector(selectProductCount(product.id));
+  const dispatch = useAppDispatch();
+  const t = useTranslations();
+  const [isSaving, setIsSaving] = useState(false);
+  const [isUpdatingBasket, setIsUpdatingBasket] = useState(false);
+
+  const handleAddToCardClick = async () => {
+    if (isUpdatingBasket || basketCount >= product.stock) return;
+    const previousCount = basketCount;
+    const nextCount = previousCount + 1;
+    dispatch(setProductCount({ productId: product.id, count: nextCount }));
+    setIsUpdatingBasket(true);
+    try {
+      const status = await setProductBasketCount(product.id, nextCount);
+      dispatch(setProductCount(status));
+    } catch {
+      dispatch(
+        setProductCount({ productId: product.id, count: previousCount }),
+      );
+    } finally {
+      setIsUpdatingBasket(false);
     }
   };
-  const t = useTranslations();
-  const dispatch = useAppDispatch();
-  const [isSaving, setIsSaving] = useState(false);
+  const handleRemoveFromCardClick = async () => {
+    if (isUpdatingBasket || basketCount >= product.stock) return;
+    const previousCount = basketCount;
+    const nextCount = previousCount - 1;
+    dispatch(setProductCount({ productId: product.id, count: nextCount }));
+    setIsUpdatingBasket(true);
+    try {
+      let status = null;
+      if (nextCount === 0) {
+        status = await deleteProductBasket(product.id);
+      } else {
+        status = await setProductBasketCount(product.id, nextCount);
+      }
+      dispatch(setProductCount(status));
+    } catch {
+      dispatch(
+        setProductCount({ productId: product.id, count: previousCount }),
+      );
+    } finally {
+      setIsUpdatingBasket(false);
+    }
+  };
   const confirm = async () => {
     setIsSaving(true);
     try {
@@ -99,18 +134,19 @@ export default function ProductAddModal({
         <div className="space-y-1">
           <div className="text-sm text-gray-500">{t("Unit number")}</div>
           <div className="flex gap-4 items-center">
-            <CountBtn
-              img="minus"
-              callback={subtractCount}
-              status={count > 1 ? "active" : "inactive"}
-            ></CountBtn>
+            <button
+              onClick={basketCount > 0 ? handleRemoveFromCardClick : () => {}}
+              className={`h-7 w-7 stroke-primary ${basketCount > 0 ? "bg-accent hover:bg-accent-hl" : ""} bg-gray-light hover:bg-gray-light-hover`}
+            >
+              {minus}
+            </button>
             <div className="text-xl font-mdeium">{count}</div>
-            <CountBtn
-              img="plus"
-              callback={addCount}
-              status="active"
-              params={{ autoFocus: true }}
-            ></CountBtn>
+            <button
+              onClick={handleAddToCardClick}
+              className={`h-7 w-7 stroke-primary bg-accent hover:bg-accent-hl`}
+            >
+              {plus}
+            </button>
           </div>
         </div>
         {/* PRICE */}
@@ -140,3 +176,30 @@ export default function ProductAddModal({
     </div>
   );
 }
+
+const plus = (
+  <svg
+    width="12"
+    height="12"
+    viewBox="0 0 12 12"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="m-auto"
+  >
+    <path d="M6 0L6 12" stroke-width="2" />
+    <line y1="6" x2="12" y2="6" strokeWidth="2" />
+  </svg>
+);
+
+const minus = (
+  <svg
+    width="12"
+    height="2"
+    viewBox="0 0 12 2"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="m-auto"
+  >
+    <line y1="1" x2="12" y2="1" strokeWidth="2" />
+  </svg>
+);

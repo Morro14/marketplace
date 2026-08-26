@@ -1,71 +1,67 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
-import type { Product } from "../data/productTypes";
+import type { Category, Product } from "../data/productTypes";
+import type { ProductSort } from "../data/productQueries";
 
-export type SortBy =
-  | "category-asc"
-  | "category-desc"
-  | "name-asc"
-  | "name-desc"
-  | "price-asc"
-  | "price-desc";
-
-export interface ProductFilters {
-  categories: string[];
-  minPrice: number | null;
-  maxPrice: number | null;
-}
+export type ProductFilters = {
+  categories?: Category[];
+  maxPrice?: number;
+  minPrice?: number;
+  name?: string;
+};
 
 interface ProductsState {
+  // categories are expected as slugString[]
   filters: ProductFilters;
   interface: {
-    categoriesSelected: string[];
+    categoriesSelected: Category[];
     addModal: {
       show: boolean;
       product: Product | null;
     };
   };
-  sortBy: SortBy;
+  sortBy: ProductSort;
 }
 
 const initialState: ProductsState = {
   filters: {
     categories: [],
-    minPrice: null,
-    maxPrice: null,
   },
   interface: {
     categoriesSelected: [],
     addModal: { show: false, product: null },
   },
-  sortBy: "name-asc",
+  sortBy: "name",
 };
 
 const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    setCategoriesConfirmed(state, action: PayloadAction<string[]>) {
+    setCategoriesConfirmed(state, action: PayloadAction<Category[]>) {
       state.filters.categories = action.payload;
     },
 
-    setCategoriesSelected(state, action: PayloadAction<string[]>) {
+    setCategoriesSelected(state, action: PayloadAction<Category[]>) {
       state.interface.categoriesSelected = action.payload;
     },
 
     setPriceRange(
       state,
       action: PayloadAction<{
-        min: number | null;
-        max: number | null;
+        min: number;
+        max: number;
       }>,
     ) {
       state.filters.minPrice = action.payload.min;
       state.filters.maxPrice = action.payload.max;
     },
 
-    setSortBy(state, action: PayloadAction<SortBy>) {
+    setSortBy(state, action: PayloadAction<ProductSort>) {
       state.sortBy = action.payload;
+    },
+    setFilters(state, action: PayloadAction<ProductFilters>) {
+      state.filters = action.payload;
     },
 
     resetFilters(state) {
@@ -86,6 +82,8 @@ const productsSlice = createSlice({
 export const selectCategoriesConfirmed = (state: RootState) =>
   state.products.filters.categories;
 
+export const selectFilters = (state: RootState) => state.products.filters;
+
 export const selectCategoriesSelected = (state: RootState) =>
   state.products.interface.categoriesSelected;
 
@@ -99,6 +97,7 @@ export const {
   setCategoriesSelected,
   setPriceRange,
   setSortBy,
+  setFilters,
   openAddModal,
   closeAddModal,
   resetFilters,
