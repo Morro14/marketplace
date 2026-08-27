@@ -1,8 +1,6 @@
 import ProductsResults from "@/src/components/products/ProductsResults";
-import {
-  getProducts,
-  getProductsFromSearchParams,
-} from "@/src/data/productQueries";
+import { getBasket } from "@/src/data/basketQueries";
+import { getProductsFromSearchParams } from "@/src/data/productQueries";
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 export default async function Products({
@@ -11,7 +9,12 @@ export default async function Products({
   searchParams: SearchParams;
 }) {
   const params = await searchParams;
-  const result = await getProductsFromSearchParams(params);
-
-  return <div>{<ProductsResults data={result}></ProductsResults>}</div>;
+  const products = await getProductsFromSearchParams(params);
+  const basket = await getBasket();
+  console.log("products", products);
+  return (
+    <div>
+      {<ProductsResults products={products} basket={basket}></ProductsResults>}
+    </div>
+  );
 }

@@ -26,7 +26,7 @@
   --color-accent-2-darker-hl: #00A6D3CC;
   --color-gray-mid: #959595;
   --color-gray-light: #F3F3F3;
-  --color-gray-light-hover: #EAEAEACC;
+  --color-gray-light-hover: #F6F6F6;
 
 }
 
@@ -45,7 +45,12 @@ body {
 button {
   @apply cursor-pointer
 }
-
+.btn__accent {
+  @apply bg-accent hover:bg-accent-hl
+}
+.btn__secondary {
+  @apply bg-gray-light hover:bg-gray-light-hover
+}
 
 .header-nav-link {
   @apply bg-accent p-1.5 text-primary font-bold border-b-3 border-primary h-9

@@ -8,3 +8,9 @@ export function slugify(text: string) {
     .replace(/[^\w\-]+/g, "")
     .replace(/\-\-+/g, "-");
 }
+
+export const isDigits = (str: string) => /^\d+$/.test(str);
+export const isEmpty = (str: string) => {
+  const strTrimmed = str.trim();
+  return /^$/.test(strTrimmed);
+};

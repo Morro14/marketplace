@@ -31,7 +31,6 @@ export default function ProductsCarFilter({
   useEffect(() => {
     const params = parseProductQuery(searchParams);
     const { categories, ...rest } = params;
-    console.log("cat filter cats", categories);
     const filters: ProductFilters = {
       ...rest,
       categories: categoriesParams.filter((cat) =>

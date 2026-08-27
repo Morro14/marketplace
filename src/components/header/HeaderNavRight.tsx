@@ -9,7 +9,6 @@ import { selectBasketCount } from "@/src/state/basketSlice";
 export default function HeaderNavRight() {
   const t = useTranslations();
   const basketCountSelector = useAppSelector(selectBasketCount);
-  console.log(basketCountSelector);
   return (
     <div className="flex gap-4 relative top-[14px]">
       <button className="flex items-center gap-5 bg-[#eee] h-8 rounded-2xl font-serif font-bold px-3 border-b-3 border-primary">

@@ -11,7 +11,6 @@ export default async function ProductsNav() {
     }),
     getProducts(),
   ]);
-  console.log("categories", categories);
   return (
     <div className="w-full flex gap-4 flex-wrap">
       <CatalogBtn></CatalogBtn>

@@ -13,7 +13,13 @@ import { useState } from "react";
 import { openAddModal, selectAddModal } from "@/src/state/productsSlice";
 import QuickViewBtn from "./QuickViewBtn";
 
-export default function ProductCard({ product }: { product: Product }) {
+export default function ProductCard({
+  product,
+  productCount,
+}: {
+  product: Product;
+  productCount: number | undefined;
+}) {
   const nameSlug = slugify(product.name);
 
   const catDivider = "/";
@@ -22,6 +28,7 @@ export default function ProductCard({ product }: { product: Product }) {
   const t = useTranslations();
   const selectModal = useAppSelector(selectAddModal);
   const basketCount = useAppSelector(selectProductCount(product.id));
+  // console.log("basketCount", basketCount);
   const dispatch = useAppDispatch();
   const [isUpdatingBasket, setIsUpdatingBasket] = useState(false);
   const handleQuickViewClick = () => {
@@ -74,11 +81,11 @@ export default function ProductCard({ product }: { product: Product }) {
     }
   };
   return (
-    <div className="flex flex-col md:w-[230px] w-45 md:h-[396px] h-90 drop-shadow bg-bg justify-between pb-2 group">
+    <div className="flex flex-col md:w-[230px] w-45 md:h-[396px] h-90 drop-shadow bg-bg justify-between pb-2 group rounded-lg">
       <div className="relative">
         <Image
           src={demoImg}
-          className="md:h-[231px] h-[226px] w-full object-cover"
+          className="md:h-[231px] h-[226px] w-full object-cover rounded-t-lg"
           alt={`product-card-img-${nameSlug}`}
         ></Image>
         <div className="absolute bottom-1.5 left-1.5">
@@ -124,21 +131,25 @@ export default function ProductCard({ product }: { product: Product }) {
           <button
             onClick={handleAddToCardClick}
             disabled={isUpdatingBasket || basketCount >= product.stock}
-            className="mx-2 flex gap-0.5 items-center justify-center bg-accent md:h-8 md:border md:border-primary"
+            className="mx-2 flex gap-0.5 items-center justify-center bg-accent md:h-8 rounded-lg"
           >
             <Image src={cartIcon} alt={`card-icon`}></Image>
             <span>{t("Add to cart")}</span>
             {basketCount > 0 && <span>({basketCount})</span>}
           </button>
         ) : (
-          <div className="mx-2 flex gap-0.5 items-center justify-between px-3 bg-gray-light hover:bg-gray-light-hover md:h-8 md:border md:border-primary">
+          <div className="mx-2 flex gap-0.5 items-center justify-between px-3 bg-gray-light hover:bg-gray-light-hover md:h-8 rounded-lg">
             <button
               className="w-5 h-5 stroke-gray-mid hover:stroke-primary"
               onClick={handleRemoveFromCardClick}
             >
               {minus}
             </button>
-            <div>{basketCount > 0 && <span>{basketCount}</span>}</div>
+            <div>
+              {basketCount > 0 && (
+                <span className="font-medium text-lg">{basketCount}</span>
+              )}
+            </div>
             <button
               className="w-5 h-5 stroke-gray-mid hover:stroke-primary"
               onClick={handleAddToCardClick}
@@ -160,7 +171,7 @@ const plus = (
     xmlns="http://www.w3.org/2000/svg"
     className="m-auto"
   >
-    <path d="M6 0L6 12" stroke-width="2" />
+    <path d="M6 0L6 12" strokeWidth="2" />
     <line y1="6" x2="12" y2="6" strokeWidth="2" />
   </svg>
 );
