@@ -9,7 +9,7 @@ import { crossMediumNoBg, heartEmpty } from "../svg/assets";
 import { useAppDispatch, useAppSelector } from "@/src/state/hooks";
 import { selectProductCount, setProductCount } from "@/src/state/basketSlice";
 import { deleteProductBasket, setProductBasketCount } from "@/src/api/basket";
-import { isDigits, isEmpty } from "@/src/utils/general";
+import { formatProductCount } from "@/src/utils/format";
 
 export default function ProductAddModal({
   product,
@@ -21,7 +21,7 @@ export default function ProductAddModal({
   const currency = CURRENCY_SIGNS[CURRENCY];
   const [emblaRef] = useEmblaCarousel({ loop: true });
   const basketCount = useAppSelector(selectProductCount(product.id));
-  const [inputCount, setInputCount] = useState(basketCount);
+  const [inputCount, setInputCount] = useState(basketCount || 1);
   const dispatch = useAppDispatch();
   const t = useTranslations();
   const [isSaving, setIsSaving] = useState(false);
@@ -106,10 +106,10 @@ export default function ProductAddModal({
         {/* COUNT */}
         <div className="space-y-1">
           <div className="text-sm text-gray-500">{t("Unit number")}</div>
-          <div className="flex gap-4 items-center">
+          <div className="flex gap-4 items-end">
             <button
               onClick={inputCount > 0 ? handleRemoveFromCardClick : () => {}}
-              className={`h-7 w-7 stroke-primary ${inputCount > 0 ? "bg-accent hover:bg-accent-hl" : "bg-gray-light hover:bg-gray-light-hover"}`}
+              className={`h-7 w-7 select-none stroke-primary ${inputCount > 0 ? "bg-accent hover:bg-accent-hl" : "bg-gray-light hover:bg-gray-light-hover"}`}
               disabled={inputCount <= 0}
             >
               {minus}
@@ -118,36 +118,52 @@ export default function ProductAddModal({
               name="count"
               type="text"
               className="text-xl font-medium w-7 text-center"
+              maxLength={2}
               onChange={(e) => {
-                let value = null;
-                const isDigits_ = isDigits(e.currentTarget.value);
-                const isEmpty_ = isEmpty(e.currentTarget.value);
-                if (isEmpty_) {
-                  value = 0;
-                } else if (!isDigits_) {
-                  return;
-                } else {
-                  value = Number(e.currentTarget.value);
+                const result = formatProductCount(e.currentTarget.value);
+                if (result !== null) {
+                  setInputCount(result);
                 }
-                setInputCount(value);
               }}
               value={inputCount}
             ></input>
             <button
               onClick={handleAddToCardClick}
-              className={`h-7 w-7 stroke-primary ${inputCount < product.stock ? "bg-accent hover:bg-accent-hl" : "bg-gray-light hover:bg-gray-light-hover"}`}
+              className={`h-7 w-7 select-none stroke-primary ${inputCount < product.stock ? "bg-accent hover:bg-accent-hl" : "bg-gray-light hover:bg-gray-light-hover"}`}
               disabled={inputCount > product.stock}
             >
               {plus}
             </button>
+            <div className="flex gap-2">
+              <span
+                onClick={() => setInputCount(1)}
+                className="text-sm underline cursor-pointer hover:opacity-80"
+              >
+                {t("reset")}
+              </span>
+              <span
+                onClick={() => setInputCount(0)}
+                className="text-sm underline cursor-pointer hover:opacity-80"
+              >
+                {t("remove")}
+              </span>
+            </div>
           </div>
         </div>
         {/* PRICE */}
         <div className="">
-          <div className="text-sm text-gray-500">
-            {t(`Price for ${inputCount} units`)}
-          </div>
-          <div className="font-medium text-lg text-accent-green">{`${currency} ${Math.round(product.price * 100 * inputCount) / 100}`}</div>
+          {inputCount > 0 ? (
+            <div className="text-sm text-gray-500">
+              {t(`Price for ${inputCount} units`)}
+            </div>
+          ) : (
+            <div className="text-sm text-gray-400">
+              {t(`Product is not added to the basket`)}
+            </div>
+          )}
+          <div
+            className={`font-medium text-lg ${inputCount > 0 ? "text-accent-green" : "text-gray-400"}`}
+          >{`${currency} ${Math.round(product.price * 100 * inputCount) / 100}`}</div>
         </div>
         {/* BUTTONS */}
         <div className="flex gap-3">

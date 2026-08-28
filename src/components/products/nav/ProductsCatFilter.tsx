@@ -66,16 +66,16 @@ export default function ProductsCarFilter({
     <div className="flex flex-wrap h-8">
       <div className="flex flex-wrap gap-1 items-end font-medium">
         <button
-          className={`h-7 text-sm shrink-0 flex gap-1 items-center rounded-2xl pl-2 border 
+          className={`category-filter-btn category-filter-btn--filled 
           ${
             isCatConfirmed
-              ? "bg-accent-2 hover:bg-accent-2-hl border-accent-2"
-              : "bg-bg hover:bg-gray-light border border-primary"
+              ? "category-filter-btn__filled"
+              : "category-filter-btn__empty"
           } 
-          transition-colors duration-150`}
+          `}
         >
           <div
-            className="w-7 h-full"
+            className="w-8 h-full"
             onClick={
               isCatConfirmed
                 ? () => {

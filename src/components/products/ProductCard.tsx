@@ -13,13 +13,7 @@ import { useState } from "react";
 import { openAddModal, selectAddModal } from "@/src/state/productsSlice";
 import QuickViewBtn from "./QuickViewBtn";
 
-export default function ProductCard({
-  product,
-  productCount,
-}: {
-  product: Product;
-  productCount: number | undefined;
-}) {
+export default function ProductCard({ product }: { product: Product }) {
   const nameSlug = slugify(product.name);
 
   const catDivider = "/";
@@ -28,7 +22,6 @@ export default function ProductCard({
   const t = useTranslations();
   const selectModal = useAppSelector(selectAddModal);
   const basketCount = useAppSelector(selectProductCount(product.id));
-  // console.log("basketCount", basketCount);
   const dispatch = useAppDispatch();
   const [isUpdatingBasket, setIsUpdatingBasket] = useState(false);
   const handleQuickViewClick = () => {
@@ -81,7 +74,7 @@ export default function ProductCard({
     }
   };
   return (
-    <div className="flex flex-col md:w-[230px] w-45 md:h-[396px] h-90 drop-shadow bg-bg justify-between pb-2 group rounded-lg">
+    <div className="flex flex-col md:w-[272px] w-45 md:h-[396px] h-90 drop-shadow bg-bg justify-between pb-2 group rounded-lg">
       <div className="relative">
         <Image
           src={demoImg}

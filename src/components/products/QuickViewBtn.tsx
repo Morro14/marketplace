@@ -9,10 +9,10 @@ export default function QuickViewBtn({
   return (
     <div
       onClick={handleQuickViewClick}
-      className="px-3 py-0.5 font-sm font-sans font-medium outline-2 
-      outline-primary -outline-offset-4 rounded-lg opacity-0 group-hover:opacity-100
+      className="my-auto px-3 py-0.5 font-sm font-sans font-medium h-[30px] 
+      rounded-xl opacity-0 group-hover:opacity-100
       transition-[opacity,background-color] duration-100 group-hover:cursor-pointer
-      text-primary bg-white hover:bg-gray-light "
+      text-white bg-[#00000070]  hover:bg-[#00000090] "
     >
       {t("Quick view")}
     </div>

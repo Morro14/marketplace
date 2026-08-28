@@ -26,7 +26,7 @@ const basketSlice = createSlice({
       const entriesMapped = action.payload.map((entry) => {
         return { productId: entry.productId, count: entry.count };
       });
-      state = entriesMapped;
+      return entriesMapped;
     },
   },
 });

@@ -6,14 +6,14 @@ import HeaderNavRight from "./HeaderNavRight";
 export default function Header() {
   const t = useTranslations();
   return (
-    <header className="w-full h-[43px] bg-[#00162D] flex items-center px-3 justify-between relative border-b-3 border-accent">
+    <header className="w-full bg-[#00162D] flex items-center px-3 justify-between relative border-b-3 border-accent">
       <Link
         className="absolute left-3 text-white font-serif text-xl font-bold"
         href="/"
       >
         {t("Marketplace")}
       </Link>
-      <div className="content-container h-full mx-auto flex justify-between">
+      <div className="content-container h-[40px] mx-auto flex justify-between items-center">
         <HeaderNav></HeaderNav>
         <HeaderNavRight></HeaderNavRight>
       </div>

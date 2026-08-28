@@ -9,7 +9,7 @@ export default function BurgerMenu() {
   const dialogRef = useRef<null | HTMLDialogElement>(null);
   let dialogOpen = false;
   return (
-    <div className="group flex items-center bg-accent p-1.5 h-[36px] border-b-3 border-primary">
+    <div className="group flex items-center p-1.5 h-7">
       <dialog className="" id="menu-modal" closedby="any" ref={dialogRef}>
         <div
           className="fixed right-0 top-20 flex flex-col bg-bg starting:opacity-0 opacity-100 transition-opacity duration-150"
@@ -67,12 +67,12 @@ export default function BurgerMenu() {
 }
 const bar = (
   <svg
-    width="28"
-    height="4"
-    viewBox="0 0 28 4"
+    width="22"
+    height="3"
+    viewBox="0 0 22 3"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <rect width="28" height="4" className="fill-primary" />
+    <rect width="22" height="3" className="fill-gray-light" />
   </svg>
 );

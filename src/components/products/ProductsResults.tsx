@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
 import ProductAddModal from "@/src/components/products/ProductAddModal";
 import type { Product } from "@/src/data/productTypes";
 import type { BasketEntry } from "@/src/data/basketTypes";
-import { selectBasket, setBasket } from "@/src/state/basketSlice";
+import { setBasket } from "@/src/state/basketSlice";
 
 export default function ProductsResults({
   products,
@@ -17,7 +17,6 @@ export default function ProductsResults({
 }) {
   const modalRef = useRef<HTMLDialogElement | null>(null);
   const selectModal = useAppSelector(selectAddModal);
-  const basketState = useAppSelector(selectBasket);
   const dispatch = useAppDispatch();
   const handleCloseModalClick = () => {
     if (!modalRef.current) return;
@@ -30,7 +29,7 @@ export default function ProductsResults({
     dispatch(setBasket(basket));
   }, [basket, dispatch]);
   return (
-    <div className="h-full grid gap-x-4 gap-y-8 2xl:grid-cols-6 w-full">
+    <div className="h-full grid w-full grid-cols-[repeat(5,max-content)] justify-between gap-y-8 content-between">
       <dialog
         id={`product-add-modal`}
         onClose={() => dispatch(closeAddModal())}
@@ -48,13 +47,7 @@ export default function ProductsResults({
         )}
       </dialog>
       {products.map((p, i) => (
-        <ProductCard
-          product={p}
-          productCount={
-            basketState.find((entry) => entry.productId === p.id)?.count
-          }
-          key={`product-card-${i}`}
-        ></ProductCard>
+        <ProductCard product={p} key={`product-card-${i}`}></ProductCard>
       ))}
     </div>
   );

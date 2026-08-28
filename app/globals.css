@@ -25,6 +25,8 @@
   --color-accent-2-darker: #00A6D3;
   --color-accent-2-darker-hl: #00A6D3CC;
   --color-gray-mid: #959595;
+  --color-gray-passive: #7E7E7E;
+  --color-gray-active: var(--color-primary);
   --color-gray-light: #F3F3F3;
   --color-gray-light-hover: #F6F6F6;
 
@@ -42,16 +44,49 @@ body {
   color: var(--foreground);
   font-family: Source Sans 3, Arial, Helvetica, sans-serif;
 }
+
 button {
   @apply cursor-pointer
 }
+
 .btn__accent {
   @apply bg-accent hover:bg-accent-hl
 }
+
 .btn__secondary {
   @apply bg-gray-light hover:bg-gray-light-hover
 }
 
 .header-nav-link {
-  @apply bg-accent p-1.5 text-primary font-bold border-b-3 border-primary h-9
+  @apply px-2 flex font-serif items-center text-gray-light font-semibold text-center hover:scale-105 hover:text-white transition-transform duration-150
+}
+
+.category-filter-btn {
+  --_bg: var(--bg, --color-bg);
+  --_borderColor: var(--borderColor, --color-gray-passive);
+  background-color: var(--_bg);
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  border: solid 1px var(--_borderColor);
+  border-radius: 16px;
+  padding-left: 8px;
+  height: 32px;
+  transition: background-color 0.1s;
+
+}
+
+.category-filter-btn__filled {
+  --bg: var(--color-accent-2);
+  --borderColor: var(--color-accent-2);
+
+  &:hover,
+  &:focus {
+    --bg: var(--color-accent-2-hl);
+    --borderColor: var(--color-accent-2-hl);
+  }
+}
+
+.category-filter-btn__filled {
+  --bg: var(--color-accent-2)
 }
