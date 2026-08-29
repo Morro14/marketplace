@@ -73,7 +73,7 @@ button {
   padding-left: 8px;
   height: 32px;
   transition: background-color 0.1s;
-
+  color: var(--_borderColor);
 }
 
 .category-filter-btn__filled {
@@ -87,6 +87,12 @@ button {
   }
 }
 
-.category-filter-btn__filled {
-  --bg: var(--color-accent-2)
+.category-filter-btn__empty {
+  --borderColor: var(--color-gray-passive);
+
+  &:hover,
+  &:focus {
+    --bg: var(--color-gray-light-hover);
+    --borderColor: var(--color-gray-active);
+  }
 }

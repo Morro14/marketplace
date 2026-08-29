@@ -15,7 +15,7 @@ export default async function ProductsNav() {
     <div className="w-full flex gap-4 flex-wrap">
       <CatalogBtn></CatalogBtn>
       <ProductSearch products={products}></ProductSearch>
-      <ProductsCarFilter categories={categories}></ProductsCarFilter>
+      <ProductsCarFilter categories={categories}></ProductsCarFilter>{" "}
     </div>
   );
 }

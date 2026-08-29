@@ -5,6 +5,7 @@ import loginIcon from "@/src/assets/login-icon.svg";
 import basketIcon from "@/src/assets/cart-icon-header.svg";
 import { useAppSelector } from "@/src/state/hooks";
 import { selectBasketCount } from "@/src/state/basketSlice";
+import Link from "next/link";
 
 export default function HeaderNavRight() {
   const t = useTranslations();
@@ -29,7 +30,7 @@ export default function HeaderNavRight() {
             {basketCountSelector}
           </div>
         </div>
-        <div className="flex gap-1">
+        <Link href={"/basket"} className="flex gap-1">
           <span className="mt-0.5">{t("basket")}</span>
           <Image
             className=""
@@ -37,7 +38,7 @@ export default function HeaderNavRight() {
             src={basketIcon}
             alt="login-icon"
           ></Image>
-        </div>
+        </Link>
       </button>
     </div>
   );

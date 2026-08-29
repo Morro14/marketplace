@@ -10,7 +10,13 @@ export default function BurgerMenu() {
   let dialogOpen = false;
   return (
     <div className="group flex items-center p-1.5 h-7">
-      <dialog className="" id="menu-modal" closedby="any" ref={dialogRef}>
+      <dialog
+        className=""
+        id="menu-modal"
+        closedby="any"
+        ref={dialogRef}
+        onClose={() => (dialogOpen = false)}
+      >
         <div
           className="fixed right-0 top-20 flex flex-col bg-bg starting:opacity-0 opacity-100 transition-opacity duration-150"
           onClick={() => dialogRef.current?.close()}
