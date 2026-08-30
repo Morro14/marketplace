@@ -16,7 +16,9 @@ export async function getBasket(): Promise<BasketEntry[]> {
   return result;
 }
 
-export async function getBasketWithProducts(): Promise<BasketEntryWithProduct[]> {
+export async function getBasketWithProducts(): Promise<
+  BasketEntryWithProduct[]
+> {
   const cookieValue = (await cookies()).get(basketCookie)?.value;
   const basketId = cookieValue ? Number(cookieValue) : NaN;
 
@@ -24,7 +26,7 @@ export async function getBasketWithProducts(): Promise<BasketEntryWithProduct[]>
 
   const result = await db.query.basketEntries.findMany({
     where: { basketId },
-    with: { product: true },
+    with: { product: { with: { categories: true } } },
   });
   return result as BasketEntryWithProduct[];
 }

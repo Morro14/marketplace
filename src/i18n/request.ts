@@ -2,6 +2,8 @@ import * as rootParams from "next/root-params";
 import { notFound } from "next/navigation";
 import { getRequestConfig } from "next-intl/server";
 import { hasLocale } from "next-intl";
+import { readFile } from "fs/promises";
+import { join } from "path";
 import { routing } from "./routing";
 
 export default getRequestConfig(async ({ locale }) => {
@@ -14,10 +16,14 @@ export default getRequestConfig(async ({ locale }) => {
     }
   }
 
-  return {
+  const messagesPath = join(process.cwd(), "messages", `${locale}.json`);
+  const messagesContent = await readFile(messagesPath, "utf-8");
+  const messages = JSON.parse(messagesContent);
+  const result = {
     locale,
-    messages: (await import(`@/messages/${locale}.json`)).default,
+    messages,
     onError(error) {
+      console.log("i18n request", error);
       if (error.code !== "MISSING_MESSAGE") {
         console.error(error);
       }
@@ -26,4 +32,5 @@ export default getRequestConfig(async ({ locale }) => {
     //   return `${namespace}.${key}`;
     // },
   };
+  return result;
 });

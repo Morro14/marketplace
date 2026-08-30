@@ -1,12 +1,17 @@
+"use client";
+import { selectBasketCount } from "@/src/state/basketSlice";
+import { useAppSelector } from "@/src/state/hooks";
 import { useTranslations } from "next-intl";
+import { heartEmpty, bin } from "./icons";
 
 export default function TopBar() {
-  const t = useTranslations();
+  const t = useTranslations("TopBar");
+  const basketCount = useAppSelector(selectBasketCount);
   return (
-    <div className="h-10 bg-bg flex justify-between w-full items-center">
-      <span className="font-serif text-lg">{t("Your basket")}</span>
+    <div className="h-10 bg-gray-light flex justify-between w-full items-center rounded-t-xl px-3">
+      <span className="font-serif text-lg">{t("title")}</span>
       <div className="flex gap-4">
-        <span>N items</span>
+        <span>{t("items", { count: basketCount })}</span>
         <div className="flex items-center gap-3">
           <div className="relative top-px">{heartEmpty}</div>
           <div>{bin}</div>
@@ -15,31 +20,3 @@ export default function TopBar() {
     </div>
   );
 }
-const heartEmpty = (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 16 16"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M8 14.5C4.76726 11.7816 0.5 8.24756 0.5 4.44173C0.5 2.40293 2.05172 0.5 4.25 0.5C5.93103 0.5 6.83621 1.17961 8 2.67475C9.03448 1.17961 10.069 0.5 11.75 0.5C13.9483 0.5 15.5 2.40293 15.5 4.44173C15.5 8.24756 11.2327 11.7816 8 14.5Z"
-      stroke="#797979"
-    />
-  </svg>
-);
-const bin = (
-  <svg
-    width="15"
-    height="16"
-    viewBox="0 0 15 16"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M4.56522 2.41489C4.56522 1.45745 4.8913 0.5 5.86957 0.5H9.13044C10.1087 0.5 10.4348 1.45745 10.4348 2.41489M0 2.41489L15 2.41489M1.30435 2.41489L2.72507 13.8169C2.84478 14.7777 3.67824 15.5 4.6672 15.5H10.3328C11.3218 15.5 12.1552 14.7777 12.2749 13.8169L13.6957 2.41489H1.30435Z"
-      stroke="#797979"
-    />
-  </svg>
-);

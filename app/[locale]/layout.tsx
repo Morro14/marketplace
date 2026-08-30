@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inika, Source_Sans_3, Inter } from "next/font/google";
 import "../globals.css";
 import { ReactNode } from "react";
+import { getMessages } from "next-intl/server";
 import IntlProviderCustom from "@/src/components/nextIntl/IntlProvider";
 import { StoreProvider } from "@/src/state/StoreProvider";
 
@@ -32,13 +33,14 @@ export default async function RootLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const messages = await getMessages();
   return (
     <html
       lang={locale}
       className={`${inika.variable} ${sourceSans.variable} text-primary h-full antialiased`}
     >
       <body className="size-full flex flex-col mx-auto">
-        <IntlProviderCustom locale={locale}>
+        <IntlProviderCustom locale={locale} messages={messages}>
           <StoreProvider>{children}</StoreProvider>
         </IntlProviderCustom>
       </body>

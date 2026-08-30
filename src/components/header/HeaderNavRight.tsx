@@ -9,7 +9,7 @@ import Link from "next/link";
 
 export default function HeaderNavRight() {
   const t = useTranslations();
-  const basketCountSelector = useAppSelector(selectBasketCount);
+  const basketCount = useAppSelector(selectBasketCount);
   return (
     <div className="flex gap-4 relative top-[14px]">
       <button
@@ -25,9 +25,9 @@ export default function HeaderNavRight() {
         transition-color duration-150 h-8 rounded-2xl font-serif font-semibold
         px-3 border-b-3 border-primary hover:border-gray-500"
       >
-        <div className="rounded-full h-[18px] w-[18px] text-white bg-accent-red">
-          <div className="relative top-0.5 text-xs font-sans font-semibold">
-            {basketCountSelector}
+        <div className="rounded-full h-[22px] w-[22px] text-white bg-accent-red">
+          <div className="relative top-px text-center text-sm font-sans font-bold">
+            {basketCount && basketCount < 100 ? basketCount : "..."}
           </div>
         </div>
         <Link href={"/basket"} className="flex gap-1">

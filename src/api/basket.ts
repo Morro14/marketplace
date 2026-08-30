@@ -1,13 +1,46 @@
+import { Product } from "@/src/data/productTypes";
+
 export interface ProductBasketStatus {
   productId: number;
   count: number;
-  stock: number;
+  product: Product;
+}
+
+export class BasketApiError extends Error {
+  constructor(
+    public status: number,
+    message: string,
+    public data?: ProductBasketStatus,
+  ) {
+    super(message);
+    this.name = "BasketApiError";
+  }
 }
 
 export async function getProductBasketStatus(productId: number) {
   const response = await fetch(`/api/basket/items/${productId}`);
   if (!response.ok) throw new Error("Unable to load basket status");
   return (await response.json()) as ProductBasketStatus;
+}
+
+export async function getBasketProductsStock(productIds: number[]) {
+  try {
+    const statusPromises = productIds.map((id) =>
+      getProductBasketStatus(id).catch(() => null),
+    );
+    const statuses = await Promise.all(statusPromises);
+
+    const stockMap = new Map<number, ProductBasketStatus>();
+    statuses.forEach((status) => {
+      if (status) {
+        stockMap.set(status.productId, status);
+      }
+    });
+
+    return stockMap;
+  } catch {
+    throw new Error("Unable to load basket products stock");
+  }
 }
 
 export async function setProductBasketCount(productId: number, count: number) {
@@ -19,8 +52,13 @@ export async function setProductBasketCount(productId: number, count: number) {
   if (!response.ok) {
     const body = (await response.json().catch(() => null)) as {
       error?: string;
+      data?: ProductBasketStatus;
     } | null;
-    throw new Error(body?.error ?? "Unable to update basket");
+    throw new BasketApiError(
+      response.status,
+      body?.error ?? "Unable to update basket",
+      body?.data,
+    );
   }
   return (await response.json()) as ProductBasketStatus;
 }
@@ -33,8 +71,13 @@ export async function deleteProductBasket(productId: number) {
   if (!response.ok) {
     const body = (await response.json().catch(() => null)) as {
       error?: string;
+      data?: ProductBasketStatus;
     } | null;
-    throw new Error(body?.error ?? "Unable to remove item from basket");
+    throw new BasketApiError(
+      response.status,
+      body?.error ?? "Unable to remove item from basket",
+      body?.data,
+    );
   }
   return (await response.json()) as ProductBasketStatus;
 }

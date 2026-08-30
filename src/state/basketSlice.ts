@@ -1,30 +1,50 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import type { BasketEntry } from "../data/basketTypes";
+import type { Product } from "../data/productTypes";
 
-const initialState: Partial<BasketEntry>[] = [];
+export interface BasketItemWithProduct {
+  productId: number;
+  count: number;
+  product: Product;
+}
+
+const initialState: BasketItemWithProduct[] = [];
 
 const basketSlice = createSlice({
   name: "basket",
   initialState,
   reducers: {
-    setProductCount(state, action: PayloadAction<Partial<BasketEntry>>) {
+    setProductCount(
+      state,
+      action: PayloadAction<{
+        productId: number;
+        count: number;
+        product: Product;
+      }>,
+    ) {
       const entryExists = state.find(
         (entry) => entry.productId === action.payload.productId,
       );
       if (!entryExists) {
         state.push({
-          count: action.payload.count,
           productId: action.payload.productId,
+          count: action.payload.count,
+          product: action.payload.product,
         });
       } else {
         entryExists.count = action.payload.count;
+        entryExists.product = action.payload.product;
       }
     },
     setBasket(state, action: PayloadAction<BasketEntry[]>) {
       if (action.payload.length === 0) return;
       const entriesMapped = action.payload.map((entry) => {
-        return { productId: entry.productId, count: entry.count };
+        return {
+          productId: entry.productId,
+          count: entry.count,
+          product: {} as Product,
+        };
       });
       return entriesMapped;
     },

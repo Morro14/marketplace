@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import HeaderNavRight from "./HeaderNavRight";
 
 export default function Header() {
-  const t = useTranslations();
+  const t = useTranslations("Header");
   return (
     <header className="w-full bg-[#00162D] flex items-center px-3 justify-between relative border-b-3 border-accent">
       <Link

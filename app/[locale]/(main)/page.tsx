@@ -11,7 +11,6 @@ export default async function Products({
   const params = await searchParams;
   const products = await getProductsFromSearchParams(params);
   const basket = await getBasket();
-  console.log("basket", basket);
   return (
     <ProductsResults products={products} basket={basket}></ProductsResults>
   );
