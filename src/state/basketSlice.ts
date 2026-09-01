@@ -71,6 +71,10 @@ export const selectBasketCount = (state: RootState) => {
   );
   return accCount.count;
 };
+export const selectProduct = (productId: number) => (state: RootState) => {
+  const product = state.basket.find((p) => p.productId === productId)?.product;
+  return product;
+};
 
 export const { setProductCount, setBasket } = basketSlice.actions;
 

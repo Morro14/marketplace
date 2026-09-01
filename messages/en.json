@@ -5,5 +5,10 @@
   },
   "Header": {
     "Marketplace": "Marketplace!"
+  },
+  "BasketEntry": {
+    "Count": {
+      "stock_exceeded_count": "currently available {count, plural, =1 {# item} other {# items}}"
+    }
   }
 }

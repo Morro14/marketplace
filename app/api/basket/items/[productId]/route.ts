@@ -91,7 +91,10 @@ export async function PUT(
     return Response.json({ error: "Product not found" }, { status: 404 });
   if (Number(count) > product.stock) {
     return Response.json(
-      { error: "Requested count exceeds stock" },
+      {
+        error: "Requested count exceeds stock",
+        data: { productId, count, product },
+      },
       { status: 409 },
     );
   }
