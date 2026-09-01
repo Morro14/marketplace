@@ -16,9 +16,7 @@ export async function getBasket(): Promise<BasketEntry[]> {
   return result;
 }
 
-export async function getBasketWithProducts(): Promise<
-  BasketEntryWithProduct[]
-> {
+export async function getBasketWithProducts() {
   const cookieValue = (await cookies()).get(basketCookie)?.value;
   const basketId = cookieValue ? Number(cookieValue) : NaN;
 

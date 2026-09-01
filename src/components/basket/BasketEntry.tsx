@@ -14,6 +14,7 @@ export default function BasketEntry({
   size: number;
 }) {
   const product = basketEntry.product;
+  console.log("product", product)
   return (
     <div
       className={`flex justify-between p-3 gap-3 h-[162px] w-[1152px] ${index < size ? "border-b border-gray-light" : ""}`}

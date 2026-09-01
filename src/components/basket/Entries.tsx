@@ -1,14 +1,30 @@
 "use client";
 
-import { BasketItemWithProduct } from "@/src/state/basketSlice";
-import { ReactNode } from "react";
+import { BasketEntryWithProduct } from "@/src/data/basketTypes";
+import { useAppDispatch, useAppSelector } from "@/src/state/hooks";
+import { selectBasket, setBasket } from "@/src/state/basketSlice";
+import { useEffect } from "react";
+import BasketEntry from "./BasketEntry";
 
 export default function Entries({
   basket,
-  children,
 }: {
-  basket: BasketItemWithProduct[];
-  children: ReactNode;
+  basket: BasketEntryWithProduct[];
 }) {
-  return <div>{children}</div>;
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setBasket(basket));
+  }, [basket, dispatch]);
+  const basketState = useAppSelector(selectBasket)
+  return <div>
+    {basketState.map((item, i) => (
+      <BasketEntry
+        key={`basket-entry-${i}`}
+        basketEntry={item}
+        index={i}
+        size={basket.length}
+      ></BasketEntry>
+    ))}
+  </div>;
 }

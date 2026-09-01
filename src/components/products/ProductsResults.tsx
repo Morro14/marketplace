@@ -5,7 +5,7 @@ import ProductCard from "@/src/components/products/ProductCard";
 import { useEffect, useRef } from "react";
 import ProductAddModal from "@/src/components/products/ProductAddModal";
 import type { Product } from "@/src/data/productTypes";
-import type { BasketEntry } from "@/src/data/basketTypes";
+import type { BasketEntry, BasketEntryWithProduct } from "@/src/data/basketTypes";
 import { setBasket } from "@/src/state/basketSlice";
 
 export default function ProductsResults({
@@ -26,7 +26,12 @@ export default function ProductsResults({
     }
   };
   useEffect(() => {
-    dispatch(setBasket(basket));
+    const basketWithProducts: BasketEntryWithProduct[] = basket.map((entry) => ({
+      productId: entry.productId,
+      count: entry.count,
+      product: {} as Product,
+    }));
+    dispatch(setBasket(basketWithProducts));
   }, [basket, dispatch]);
   return (
     <div className="h-full grid w-full grid-cols-[repeat(5,max-content)] justify-between gap-y-8 content-between">
