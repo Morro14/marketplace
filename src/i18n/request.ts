@@ -23,14 +23,13 @@ export default getRequestConfig(async ({ locale }) => {
     locale,
     messages,
     onError(error) {
-      console.log("i18n request", error);
       if (error.code !== "MISSING_MESSAGE") {
-        console.error(error);
+        return;
       }
     },
-    // getMessageFallback({ namespace, key }) {
-    //   return `${namespace}.${key}`;
-    // },
+    getMessageFallback({ namespace, key }) {
+      return `${namespace}.${key}`;
+    },
   };
   return result;
 });

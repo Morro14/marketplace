@@ -32,12 +32,7 @@ export default function HeaderNavRight() {
         </div>
         <Link href={"/basket"} className="flex gap-1">
           <span className="mt-0.5">{t("basket")}</span>
-          <Image
-            className=""
-            aria-selected="false"
-            src={basketIcon}
-            alt="login-icon"
-          ></Image>
+          <Image aria-selected="false" src={basketIcon} alt="cart-icon"></Image>
         </Link>
       </button>
     </div>

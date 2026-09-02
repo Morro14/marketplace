@@ -14,7 +14,6 @@ export default function BasketEntry({
   size: number;
 }) {
   const product = basketEntry.product;
-  console.log("product", product)
   return (
     <div
       className={`flex justify-between p-3 gap-3 h-[162px] w-[1152px] ${index < size ? "border-b border-gray-light" : ""}`}
@@ -24,9 +23,11 @@ export default function BasketEntry({
         <div className="h-full rounded-lg overflow-hidden">
           <Image
             src={demoImg}
+            loading="eager"
             width={126}
             alt="demo-img"
             className="object-cover h-full"
+            style={{ width: "auto" }}
           ></Image>
         </div>
         <div className="flex flex-col justify-between pb-1.5">

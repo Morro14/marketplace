@@ -16,15 +16,17 @@ export default function Entries({
   useEffect(() => {
     dispatch(setBasket(basket));
   }, [basket, dispatch]);
-  const basketState = useAppSelector(selectBasket)
-  return <div>
-    {basketState.map((item, i) => (
-      <BasketEntry
-        key={`basket-entry-${i}`}
-        basketEntry={item}
-        index={i}
-        size={basket.length}
-      ></BasketEntry>
-    ))}
-  </div>;
+  const basketState = useAppSelector(selectBasket);
+  return (
+    <div>
+      {basketState.map((item, i) => (
+        <BasketEntry
+          key={`basket-entry-${i}`}
+          basketEntry={item}
+          index={i}
+          size={basket.length}
+        ></BasketEntry>
+      ))}
+    </div>
+  );
 }
