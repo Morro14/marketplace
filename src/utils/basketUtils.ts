@@ -14,7 +14,6 @@ export function updateBasketProductData(
     setProductCount({
       productId: status.productId,
       count: status.count,
-      product: status.product,
     }),
   );
 }
@@ -37,7 +36,6 @@ export async function fetchAndUpdateBasketProductsStock(
         setProductCount({
           productId: status.productId,
           count: status.count,
-          product: status.product,
         }),
       );
     });

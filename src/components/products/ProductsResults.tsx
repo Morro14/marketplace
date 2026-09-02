@@ -5,7 +5,7 @@ import ProductCard from "@/src/components/products/ProductCard";
 import { useEffect, useRef } from "react";
 import ProductAddModal from "@/src/components/products/ProductAddModal";
 import type { Product } from "@/src/data/productTypes";
-import type { BasketEntry, BasketEntryWithProduct } from "@/src/data/basketTypes";
+import type { BasketEntryWithProduct } from "@/src/data/basketTypes";
 import { setBasket } from "@/src/state/basketSlice";
 
 export default function ProductsResults({
@@ -13,7 +13,7 @@ export default function ProductsResults({
   basket,
 }: {
   products: Product[];
-  basket: BasketEntry[];
+  basket: BasketEntryWithProduct[];
 }) {
   const modalRef = useRef<HTMLDialogElement | null>(null);
   const selectModal = useAppSelector(selectAddModal);
@@ -26,13 +26,23 @@ export default function ProductsResults({
     }
   };
   useEffect(() => {
-    const basketWithProducts: BasketEntryWithProduct[] = basket.map((entry) => ({
-      productId: entry.productId,
-      count: entry.count,
-      product: {} as Product,
-    }));
+    const basketByProductId = new Map(
+      basket.map((entry) => [entry.productId, entry]),
+    );
+    const basketWithProducts: BasketEntryWithProduct[] = products.map(
+      (product) => ({
+        productId: product.id,
+        count: basketByProductId.get(product.id)?.count ?? 0,
+        product,
+      }),
+    );
+    basket.forEach((entry) => {
+      if (!products.some((product) => product.id === entry.productId)) {
+        basketWithProducts.push(entry);
+      }
+    });
     dispatch(setBasket(basketWithProducts));
-  }, [basket, dispatch]);
+  }, [basket, dispatch, products]);
   return (
     <div className="h-full grid w-full grid-cols-[repeat(5,max-content)] justify-between gap-y-8 content-between">
       <dialog

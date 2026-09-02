@@ -31,9 +31,7 @@ export default function Count({ product }: { product: Product }) {
     if (isUpdatingBasket || basketCount >= product.stock) return;
     const previousCount = basketCount;
     const nextCount = previousCount + 1;
-    dispatch(
-      setProductCount({ productId: product.id, count: nextCount, product }),
-    );
+    dispatch(setProductCount({ productId: product.id, count: nextCount }));
     setIsUpdatingBasket(true);
     setInputCount(nextCount);
     try {
@@ -53,7 +51,6 @@ export default function Count({ product }: { product: Product }) {
           setProductCount({
             productId: product.id,
             count: previousCount,
-            product,
           }),
         );
         setInputCount(previousCount);
@@ -68,9 +65,7 @@ export default function Count({ product }: { product: Product }) {
     if (isUpdatingBasket || basketCount <= 0) return;
     const previousCount = basketCount;
     const nextCount = previousCount - 1;
-    dispatch(
-      setProductCount({ productId: product.id, count: nextCount, product }),
-    );
+    dispatch(setProductCount({ productId: product.id, count: nextCount }));
     setIsUpdatingBasket(true);
     setInputCount(nextCount);
     try {
@@ -97,7 +92,6 @@ export default function Count({ product }: { product: Product }) {
           setProductCount({
             productId: product.id,
             count: previousCount,
-            product,
           }),
         );
         setInputCount(previousCount);
@@ -114,7 +108,7 @@ export default function Count({ product }: { product: Product }) {
     if (count === null) return;
 
     const previousCount = basketCount;
-    dispatch(setProductCount({ productId: product.id, count, product }));
+    dispatch(setProductCount({ productId: product.id, count }));
     setIsUpdatingBasket(true);
     if (count !== previousCount) setStockExceeded(false);
     try {
@@ -139,7 +133,6 @@ export default function Count({ product }: { product: Product }) {
           setProductCount({
             productId: product.id,
             count: previousCount,
-            product,
           }),
         );
       }
