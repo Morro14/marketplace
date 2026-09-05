@@ -3,6 +3,9 @@ import demoImg from "@/src/assets/product-demo.jpeg";
 import { BasketEntryWithProduct } from "@/src/data/basketTypes";
 import Count from "./Count";
 import { heartEmpty, bin } from "./icons";
+import { calcConst } from "@/src/utils/basketUtils";
+import { CURRENCY, CURRENCY_SIGNS } from "@/src/utils/appVars";
+import { useEffect, useState } from "react";
 
 export default function BasketEntry({
   basketEntry,
@@ -14,6 +17,14 @@ export default function BasketEntry({
   size: number;
 }) {
   const product = basketEntry.product;
+  const entryCost = calcConst(product.price, basketEntry.count);
+  const CURRENCY_SIGN = CURRENCY_SIGNS[CURRENCY];
+  const [prevCost, setPrevCost] = useState(entryCost);
+  useEffect(() => {
+    setInterval(() => {
+      setPrevCost(entryCost);
+    }, 1000);
+  }, [entryCost]);
   return (
     <div
       className={`flex justify-between p-3 gap-3 h-[162px] w-[1152px] ${index < size ? "border-b border-gray-light" : ""}`}
@@ -42,9 +53,13 @@ export default function BasketEntry({
           </div>
         </div>
       </div>
-      <div className="flex">
+      {/* RESPONSIVE */}
+      <div className="flex 2xl:w-55 justify-between">
         <Count product={basketEntry.product}></Count>
-        <span>{}</span>
+        <div className="basket-entry-cost text-xl w-20 font-medium">
+          <div>{`${CURRENCY_SIGN} ${prevCost}`}</div>
+          <div>{`${CURRENCY_SIGN} ${entryCost}`}</div>
+        </div>
       </div>
     </div>
   );

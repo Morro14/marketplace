@@ -26,6 +26,12 @@ export default function Count({ product }: { product: Product }) {
 
   const [stockExceeded, setStockExceeded] = useState(false);
   const productStock = useAppSelector(selectProduct(product.id))?.stock || 0;
+  const [lastBasketCount, setLastBasketCount] = useState(basketCount);
+
+  if (lastBasketCount !== basketCount) {
+    setLastBasketCount(basketCount);
+    setInputCount(basketCount);
+  }
 
   const handleAddToCardClick = async () => {
     if (isUpdatingBasket || basketCount >= product.stock) return;
@@ -100,6 +106,7 @@ export default function Count({ product }: { product: Product }) {
       setIsUpdatingBasket(false);
     }
   };
+
   const handleFormSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -109,6 +116,7 @@ export default function Count({ product }: { product: Product }) {
 
     const previousCount = basketCount;
     dispatch(setProductCount({ productId: product.id, count }));
+    setInputCount(count);
     setIsUpdatingBasket(true);
     if (count !== previousCount) setStockExceeded(false);
     try {

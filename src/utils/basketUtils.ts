@@ -43,3 +43,16 @@ export async function fetchAndUpdateBasketProductsStock(
     console.error("Failed to update basket products stock:", error);
   }
 }
+
+export function calcConst(price: number, count: number): string {
+  {
+    /* const calc logic*/
+  }
+  const value = price * count;
+  const floor = Math.floor(value);
+  let result = value.toString();
+  if (value !== floor) {
+    result = value.toFixed(2);
+  }
+  return result;
+}

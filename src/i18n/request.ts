@@ -28,7 +28,7 @@ export default getRequestConfig(async ({ locale }) => {
       }
     },
     getMessageFallback({ namespace, key }) {
-      return `${namespace}.${key}`;
+      return `${key}`;
     },
   };
   return result;
