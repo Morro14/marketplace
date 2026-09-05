@@ -44,11 +44,20 @@ export async function fetchAndUpdateBasketProductsStock(
   }
 }
 
-export function calcConst(price: number, count: number): string {
+export function calcCost(price: number, count: number): number {
   {
     /* const calc logic*/
   }
   const value = price * count;
+  const floor = Math.floor(value);
+  let result = value.toString();
+  if (value !== floor) {
+    result = value.toFixed(2);
+  }
+
+  return value;
+}
+export function formatCost(value: number): string {
   const floor = Math.floor(value);
   let result = value.toString();
   if (value !== floor) {
