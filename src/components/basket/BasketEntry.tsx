@@ -54,8 +54,9 @@ export default function BasketEntry({
       }
     });
     setPrevCost(entryCostVal);
-    setTimeout(() => {}, 300);
-    snapPrevCost.current = entryCost;
+    setTimeout(() => {
+      snapPrevCost.current = entryCost;
+    }, 300);
   }, [entryCost]);
   return (
     <div
@@ -86,11 +87,11 @@ export default function BasketEntry({
         </div>
       </div>
       {/* RESPONSIVE */}
-      <div className="flex 2xl:w-60 justify-between">
+      <div className="flex 2xl:w-60 justify-between items-start">
         <Count product={basketEntry.product}></Count>
-        <div className="flex gap-1">
+        <div className="flex gap-1 h-auto">
           <div className="text-xl">{CURRENCY_SIGN}</div>
-          <div className="basket-entry-cost text-xl w-18 relative">
+          <div className="basket-entry-cost text-xl w-18">
             <div
               className="absolute"
               style={{

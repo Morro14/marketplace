@@ -1,26 +1,35 @@
 "use client";
 import { selectBasketCount, selectTotalCost } from "@/src/state/basketSlice";
 import { useAppSelector } from "@/src/state/hooks";
+import { CURRENCY, CURRENCY_SIGNS } from "@/src/utils/appVars";
 import { useTranslations } from "next-intl";
+import { formatCost } from "@/src/utils/basketUtils";
 
 export default function BasketSummaryEmbedded() {
   const t = useTranslations();
   const basketCount = useAppSelector(selectBasketCount);
-  const totalPrice = useAppSelector(selectTotalCost);
+  const totalPrice = formatCost(useAppSelector(selectTotalCost));
+  const CURRENCY_SIGN = CURRENCY_SIGNS[CURRENCY];
   return (
     <div className="mt-10 w-[210px] h-[162px] bg-bg drop-shadow-xl rounded-lg flex flex-col gap-3 p-3">
       {/* DELIVERY LOCATION */}
-      <div className="flex gap-2.5">
+      <div className="link flex gap-2.5">
         {locIcon}
         <span className="text-sm underline">{t("Delivery location")}</span>
       </div>
-      <div>
+      <div className="px-1">
         <span>{t("BasketSummary.items", { count: basketCount })}</span>
-        <div className="flex justify-between">
+        <div className="flex justify-between pr-1">
           <span className="text-xl">{t("Total")}</span>
-          <span className="text-2xl">{totalPrice}</span>
+          <div className="flex gap-1">
+            <span className="text-2xl">{CURRENCY_SIGN}</span>
+            <span className="text-2xl text-left w-25">{totalPrice}</span>
+          </div>
         </div>
       </div>
+      <button className="btn__accent h-8 rounded-lg font-medium" type="submit">
+        {t("Proceed to checkout")}
+      </button>
     </div>
   );
 }

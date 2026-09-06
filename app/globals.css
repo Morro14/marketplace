@@ -47,7 +47,7 @@ body {
 }
 
 button {
-  @apply cursor-pointer
+  @apply cursor-pointer transition-colors duration-100
 }
 
 .btn__accent {
@@ -56,6 +56,10 @@ button {
 
 .btn__secondary {
   @apply bg-gray-light hover:bg-gray-light-hover
+}
+
+.link {
+  @apply hover:text-gray-active transition-colors duration-100 cursor-pointer
 }
 
 .header-nav-link {
