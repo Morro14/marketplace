@@ -31,6 +31,22 @@ export const relations = defineRelations(schema, (r) => ({
 
   baskets: {
     entries: r.many.basketEntries(),
+    deliveryInfo: r.one.deliveryInfo(),
+  },
+
+  deliveryInfo: {
+    basket: r.one.baskets({
+      from: r.deliveryInfo.basketId,
+      to: r.baskets.id,
+    }),
+    address: r.one.deliveryAddresses(),
+  },
+
+  deliveryAddresses: {
+    deliveryInfo: r.one.deliveryInfo({
+      from: r.deliveryAddresses.deliveryInfoId,
+      to: r.deliveryInfo.id,
+    }),
   },
 
   basketEntries: {

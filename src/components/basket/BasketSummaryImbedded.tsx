@@ -4,6 +4,7 @@ import { useAppSelector } from "@/src/state/hooks";
 import { CURRENCY, CURRENCY_SIGNS } from "@/src/utils/appVars";
 import { useTranslations } from "next-intl";
 import { formatCost } from "@/src/utils/basketUtils";
+import Link from "next/link";
 
 export default function BasketSummaryEmbedded() {
   const t = useTranslations();
@@ -11,7 +12,7 @@ export default function BasketSummaryEmbedded() {
   const totalPrice = formatCost(useAppSelector(selectTotalCost));
   const CURRENCY_SIGN = CURRENCY_SIGNS[CURRENCY];
   return (
-    <div className="mt-10 w-[210px] h-[162px] bg-bg drop-shadow-xl rounded-lg flex flex-col gap-3 p-3">
+    <div className="mt-10 w-[230px] h-[162px] bg-bg drop-shadow-xl rounded-lg flex flex-col gap-3 p-3">
       {/* DELIVERY LOCATION */}
       <div className="link flex gap-2.5">
         {locIcon}
@@ -27,9 +28,11 @@ export default function BasketSummaryEmbedded() {
           </div>
         </div>
       </div>
-      <button className="btn__accent h-8 rounded-lg font-medium" type="submit">
-        {t("Proceed to checkout")}
-      </button>
+      <Link href={"/checkout"} >
+        <button className="btn__accent h-8 rounded-lg font-medium w-50">
+          {t("Proceed to checkout")}
+        </button>
+      </Link>
     </div>
   );
 }

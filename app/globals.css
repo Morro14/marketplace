@@ -27,6 +27,7 @@
   --color-gray-mid: #959595;
   --color-gray-passive: #7E7E7E;
   --color-gray-active: var(--color-primary);
+  --color-gray-form: #AAAAAA;
   --color-gray-light: #F3F3F3;
   --color-gray-light-hover: #F6F6F6;
   --color-red-warning: #FF3815;

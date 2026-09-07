@@ -1,6 +1,11 @@
 import { cookies } from "next/headers";
 import { db } from "@/db";
-import type { BasketEntry, BasketEntryWithProduct } from "./basketTypes";
+import { calcCost } from "@/src/utils/basketUtils";
+import type {
+  BasketCheckoutSummary,
+  BasketEntry,
+  BasketEntryWithProduct,
+} from "./basketTypes";
 
 const basketCookie = "basket_id";
 
@@ -27,4 +32,21 @@ export async function getBasketWithProducts() {
     with: { product: { with: { categories: true } } },
   });
   return result as BasketEntryWithProduct[];
+}
+
+function calculateCostTotal(basketEntries: BasketEntryWithProduct[]): number {
+  return basketEntries.reduce(
+    (total, entry) => total + calcCost(entry.product.price, entry.count),
+    0,
+  );
+}
+
+export async function getBasketCheckoutSummary(): Promise<BasketCheckoutSummary> {
+  const basketEntries = await getBasketWithProducts();
+
+  return {
+    basketEntries,
+    costTotal: calculateCostTotal(basketEntries),
+    currency: process.env.CURRENCY ?? "USD",
+  };
 }

@@ -43,6 +43,39 @@ export const baskets = sqliteTable("baskets", {
   id: integer("id").primaryKey({ autoIncrement: true }),
 });
 
+export const deliveryInfo = sqliteTable(
+  "delivery_info",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    basketId: integer("basket_id")
+      .notNull()
+      .references(() => baskets.id, { onDelete: "cascade" }),
+    fullName: text("full_name").notNull(),
+    phone: text("phone"),
+    email: text("email").notNull(),
+  },
+  (table) => [uniqueIndex("delivery_info_basket_unique").on(table.basketId)],
+);
+
+export const deliveryAddresses = sqliteTable(
+  "delivery_addresses",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    deliveryInfoId: integer("delivery_info_id")
+      .notNull()
+      .references(() => deliveryInfo.id, { onDelete: "cascade" }),
+    apartment: text("apartment"),
+    building: text("building").notNull(),
+    street: text("street").notNull(),
+    town: text("town").notNull(),
+    province: text("province").notNull(),
+    state: text("state").notNull(),
+  },
+  (table) => [
+    uniqueIndex("delivery_addresses_info_unique").on(table.deliveryInfoId),
+  ],
+);
+
 export const basketEntries = sqliteTable(
   "basket_entries",
   {
