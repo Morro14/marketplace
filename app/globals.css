@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./responsive.css";
+@import "./styles/checkout.css";
 @import "./styles/embla.css";
 
 :root {
@@ -101,4 +102,8 @@ button {
     --bg: var(--color-gray-light-hover);
     --borderColor: var(--color-gray-active);
   }
+}
+
+.payment-method-btn {
+  @apply h-11 w-[150px]
 }

@@ -1,15 +1,21 @@
 "use server";
 
-import { redirect } from "@/src/i18n/navigations";
+import { saveDeliveryInfo } from "@/src/data/deliveryQueries";
+import type { DeliveryInfoInput } from "@/src/data/deliveryTypes";
 import {
   type AddAddressFormData,
   validateAddAddressForm,
 } from "@/src/utils/validation";
-import { getLocale } from "next-intl/server";
+import { redirect } from "next/navigation";
 
 export type AddAddressFormState = {
   errors: Partial<Record<keyof AddAddressFormData, string>>;
 };
+
+function getFormString(formData: FormData, name: string): string {
+  const value = formData.get(name);
+  return typeof value === "string" ? value.trim() : "";
+}
 
 export async function handleAddAddress(
   _previousState: AddAddressFormState,
@@ -21,14 +27,24 @@ export async function handleAddAddress(
       .filter(([, result]) => !result.valid)
       .map(([field, result]) => [field, result.message]),
   ) as AddAddressFormState["errors"];
-
   if (Object.keys(errors).length > 0) {
     return { errors };
   }
 
-  // Add address persistence here.
-  console.log("Address form is valid");
-  redirect({ href: "/", locale: await getLocale() });
+  const formObj: DeliveryInfoInput = {
+    fullName: getFormString(formData, "username"),
+    email: getFormString(formData, "email"),
+    phone: getFormString(formData, "phone-number") || null,
+    address: {
+      apartment: getFormString(formData, "apartment") || null,
+      building: getFormString(formData, "building"),
+      street: getFormString(formData, "street"),
+      town: getFormString(formData, "town"),
+      province: getFormString(formData, "province"),
+      state: getFormString(formData, "country"),
+    },
+  };
 
-  return { errors: {} };
+  await saveDeliveryInfo(formObj);
+  redirect("/checkout");
 }

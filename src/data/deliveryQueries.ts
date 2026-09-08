@@ -27,7 +27,50 @@ export async function getDeliveryInfo(): Promise<DeliveryInfoWithAddress | null>
 
   return result ?? null;
 }
+export async function removeDeliveryAddress() {
+  const basketId = await getBasketIdFromCookie();
+  if (!basketId) {
+    throw new Error("Cannot remove delivery address without a basket cookie");
+  }
 
+  const existing = await db.query.deliveryInfo.findFirst({
+    where: { basketId },
+    columns: { id: true },
+  });
+
+  if (!existing) return null;
+
+  return db
+    .delete(deliveryAddresses)
+    .where(eq(deliveryAddresses.deliveryInfoId, existing.id))
+    .run();
+}
+
+export async function removeDeliveryInfo() {
+  const basketId = await getBasketIdFromCookie();
+  if (!basketId) {
+    throw new Error("Cannot remove delivery info without a basket cookie");
+  }
+
+  const existing = await db.query.deliveryInfo.findFirst({
+    where: { basketId },
+    columns: { id: true },
+  });
+
+  if (!existing) return null;
+
+  return db.transaction((transaction) => {
+    transaction
+      .delete(deliveryAddresses)
+      .where(eq(deliveryAddresses.deliveryInfoId, existing.id))
+      .run();
+
+    return transaction
+      .delete(deliveryInfo)
+      .where(eq(deliveryInfo.id, existing.id))
+      .run();
+  });
+}
 export async function saveDeliveryInfo(
   input: DeliveryInfoInput,
 ): Promise<DeliveryInfoWithAddress> {

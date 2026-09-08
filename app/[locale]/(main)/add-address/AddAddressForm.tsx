@@ -10,12 +10,17 @@ import {
   type AddAddressFormData,
   validateAddAddressForm,
 } from "@/src/utils/validation";
+import type { DeliveryInfoWithAddress } from "@/src/data/deliveryTypes";
 
 const initialAddAddressFormState: AddAddressFormState = {
   errors: {},
 };
 
-export default function AddAddressForm() {
+export default function AddAddressForm({
+  deliveryInfo,
+}: {
+  deliveryInfo: DeliveryInfoWithAddress | null;
+}) {
   const t = useTranslations();
   const [state, formAction, pending] = useActionState(
     handleAddAddress,
@@ -43,6 +48,7 @@ export default function AddAddressForm() {
   }
 
   const errors = { ...state?.errors, ...clientErrors };
+  const address = deliveryInfo?.address;
 
   return (
     <Form
@@ -59,6 +65,7 @@ export default function AddAddressForm() {
             name: "username",
             type: "text",
             placeholder: t("Enter your full name"),
+            defaultValue: deliveryInfo?.fullName,
           }}
         />
         <Input
@@ -68,6 +75,7 @@ export default function AddAddressForm() {
             name: "email",
             type: "email",
             placeholder: t("Enter your email"),
+            defaultValue: deliveryInfo?.email,
           }}
         />
         <Input
@@ -77,6 +85,7 @@ export default function AddAddressForm() {
             name: "phone-number",
             type: "text",
             placeholder: t("Enter your phone number"),
+            defaultValue: deliveryInfo?.phone ?? "",
           }}
         />
         <h4 className="text-lg">{t("Address")}</h4>
@@ -89,6 +98,7 @@ export default function AddAddressForm() {
                 name: "apartment",
                 type: "text",
                 placeholder: t("Apartment number"),
+                defaultValue: address?.apartment ?? "",
               }}
             />
           </div>
@@ -100,6 +110,7 @@ export default function AddAddressForm() {
                 name: "building",
                 type: "text",
                 placeholder: t("Building number"),
+                defaultValue: address?.building,
               }}
             />
           </div>
@@ -111,6 +122,7 @@ export default function AddAddressForm() {
             name: "street",
             type: "text",
             placeholder: t("Street name"),
+            defaultValue: address?.street,
           }}
         />
         <div className="flex gap-2 w-full">
@@ -122,6 +134,7 @@ export default function AddAddressForm() {
                 name: "town",
                 type: "text",
                 placeholder: t("Town name"),
+                defaultValue: address?.town,
               }}
             />
           </div>
@@ -133,18 +146,22 @@ export default function AddAddressForm() {
                 name: "province",
                 type: "text",
                 placeholder: t("Province name"),
+                defaultValue: address?.province,
               }}
             />
           </div>
         </div>
-        <CountryInput error={errors.country} />
+        <CountryInput
+          error={errors.country}
+          initialValue={address?.state ?? ""}
+        />
       </div>
       <button
         type="submit"
         disabled={pending}
         className="btn__accent px-4 h-8 rounded-lg shrink disabled:opacity-50 mt-3"
       >
-        {t("Add address")}
+        {t("Save address")}
       </button>
     </Form>
   );

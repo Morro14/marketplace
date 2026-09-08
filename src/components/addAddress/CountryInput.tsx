@@ -6,12 +6,18 @@ import { SyntheticEvent, useMemo, useRef, useState } from "react";
 import { useCloseOnClick } from "@/src/utils/components/closeOnClick";
 import Fuse, { FuseResult } from "fuse.js";
 
-export default function CountryInput({ error }: { error?: string }) {
+export default function CountryInput({
+  error,
+  initialValue = "",
+}: {
+  error?: string;
+  initialValue?: string;
+}) {
   const countries = countriesOnly.getCountries();
   const t = useTranslations();
   const suggestionsRef = useRef<null | HTMLDivElement>(null);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [value, setValue] = useState<string | undefined>("");
+  const [value, setValue] = useState<string | undefined>(initialValue);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   useCloseOnClick([suggestionsRef, searchInputRef], () =>
     setShowSuggestions(false),

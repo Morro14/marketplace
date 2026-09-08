@@ -1,3 +1,4 @@
+import { DeliveryInfoWithAddress } from "../data/deliveryTypes";
 import { isDigits, isEmpty } from "./general";
 
 export function formatProductCount(value: string): null | number {
@@ -10,5 +11,10 @@ export function formatProductCount(value: string): null | number {
     result = Number(value);
   }
 
+  return result;
+}
+
+export function formatDeliveryInfo(info: DeliveryInfoWithAddress) {
+  const result = `${info.address?.building} ${info.address?.street}, Apt. ${info.address?.apartment}, ${info.address?.town}`;
   return result;
 }
