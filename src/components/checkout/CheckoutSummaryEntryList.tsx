@@ -14,7 +14,7 @@ export default function CheckoutSummaryEntryList({
       <tbody>
         {basket.map((entry, i) => {
           return (
-            <tr key={i} className="text-gray-passive">
+            <tr key={i} className="text-primary">
               <td>{`(${entry.count}) ${entry.product.name}`}</td>
               <td>{`${CURRENCY_SIGN} ${formatCost(calcCost(entry.product.price, entry.count))}`}</td>
             </tr>

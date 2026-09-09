@@ -16,10 +16,12 @@ export default function BasketSummaryEmbedded() {
       {/* DELIVERY LOCATION */}
       <div className="link flex gap-2.5">
         {locIcon}
-        <span className="text-sm underline">{t("Delivery location")}</span>
+        <Link href="/add-address" className="text-sm underline">
+          {t("Delivery location")}
+        </Link>
       </div>
       <div className="px-1">
-        <span>{t("BasketSummary.items", { count: basketCount })}</span>
+        <span>{t("items", { count: basketCount })}</span>
         <div className="flex justify-between pr-1">
           <span className="text-xl">{t("Total")}</span>
           <div className="flex gap-1">
@@ -28,7 +30,7 @@ export default function BasketSummaryEmbedded() {
           </div>
         </div>
       </div>
-      <Link href={"/checkout"} >
+      <Link href={"/checkout"}>
         <button className="btn__accent h-8 rounded-lg font-medium w-50">
           {t("Proceed to checkout")}
         </button>

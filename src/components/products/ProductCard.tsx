@@ -91,7 +91,7 @@ export default function ProductCard({ product }: { product: Product }) {
         <div className="flex flex-col gap-0.5 px-2 py-1.5">
           <div>
             {/* NAME */}
-            <div className="font-serif">{product.name}</div>
+            <div className="font-serif text-lg">{product.name}</div>
             {/* CATEGORIES */}
             <div className="flex font-sans text-xs text-gray-500 italic">
               {product.categories.map((cat, i) => {
@@ -124,7 +124,7 @@ export default function ProductCard({ product }: { product: Product }) {
           <button
             onClick={handleAddToCardClick}
             disabled={isUpdatingBasket || basketCount >= product.stock}
-            className="mx-2 flex gap-0.5 items-center justify-center bg-accent md:h-8 rounded-lg"
+            className="btn__accent mx-2 flex gap-0.5 items-center justify-center bg-accent md:h-8 rounded-lg"
           >
             <Image src={cartIcon} alt={`card-icon`}></Image>
             <span>{t("Add to cart")}</span>

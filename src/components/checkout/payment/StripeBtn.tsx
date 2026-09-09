@@ -1,7 +1,6 @@
-import Image from "next/image";
-import Link from "next/link";
 import stripeLogo from "@/src/assets/stripe-logo.svg";
 import { Currency } from "@/src/utils/appVars";
+import PaymentMethodButton from "./PaymentMethodButton";
 
 export default function StripeBtn({
   amount,
@@ -13,11 +12,13 @@ export default function StripeBtn({
   mode?: "mock" | "prod";
 }) {
   return (
-    <Link
-      href="/checkout?method=stripe"
-      className="flex payment-method-btn btn border border-[#3C4043]"
-    >
-      <Image src={stripeLogo} alt="google-pay-logo" className="m-auto"></Image>
-    </Link>
+    <PaymentMethodButton
+      method="stripe"
+      logo={stripeLogo}
+      altText="stripe-logo"
+      amount={amount}
+      currency={currency}
+      mode={mode}
+    />
   );
 }

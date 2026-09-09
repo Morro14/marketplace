@@ -98,7 +98,7 @@ export default function ProductsCarFilter({
           </div>
           <span
             onClick={handleCatButtonClick}
-            className="text-nowrap size-full flex items-center"
+            className="text-nowrap text-primary-darker size-full flex items-center"
           >
             <span className="pr-4">{t("Categories")}</span>
           </span>

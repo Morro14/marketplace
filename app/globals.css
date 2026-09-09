@@ -53,7 +53,7 @@ button {
 }
 
 .btn__accent {
-  @apply bg-accent hover:bg-accent-hl
+  @apply bg-accent hover:bg-accent-hl transition-colors duration-100
 }
 
 .btn__secondary {

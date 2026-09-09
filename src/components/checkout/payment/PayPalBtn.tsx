@@ -1,7 +1,6 @@
-import Image from "next/image";
-import Link from "next/link";
 import paypalLogo from "@/src/assets/paypal-logo.svg";
 import { Currency } from "@/src/utils/appVars";
+import PaymentMethodButton from "./PaymentMethodButton";
 
 export default function PayPalBtn({
   amount,
@@ -13,11 +12,13 @@ export default function PayPalBtn({
   mode?: "mock" | "prod";
 }) {
   return (
-    <Link
-      href="/checkout?method=paypal"
-      className="flex payment-method-btn btn border border-[#3C4043]"
-    >
-      <Image src={paypalLogo} alt="google-pay-logo" className="m-auto"></Image>
-    </Link>
+    <PaymentMethodButton
+      method="paypal"
+      logo={paypalLogo}
+      altText="paypal-logo"
+      amount={amount}
+      currency={currency}
+      mode={mode}
+    />
   );
 }

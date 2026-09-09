@@ -1,8 +1,6 @@
-"use client";
-import Image from "next/image";
-import Link from "next/link";
 import googlePayLogo from "@/src/assets/google-pay-logo.svg";
 import { Currency } from "@/src/utils/appVars";
+import PaymentMethodButton from "./PaymentMethodButton";
 
 export default function GooglePayBtn({
   amount,
@@ -14,15 +12,13 @@ export default function GooglePayBtn({
   mode?: "mock" | "prod";
 }) {
   return (
-    <Link
-      href="/checkout?method=google-pay"
-      className="flex payment-method-btn btn border border-[#3C4043]"
-    >
-      <Image
-        src={googlePayLogo}
-        alt="google-pay-logo"
-        className="m-auto"
-      ></Image>
-    </Link>
+    <PaymentMethodButton
+      method="google-pay"
+      logo={googlePayLogo}
+      altText="google-pay-logo"
+      amount={amount}
+      currency={currency}
+      mode={mode}
+    />
   );
 }

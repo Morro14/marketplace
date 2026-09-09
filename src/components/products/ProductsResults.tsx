@@ -44,7 +44,7 @@ export default function ProductsResults({
     dispatch(setBasket(basketWithProducts));
   }, [basket, dispatch, products]);
   return (
-    <div className="h-full grid w-full grid-cols-[repeat(5,max-content)] justify-between gap-y-8 content-between">
+    <div className="h-full grid w-full grid-cols-[repeat(5,max-content)] gap-y-8 gap-x-3">
       <dialog
         id={`product-add-modal`}
         onClose={() => dispatch(closeAddModal())}
