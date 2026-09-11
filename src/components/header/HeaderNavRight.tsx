@@ -11,7 +11,7 @@ export default function HeaderNavRight() {
   const t = useTranslations();
   const basketCount = useAppSelector(selectBasketCount);
   return (
-    <div className="flex gap-4 relative top-[14px]">
+    <div className="flex gap-4 relative top-[14px] text-primary">
       <button
         className="flex items-center gap-3 bg-gray-light hover:bg-white
         transition-color duration-150 h-8 rounded-2xl font-serif font-semibold

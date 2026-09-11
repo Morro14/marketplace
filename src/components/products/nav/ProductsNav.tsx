@@ -3,6 +3,7 @@ import { getProducts } from "@/src/data/productQueries";
 import CatalogBtn from "./CatalogBtn";
 import ProductsCarFilter from "./ProductsCatFilter";
 import ProductSearch from "./ProductSearch";
+import ShowFavoritesBtn from "../../favorites/ShowFavoritesBtn";
 
 export default async function ProductsNav() {
   const [categories, products] = await Promise.all([
@@ -16,6 +17,7 @@ export default async function ProductsNav() {
       <CatalogBtn categories={categories}></CatalogBtn>
       <ProductSearch products={products}></ProductSearch>
       <ProductsCarFilter categories={categories}></ProductsCarFilter>{" "}
+      <ShowFavoritesBtn></ShowFavoritesBtn>
     </div>
   );
 }

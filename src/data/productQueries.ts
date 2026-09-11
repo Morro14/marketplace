@@ -1,5 +1,7 @@
 import { db } from "@/db";
 import type { Product } from "./productTypes";
+import { getBasket } from "./basketQueries";
+import { getFavoriteIds } from "./favoritesQueries";
 
 export type ProductSort = "name" | "price" | "nameDesc" | "priceDesc";
 export type ProductFilters = "categories" | "name" | "minPrice" | "maxPrice";
@@ -10,6 +12,7 @@ export interface ProductQueryOptions {
   minPrice?: number;
   maxPrice?: number;
   sortBy?: ProductSort;
+  favorites?: boolean;
 }
 export type ProductQueryFilters = Partial<
   Record<ProductFilters, ProductQueryOptions[ProductFilters]>
@@ -31,6 +34,7 @@ export function parseProductQuery(
   const minPrice = minPriceValue ? Number(minPriceValue) : undefined;
   const maxPrice = maxPriceValue ? Number(maxPriceValue) : undefined;
   const sortBy = searchParams.get("sort_by") as ProductSort | null;
+  const favorites = searchParams.get("favorites");
   return {
     categories: categories,
     name,
@@ -46,6 +50,7 @@ export function parseProductQuery(
       sortBy === "price" || sortBy === "priceDesc" || sortBy === "nameDesc"
         ? sortBy
         : "name",
+    favorites: favorites === "true",
   };
 }
 
@@ -72,6 +77,7 @@ export async function getProductsFromSearchParams(
 export async function getProducts(
   options: ProductQueryOptions = {},
 ): Promise<Product[]> {
+  const favorites = await getFavoriteIds();
   const result = await db.query.products.findMany({
     where: {
       ...(options.name && {
@@ -97,6 +103,12 @@ export async function getProducts(
           slug: {
             in: options.categories,
           },
+        },
+      }),
+
+      ...(options.favorites && favorites.length > 0 && {
+        id: {
+          in: favorites,
         },
       }),
     },

@@ -38,7 +38,7 @@ export async function GET(
       orderBy = asc(products.name);
       break;
   }
-
+  // TODO: complete sorting
   const result = await db.query.products.findMany({
     columns: {
       id: true,

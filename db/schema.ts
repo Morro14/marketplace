@@ -99,3 +99,26 @@ export const basketEntries = sqliteTable(
     ),
   ],
 );
+
+export const favorites = sqliteTable(
+  "favorites",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    basketId: integer("basket_id")
+      .notNull()
+      .references(() => baskets.id, {
+        onDelete: "cascade",
+      }),
+    productId: integer("product_id")
+      .notNull()
+      .references(() => products.id, {
+        onDelete: "cascade",
+      }),
+  },
+  (table) => [
+    uniqueIndex("favorites_basket_product_unique").on(
+      table.basketId,
+      table.productId,
+    ),
+  ],
+);

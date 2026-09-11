@@ -9,6 +9,7 @@ export const relations = defineRelations(schema, (r) => ({
     }),
 
     basketEntries: r.many.basketEntries(),
+    favorites: r.many.favorites(),
   },
 
   categories: {
@@ -32,6 +33,7 @@ export const relations = defineRelations(schema, (r) => ({
   baskets: {
     entries: r.many.basketEntries(),
     deliveryInfo: r.one.deliveryInfo(),
+    favorites: r.many.favorites(),
   },
 
   deliveryInfo: {
@@ -57,6 +59,18 @@ export const relations = defineRelations(schema, (r) => ({
 
     product: r.one.products({
       from: r.basketEntries.productId,
+      to: r.products.id,
+    }),
+  },
+
+  favorites: {
+    basket: r.one.baskets({
+      from: r.favorites.basketId,
+      to: r.baskets.id,
+    }),
+
+    product: r.one.products({
+      from: r.favorites.productId,
       to: r.products.id,
     }),
   },

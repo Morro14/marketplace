@@ -12,6 +12,7 @@ import { deleteProductBasket, setProductBasketCount } from "@/src/api/basket";
 import { useState } from "react";
 import { openAddModal, selectAddModal } from "@/src/state/productsSlice";
 import QuickViewBtn from "./QuickViewBtn";
+import AddToFavoritesBtn from "../favorites/AddToFavoritesBtn";
 
 export default function ProductCard({ product }: { product: Product }) {
   const nameSlug = slugify(product.name);
@@ -75,16 +76,17 @@ export default function ProductCard({ product }: { product: Product }) {
   };
   return (
     <div className="flex flex-col md:w-[272px] w-45 md:h-[396px] h-90 drop-shadow bg-bg justify-between pb-2 group rounded-lg">
-      <div className="relative">
+      <div className="relative flex">
         <Image
           src={demoImg}
           className="md:h-[231px] h-[226px] w-full object-cover rounded-t-lg"
           alt={`product-card-img-${nameSlug}`}
         ></Image>
-        <div className="absolute bottom-1.5 left-1.5">
+        <div className="absolute flex w-full justify-between bottom-1.5 left-0 px-1.5 ">
           <QuickViewBtn
             handleQuickViewClick={handleQuickViewClick}
           ></QuickViewBtn>
+          <AddToFavoritesBtn productId={product.id}></AddToFavoritesBtn>
         </div>
       </div>
       <div className="flex flex-col gap-1 mb-1">
@@ -93,7 +95,7 @@ export default function ProductCard({ product }: { product: Product }) {
             {/* NAME */}
             <div className="font-serif text-lg">{product.name}</div>
             {/* CATEGORIES */}
-            <div className="flex font-sans text-xs text-gray-500 italic">
+            <div className="flex font-sans text-sm text-gray-passive">
               {product.categories.map((cat, i) => {
                 return (
                   <span
@@ -109,7 +111,7 @@ export default function ProductCard({ product }: { product: Product }) {
             </div>
           </div>
           {/* DESCRIPTION */}
-          <div className="text-sm font-serif text-ellipsis overflow-hidden h-5">
+          <div className="text-sm font-sans text-ellipsis overflow-hidden h-5">
             {product.description}
           </div>
         </div>

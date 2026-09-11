@@ -35,16 +35,19 @@ export default function CatalogSide({
       onClose={onCloseAction}
     >
       <div
-        className="fixed p-4 starting:translate-x-[-332px] translate-x-0 left-0 top-[43px] h-screen w-[332px] flex flex-col bg-bg starting:opacity-0 opacity-100 transition-translate duration-150 ease-out"
+        className="fixed p-4 starting:translate-x-[-332px] translate-x-0 left-0 top-[43px] h-screen w-[332px] flex flex-col bg-bg starting:opacity-0 opacity-100 transition-translate duration-150 ease-out gap-3"
         onClick={() => ref.current?.close()}
       >
         <h3 className="font-serif text-xl">{t("Catalog")}</h3>
-        <div className="flex flex-col gap-3 text-lg">
+        <div className="h-px w-full bg-gray-300"></div>
+        <div className="flex flex-col text-lg ">
           {categories
-            ? categories.map((cat) => (
+            ? categories.map((cat, i) => (
                 <Link
+                  className="hover:bg-gray-light"
                   onNavigate={() => handleCatNavigate(cat)}
                   href={`/products?cat=${cat.slug}`}
+                  key={i}
                 >
                   {cat.name}
                 </Link>

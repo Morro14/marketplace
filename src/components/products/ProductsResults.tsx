@@ -7,13 +7,16 @@ import ProductAddModal from "@/src/components/products/ProductAddModal";
 import type { Product } from "@/src/data/productTypes";
 import type { BasketEntryWithProduct } from "@/src/data/basketTypes";
 import { setBasket } from "@/src/state/basketSlice";
+import { setFavorites } from "@/src/state/favoritesSlice";
 
 export default function ProductsResults({
   products,
   basket,
+  favorites,
 }: {
   products: Product[];
   basket: BasketEntryWithProduct[];
+  favorites: number[];
 }) {
   const modalRef = useRef<HTMLDialogElement | null>(null);
   const selectModal = useAppSelector(selectAddModal);
@@ -26,23 +29,9 @@ export default function ProductsResults({
     }
   };
   useEffect(() => {
-    const basketByProductId = new Map(
-      basket.map((entry) => [entry.productId, entry]),
-    );
-    const basketWithProducts: BasketEntryWithProduct[] = products.map(
-      (product) => ({
-        productId: product.id,
-        count: basketByProductId.get(product.id)?.count ?? 0,
-        product,
-      }),
-    );
-    basket.forEach((entry) => {
-      if (!products.some((product) => product.id === entry.productId)) {
-        basketWithProducts.push(entry);
-      }
-    });
-    dispatch(setBasket(basketWithProducts));
-  }, [basket, dispatch, products]);
+    dispatch(setBasket(basket));
+    dispatch(setFavorites(favorites));
+  }, [basket, dispatch, products, favorites]);
   return (
     <div className="h-full grid w-full grid-cols-[repeat(5,max-content)] gap-y-8 gap-x-3">
       <dialog

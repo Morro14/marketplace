@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inika, Source_Sans_3, Inter } from "next/font/google";
+import { Inika, Source_Sans_3, Source_Serif_4, Inter } from "next/font/google";
 import "../globals.css";
 import { ReactNode } from "react";
 import { getMessages } from "next-intl/server";
@@ -13,6 +13,11 @@ const inika = Inika({
 });
 const sourceSans = Source_Sans_3({
   variable: "--font-source-sans-3",
+  weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
+  subsets: ["latin"],
+});
+const sourceSerif = Source_Serif_4({
+  variable: "--font-source-serif-4",
   weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
 });
