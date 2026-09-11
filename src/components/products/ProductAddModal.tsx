@@ -7,7 +7,7 @@ import { useState } from "react";
 import Chip from "./nav/Chip";
 import { crossMediumNoBg, heartEmpty } from "../svg/assets";
 import { useAppDispatch, useAppSelector } from "@/src/state/hooks";
-import { selectProductCount, setProductCount } from "@/src/state/basketSlice";
+import { selectProductCount, setProductCount, deleteBasketEntry } from "@/src/state/basketSlice";
 import { deleteProductBasket, setProductBasketCount } from "@/src/api/basket";
 import { formatProductCount } from "@/src/utils/format";
 
@@ -26,11 +26,11 @@ export default function ProductAddModal({
   const t = useTranslations();
   const [isSaving, setIsSaving] = useState(false);
 
-  const handleAddToCardClick = async () => {
+  const handleAddToCardClick = () => {
     if (inputCount >= product.stock) return;
     setInputCount(inputCount + 1);
   };
-  const handleRemoveFromCardClick = async () => {
+  const handleRemoveFromCardClick = () => {
     if (inputCount <= 0) return;
     setInputCount(inputCount - 1);
   };
@@ -41,10 +41,12 @@ export default function ProductAddModal({
       let status;
       if (inputCount === 0) {
         status = await deleteProductBasket(product.id);
+        dispatch(deleteBasketEntry(status.productId));
       } else {
         status = await setProductBasketCount(product.id, inputCount);
+        dispatch(setProductCount(status));
       }
-      dispatch(setProductCount(status));
+      console.log("status", status);
       closeModalAction();
     } finally {
       setIsSaving(false);

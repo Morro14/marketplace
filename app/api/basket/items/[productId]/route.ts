@@ -144,7 +144,9 @@ export async function DELETE(
     );
 
   const response = Response.json({
-    message: `Basket entry for product ${productId} has been removed`,
+    productId,
+    count: 0,
+    product,
   });
   response.headers.append(
     "Set-Cookie",

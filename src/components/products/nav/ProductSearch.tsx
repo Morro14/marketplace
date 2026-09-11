@@ -61,28 +61,32 @@ export default function ProductSearch({ products }: { products: Product[] }) {
         value={value}
       />
       <div
-        className={`absolute z-20 drop-shadow bg-white flex-col text-nowrap overflow-hidden w-full top-9 left-0 ${showSuggestions ? "flex" : "hidden"} starting:opacity-0 opacity-100 transition-opacity duration-100`}
-        ref={suggestionsRef}
+        className={`${showSuggestions ? "block" : "hidden"} absolute z-20 top-9 left-0 h-128 overflow-y-scroll w-full`}
       >
-        {inputItems.slice(0, 5).map((item, i) => (
-          <option
-            className="px-2 py-2 border-b border-gray-300 cursor-pointer hover:bg-gray-light"
-            value={item.item.name}
-            key={`products-search-item-${i}`}
-            onClick={() => {
-              setValue(item.item.name);
-              router.push(
-                `${pathname}?${new URLSearchParams({
-                  ...Object.fromEntries(searchParams.entries()),
-                  name: item.item.name,
-                }).toString()}`,
-              );
-              setShowSuggestions(false);
-            }}
-          >
-            {item.item.name}
-          </option>
-        ))}
+        <div
+          className={`z-20 drop-shadow bg-white flex-col text-nowrap overflow-hidden w-full ${showSuggestions ? "flex" : "hidden"} starting:opacity-0 opacity-100 transition-opacity duration-100`}
+          ref={suggestionsRef}
+        >
+          {inputItems.map((item, i) => (
+            <option
+              className="px-2 py-2 border-b border-gray-300 cursor-pointer hover:bg-gray-light"
+              value={item.item.name}
+              key={`products-search-item-${i}`}
+              onClick={() => {
+                setValue(item.item.name);
+                router.push(
+                  `${pathname}?${new URLSearchParams({
+                    ...Object.fromEntries(searchParams.entries()),
+                    name: item.item.name,
+                  }).toString()}`,
+                );
+                setShowSuggestions(false);
+              }}
+            >
+              {item.item.name}
+            </option>
+          ))}
+        </div>
       </div>
     </form>
   );
