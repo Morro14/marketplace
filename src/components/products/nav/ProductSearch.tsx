@@ -51,7 +51,7 @@ export default function ProductSearch({ products }: { products: Product[] }) {
     <form className="relative w-90 h-8" onSubmit={submitSearch}>
       <input
         type="search"
-        className="size-full px-4 border border-primary rounded-2xl focus:outline-accent"
+        className="size-full px-4 border border-gray-form rounded-2xl focus:outline-accent"
         onChange={handleInputChange}
         onFocus={() => {
           setShowSuggestions(true);

@@ -33,6 +33,9 @@
   --color-gray-light-hover: #F6F6F6;
   --color-red-warning: #FF3815;
   --color-red-heart: #FF766D;
+  --color-red-heart-light: #FFB6B1;
+  --color-red-heart-light-hl: #FFC5C1;
+  --color-red-heart-super-light: #FFEEEC;
 
 }
 
@@ -97,6 +100,7 @@ button {
 
 .category-filter-btn__empty {
   --borderColor: var(--color-gray-passive);
+  /* --bg: var(--color-gray-light); */
 
   &:hover,
   &:focus {
