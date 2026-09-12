@@ -75,7 +75,7 @@ export default function ProductCard({ product }: { product: Product }) {
     }
   };
   return (
-    <div className="flex flex-col md:w-[272px] w-45 md:h-[396px] h-90 drop-shadow bg-bg justify-between pb-2 group rounded-lg">
+    <div className="product-card flex flex-col h-90 drop-shadow bg-bg justify-between pb-2 group rounded-lg">
       <div className="relative flex">
         <Image
           src={demoImg}

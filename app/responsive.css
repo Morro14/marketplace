@@ -1,9 +1,14 @@
 @reference "tailwindcss";
 
 .content-container {
-  @apply 2xl:w-[1410px] md:w-[698px] w-[352px];
+  @apply 2xl:w-[1410px] w-full px-4 max-sm:w-[352px]
 }
 
 .products-cats-modal {
-  @apply 2xl:w-[640px] w-[352px] 
+  @apply 2xl:w-[640px] w-[352px]
+}
+
+
+.product-card {
+  @apply md:w-[272px] w-45 md:h-[396px]
 }
