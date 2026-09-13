@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import type { BasketEntryWithProduct } from "../data/basketTypes";
+import { Product } from "../data/productTypes";
 
 type ProductId = number;
 const initialState: BasketEntryWithProduct[] = [];
@@ -12,14 +13,28 @@ const basketSlice = createSlice({
     setProductCount(
       state,
       action: PayloadAction<{
-        productId: number;
         count: number;
+        product: Product;
       }>,
     ) {
       const entry = state.find(
-        (entry) => entry.productId === action.payload.productId,
+        (entry) => entry.productId === action.payload.product.id,
       );
-      if (!entry) return;
+      // console.log("entry", entry, entry?.count);
+      if (!entry) {
+        // console.log("no entry");
+        state = [
+          ...state,
+          {
+            productId: action.payload.product.id,
+            count: action.payload.count,
+            product: action.payload.product,
+          },
+        ];
+        return;
+      }
+
+      // console.log("update state", action.payload.count);
       entry.count = action.payload.count;
     },
     setBasket(state, action: PayloadAction<BasketEntryWithProduct[]>) {

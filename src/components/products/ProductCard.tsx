@@ -39,24 +39,25 @@ export default function ProductCard({ product }: { product: Product }) {
     if (isUpdatingBasket || basketCount >= product.stock) return;
     const previousCount = basketCount;
     const nextCount = previousCount + 1;
-    dispatch(setProductCount({ productId: product.id, count: nextCount }));
+    dispatch(setProductCount({ product, count: nextCount }));
     setIsUpdatingBasket(true);
     try {
       const status = await setProductBasketCount(product.id, nextCount);
-      dispatch(setProductCount(status));
-    } catch {
-      dispatch(
-        setProductCount({ productId: product.id, count: previousCount }),
-      );
+      // console.log("status", status);
+      dispatch(setProductCount({ product, count: status.count }));
+    } catch (e) {
+      // console.log("catch", e);
+      dispatch(setProductCount({ product, count: previousCount }));
     } finally {
       setIsUpdatingBasket(false);
+      // console.log(basketCount);
     }
   };
   const handleRemoveFromCardClick = async () => {
     if (isUpdatingBasket || basketCount >= product.stock) return;
     const previousCount = basketCount;
     const nextCount = previousCount - 1;
-    dispatch(setProductCount({ productId: product.id, count: nextCount }));
+    dispatch(setProductCount({ product, count: nextCount }));
     setIsUpdatingBasket(true);
     try {
       let status = null;
@@ -65,21 +66,19 @@ export default function ProductCard({ product }: { product: Product }) {
       } else {
         status = await setProductBasketCount(product.id, nextCount);
       }
-      dispatch(setProductCount(status));
+      dispatch(setProductCount({ product, count: status.count }));
     } catch {
-      dispatch(
-        setProductCount({ productId: product.id, count: previousCount }),
-      );
+      dispatch(setProductCount({ product, count: previousCount }));
     } finally {
       setIsUpdatingBasket(false);
     }
   };
   return (
-    <div className="product-card flex flex-col h-90 drop-shadow bg-bg justify-between pb-2 group rounded-lg">
+    <div className="product-card flex flex-col h-90 sm:drop-shadow bg-bg justify-between pb-2 group rounded-lg">
       <div className="relative flex">
         <Image
           src={demoImg}
-          className="md:h-[231px] h-[226px] w-full object-cover rounded-t-lg"
+          className="sm:h-[231px] h-[200px] w-full object-cover rounded-t-lg"
           alt={`product-card-img-${nameSlug}`}
         ></Image>
         <div className="absolute flex w-full justify-between bottom-1.5 left-0 px-1.5 ">
@@ -90,10 +89,12 @@ export default function ProductCard({ product }: { product: Product }) {
         </div>
       </div>
       <div className="flex flex-col gap-1 mb-1">
-        <div className="flex flex-col gap-0.5 px-2 py-1.5">
+        <div className="flex flex-col gap-0.5 sm:px-2 px-0.5 sm:py-1.5">
           <div>
             {/* NAME */}
-            <div className="font-serif text-lg">{product.name}</div>
+            <div className="font-serif max-sm:text-base/6 text-lg">
+              {product.name}
+            </div>
             {/* CATEGORIES */}
             <div className="flex font-sans text-sm text-gray-passive">
               {product.categories.map((cat, i) => {
@@ -118,7 +119,7 @@ export default function ProductCard({ product }: { product: Product }) {
       </div>
       <div className="flex flex-col gap-1">
         {/* PRICE */}
-        <div className="flex px-2.5 items-center gap-1">
+        <div className="flex sm:px-2.5 px-0.5 items-center gap-1">
           <div className="font-medium text-lg text-accent-green">{`${currency} ${product.price}`}</div>
           <div>{`(${product.priceUnit})`}</div>
         </div>
@@ -126,14 +127,14 @@ export default function ProductCard({ product }: { product: Product }) {
           <button
             onClick={handleAddToCardClick}
             disabled={isUpdatingBasket || basketCount >= product.stock}
-            className="btn__accent mx-2 flex gap-0.5 items-center justify-center bg-accent md:h-8 rounded-lg"
+            className="btn__accent sm:mx-2 flex gap-0.5 items-center justify-center bg-accent h-8 rounded-lg"
           >
             <Image src={cartIcon} alt={`card-icon`}></Image>
             <span>{t("Add to cart")}</span>
             {basketCount > 0 && <span>({basketCount})</span>}
           </button>
         ) : (
-          <div className="mx-2 flex gap-0.5 items-center justify-between px-3 bg-gray-light hover:bg-gray-light-hover md:h-8 rounded-lg">
+          <div className="sm:mx-2 mx-0.5 flex gap-0.5 items-center justify-between px-3 bg-gray-light hover:bg-gray-light-hover h-8 rounded-lg">
             <button
               className="w-5 h-5 stroke-gray-mid hover:stroke-primary"
               onClick={handleRemoveFromCardClick}
