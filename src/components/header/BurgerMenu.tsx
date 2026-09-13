@@ -4,7 +4,11 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRef } from "react";
 
-export default function BurgerMenu() {
+export default function BurgerMenu({
+  variant = "default",
+}: {
+  variant?: "default" | "mobile";
+}) {
   const t = useTranslations();
   const dialogRef = useRef<null | HTMLDialogElement>(null);
   let dialogOpen = false;
@@ -50,7 +54,7 @@ export default function BurgerMenu() {
           // console.log("dialogOpen", dialogOpen);
           // params.setModalShow(!dialogOpen);
         }}
-        className="space-y-1.25"
+        className={`space-y-1.25 ${variant === "default" ? "fill-gray-light" : "fill-gray-passive"}`}
       >
         <div
           className={`transition duration-150 group-has-open:opacity-0 opacity-100`}
@@ -76,9 +80,8 @@ const bar = (
     width="22"
     height="3"
     viewBox="0 0 22 3"
-    fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <rect width="22" height="3" className="fill-gray-light" />
+    <rect width="22" height="3" />
   </svg>
 );

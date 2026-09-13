@@ -5,17 +5,25 @@ import { useTranslations } from "next-intl";
 export default function HeaderNav() {
   const t = useTranslations();
   return (
-    <div className="flex h-7 relative text-lg gap-3">
+    <div className="flex h-7 relative text-lg gap-3 ">
       <BurgerMenu></BurgerMenu>
-      <Link className="header-nav-link" href={"/about"}>
-        {t("About us")}
+      <Link
+        className="lg:hidden block left-3 text-white font-serif font-bold"
+        href="/"
+      >
+        {t("Marketplace")}
       </Link>
-      <Link className="header-nav-link" href={"/products"}>
-        {t("Our products")}
-      </Link>
-      <Link className="header-nav-link" href={"/for-partners"}>
-        {t("Become our partners")}
-      </Link>
+      <div className="gap-3 lg:flex hidden">
+        <Link className="header-nav-link" href={"/about"}>
+          {t("About us")}
+        </Link>
+        <Link className="header-nav-link" href={"/products"}>
+          {t("Our products")}
+        </Link>
+        <Link className="header-nav-link" href={"/for-partners"}>
+          {t("Become our partners")}
+        </Link>
+      </div>
     </div>
   );
 }

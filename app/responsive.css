@@ -1,9 +1,25 @@
 @reference "tailwindcss";
 
 .content-container {
+<<<<<<< Updated upstream
   @apply 2xl:w-[1410px] md:w-[698px] w-[352px];
 }
 
 .products-cats-modal {
   @apply 2xl:w-[640px] w-[352px] 
+=======
+  @apply 2xl:w-[1410px] xl:w-[1124px] lg:w-[840px] sm:w-[556px] w-[352px]
+}
+
+.products-cats-modal {
+  @apply 2xl:w-[640px] w-[352px]
+}
+
+.products-results {
+  @apply w-full
+}
+
+.product-card {
+  @apply sm:w-[272px] w-[174px] sm:h-[396px]
+>>>>>>> Stashed changes
 }

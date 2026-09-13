@@ -36,7 +36,7 @@
   --color-red-heart-light: #FFB6B1;
   --color-red-heart-light-hl: #FFC5C1;
   --color-red-heart-super-light: #FFEEEC;
-
+  --color-blue-black: #00162d
 }
 
 @media (prefers-color-scheme: dark) {
@@ -76,13 +76,8 @@ button {
   --_bg: var(--bg, --color-bg);
   --_borderColor: var(--borderColor, --color-gray-passive);
   background-color: var(--_bg);
-  display: flex;
-  gap: 1rem;
-  align-items: center;
   border: solid 1px var(--_borderColor);
   border-radius: 16px;
-  padding-left: 8px;
-  height: 32px;
   transition: background-color 0.1s;
   color: var(--_borderColor);
 }

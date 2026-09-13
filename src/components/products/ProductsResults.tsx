@@ -33,7 +33,11 @@ export default function ProductsResults({
     dispatch(setFavorites(favorites));
   }, [basket, dispatch, products, favorites]);
   return (
+<<<<<<< Updated upstream
     <div className="h-full grid w-full grid-cols-[repeat(5,max-content)] gap-y-8 gap-x-3">
+=======
+    <div className="products-results h-full flex flex-wrap w-full gap-y-8 sm:gap-x-3 max-sm:justify-between">
+>>>>>>> Stashed changes
       <dialog
         id={`product-add-modal`}
         onClose={() => dispatch(closeAddModal())}

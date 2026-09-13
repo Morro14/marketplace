@@ -63,47 +63,49 @@ export default function ProductsCarFilter({
     router.replace(`/products?${params.toString()}`);
   };
   return (
-    <div className="flex flex-wrap h-8">
-      <div className="flex flex-wrap gap-1 items-end font-medium">
-        <button
-          className={`category-filter-btn category-filter-btn--filled 
+    <div className="font-medium">
+      <button
+        className={`category-filter-btn category-filter-btn--filled flex items-center h-8
           ${
             isCatConfirmed
               ? "category-filter-btn__filled"
               : "category-filter-btn__empty"
           } 
           `}
+      >
+        <div
+          className={`w-8 h-8 flex flex-shrink-0 ${isCatConfirmed ? "hover:stroke-accent-2-darker-hl" : ""}`}
+          onClick={
+            isCatConfirmed
+              ? () => {
+                  dispatch(setFilters({ ...filters, categories: [] }));
+                  dispatch(setCategoriesSelected([]));
+                  clearCategoryQuery();
+                }
+              : handleCatButtonClick
+          }
         >
-          <div
-            className="w-8 h-full"
-            onClick={
-              isCatConfirmed
-                ? () => {
-                    dispatch(setFilters({ ...filters, categories: [] }));
-                    dispatch(setCategoriesSelected([]));
-                    clearCategoryQuery();
-                  }
-                : handleCatButtonClick
-            }
-          >
-            <div
-              className={`size-full flex items-center justify-center stroke-accent-2-darker ${isCatConfirmed ? "hover:stroke-accent-2-darker-hl" : ""}`}
-            >
-              {isCatConfirmed ? (
-                <Image src={crossIcon} alt="cross-icon-tiny"></Image>
-              ) : (
-                <Image src={plusIcon} alt="plus-icon-tiny"></Image>
-              )}
-            </div>
-          </div>
-          <span
-            onClick={handleCatButtonClick}
-            className="text-nowrap text-primary-darker size-full flex items-center"
-          >
-            <span className="pr-4">{t("Categories")}</span>
-          </span>
-        </button>
-      </div>
+          {isCatConfirmed ? (
+            <Image
+              className="m-auto"
+              src={crossIcon}
+              alt="cross-icon-tiny"
+            ></Image>
+          ) : (
+            <Image
+              className="m-auto"
+              src={plusIcon}
+              alt="plus-icon-tiny"
+            ></Image>
+          )}
+        </div>
+        <span
+          onClick={handleCatButtonClick}
+          className="text-nowrap text-primary-darker size-full flex items-center"
+        >
+          <span className="pr-4 text-sm">{t("Categories")}</span>
+        </span>
+      </button>
       {/* responsive */}
       <dialog
         onClose={() => setOpenCatsModal(false)}

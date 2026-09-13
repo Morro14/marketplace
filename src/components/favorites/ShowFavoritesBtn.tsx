@@ -3,7 +3,7 @@
 import { selectFavoritesCount } from "@/src/state/favoritesSlice";
 import { useAppSelector } from "@/src/state/hooks";
 import { useTranslations } from "next-intl";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function ShowFavoritesBtn() {
   const t = useTranslations();
@@ -29,11 +29,13 @@ export default function ShowFavoritesBtn() {
           className="flex gap-2 border border-red-heart hover:bg-red-heart-super-light rounded-full px-4 h-8"
         >
           {/* <div className="flex bg-red-heart rounded-full w-8 h-8"> */}
-          <span className="text font-sans font-medium text-center my-auto pr-0.5">
-            ({countSelector})
+          <span className="text font-sans font-medium text-sm text-center my-auto pr-0.5">
+            {countSelector}
           </span>
           {/* </div> */}
-          <span className="my-auto font-medium">{t("Show favorites")}</span>
+          <span className="my-auto font-medium text-sm">
+            {t("Show favorites")}
+          </span>
         </button>
       ) : favoritesActive ? (
         <button
@@ -42,10 +44,12 @@ export default function ShowFavoritesBtn() {
         >
           {/* <div className="flex bg-red-heart rounded-full w-8 h-8"> */}
           <span className="text font-sans font-medium text-center my-auto pr-0.5">
-            ({countSelector})
+            {countSelector}
           </span>
           {/* </div> */}
-          <span className="my-auto font-medium">{t("Show the rest")}</span>
+          <span className="my-auto font-medium text-sm">
+            {t("Show the rest")}
+          </span>
         </button>
       ) : (
         ""

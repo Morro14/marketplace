@@ -48,7 +48,7 @@ export default function ProductSearch({ products }: { products: Product[] }) {
     setShowSuggestions(false),
   );
   return (
-    <form className="relative w-90 h-8" onSubmit={submitSearch}>
+    <form className="relative min-w-[352] h-8" onSubmit={submitSearch}>
       <input
         type="search"
         className="size-full px-4 border border-gray-form rounded-2xl focus:outline-accent"

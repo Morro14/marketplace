@@ -4,6 +4,7 @@ import CatalogBtn from "./CatalogBtn";
 import ProductsCarFilter from "./ProductsCatFilter";
 import ProductSearch from "./ProductSearch";
 import ShowFavoritesBtn from "../../favorites/ShowFavoritesBtn";
+import NavIconBar from "./NavIconBar";
 
 export default async function ProductsNav() {
   const [categories, products] = await Promise.all([
@@ -13,11 +14,18 @@ export default async function ProductsNav() {
     getProducts(),
   ]);
   return (
-    <div className="w-full flex gap-4 flex-wrap">
-      <CatalogBtn categories={categories}></CatalogBtn>
-      <ProductSearch products={products}></ProductSearch>
-      <ProductsCarFilter categories={categories}></ProductsCarFilter>{" "}
-      <ShowFavoritesBtn></ShowFavoritesBtn>
+    <div className="w-full flex sm:justify-between gap-1">
+      <div className="flex gap-4">
+        <CatalogBtn categories={categories}></CatalogBtn>
+        <ProductSearch products={products}></ProductSearch>
+        <div className="gap-4 lg:flex hidden">
+          <ProductsCarFilter categories={categories}></ProductsCarFilter>{" "}
+          <ShowFavoritesBtn></ShowFavoritesBtn>
+        </div>
+      </div>
+      <div className="lg:hidden sm:flex max-sm:hidden max-sm:pl-px max-sm:w-full">
+        <NavIconBar></NavIconBar>
+      </div>
     </div>
   );
 }
