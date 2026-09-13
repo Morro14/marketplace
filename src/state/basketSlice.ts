@@ -31,10 +31,9 @@ const basketSlice = createSlice({
             product: action.payload.product,
           },
         ];
-        return;
+        return state;
       }
 
-      // console.log("update state", action.payload.count);
       entry.count = action.payload.count;
     },
     setBasket(state, action: PayloadAction<BasketEntryWithProduct[]>) {

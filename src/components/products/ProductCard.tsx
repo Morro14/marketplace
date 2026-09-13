@@ -43,10 +43,8 @@ export default function ProductCard({ product }: { product: Product }) {
     setIsUpdatingBasket(true);
     try {
       const status = await setProductBasketCount(product.id, nextCount);
-      // console.log("status", status);
       dispatch(setProductCount({ product, count: status.count }));
     } catch (e) {
-      // console.log("catch", e);
       dispatch(setProductCount({ product, count: previousCount }));
     } finally {
       setIsUpdatingBasket(false);

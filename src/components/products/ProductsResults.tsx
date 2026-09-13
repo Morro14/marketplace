@@ -33,7 +33,7 @@ export default function ProductsResults({
     dispatch(setFavorites(favorites));
   }, [basket, dispatch, products, favorites]);
   return (
-    <div className="xl:grid-cols-[repeat(5,max-content)] lg:grid-cols-[repeat(4,max-content)] h-full grid w-full gap-y-8 gap-x-3">
+    <div className="products-results h-full flex flex-wrap w-full gap-y-8 sm:gap-x-3 max-sm:justify-between">
       <dialog
         id={`product-add-modal`}
         onClose={() => dispatch(closeAddModal())}
