@@ -3,20 +3,33 @@ import { useAppSelector } from "@/src/state/hooks";
 import BurgerMenu from "./BurgerMenu";
 import { selectBasketCount } from "@/src/state/basketSlice";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import Image from "next/image";
 import MobileBtnTemplate from "./MobileBtnTemplate";
 import cartIcon from "@/src/assets/cart-icon-header.svg";
-import SortModal from "../products/nav/SortModal";
+import sortIcon from "@/src/assets/sort-icon.svg"
+import { useRouter, useSearchParams } from "next/navigation";
+import { ProductSort } from "@/src/data/productQueries";
 
 export default function HeaderMobile() {
   const basketCount = useAppSelector(selectBasketCount);
   const t = useTranslations();
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const handleSortClick = (sortBy: ProductSort) => {
+    const params = new URLSearchParams(searchParams)
+    params.delete("sortBy")
+    params.append("sortBy", sortBy)
+    router.replace(`/products?${params.toString()}`)
+  }
   return (
     <div className="fixed max-sm:flex hidden justify-between items-center bottom-0 w-screen bg-bg z-50 h-14 px-3">
       <BurgerMenu variant="mobile"></BurgerMenu>
-      <div className="flex items-end gap-3">
-        <SortModal>
-        </SortModal>
+      <div className="flex">
+        <button></button>
+        <button></button>
+        <button></button>
+        <button></button>
         <MobileBtnTemplate>
           <div className="relative flex h-full">
             <div className="absolute -top-3.5 left-[14px] rounded-full h-[20px] w-[20px] text-white bg-accent-red outline-2 outline-white">
@@ -29,6 +42,16 @@ export default function HeaderMobile() {
               aria-selected="false"
               src={cartIcon}
               alt="cart-icon"
+            ></Image>
+          </div>
+        </MobileBtnTemplate>
+        <MobileBtnTemplate>
+          <div className="flex relative size-full rounded-full">
+            <Image
+              className="m-auto relative top-[-3px] left-[1px]"
+              aria-selected="false"
+              src={sortIcon}
+              alt="sort-icon"
             ></Image>
           </div>
         </MobileBtnTemplate>

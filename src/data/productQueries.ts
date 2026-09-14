@@ -2,8 +2,8 @@ import { db } from "@/db";
 import type { Product } from "./productTypes";
 import { getBasket } from "./basketQueries";
 import { getFavoriteIds } from "./favoritesQueries";
-
-export type ProductSort = "name" | "price" | "nameDesc" | "priceDesc";
+import { SORT_BY } from "../utils/appVars";
+export type ProductSort = typeof SORT_BY[number];
 export type ProductFilters = "categories" | "name" | "minPrice" | "maxPrice";
 
 export interface ProductQueryOptions {
@@ -33,7 +33,7 @@ export function parseProductQuery(
   const maxPriceValue = searchParams.get("max_price");
   const minPrice = minPriceValue ? Number(minPriceValue) : undefined;
   const maxPrice = maxPriceValue ? Number(maxPriceValue) : undefined;
-  const sortBy = searchParams.get("sort_by") as ProductSort | null;
+  const sortBy = searchParams.get("sortBy") as ProductSort | null;
   const favorites = searchParams.get("favorites");
   return {
     categories: categories,
@@ -117,5 +117,20 @@ export async function getProducts(
       categories: true,
     },
   });
+  console.log("options sortby", options.sortBy)
+  result.sort((a, b) => {
+    switch (options.sortBy) {
+      case "name":
+        return a.name.localeCompare(b.name)
+      case "nameDesc":
+        return b.name.localeCompare(a.name)
+      case "price":
+        return a.price - b.price
+      case "priceDesc":
+        return b.price - a.price
+    }
+    return 0
+  })
+  console.log("result", result)
   return result;
 }
