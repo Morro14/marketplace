@@ -1,6 +1,5 @@
 import { db } from "@/db";
 import type { Product } from "./productTypes";
-import { getBasket } from "./basketQueries";
 import { getFavoriteIds } from "./favoritesQueries";
 import { SORT_BY } from "../utils/appVars";
 export type ProductSort = typeof SORT_BY[number];
@@ -117,7 +116,6 @@ export async function getProducts(
       categories: true,
     },
   });
-  console.log("options sortby", options.sortBy)
   result.sort((a, b) => {
     switch (options.sortBy) {
       case "name":
@@ -131,6 +129,5 @@ export async function getProducts(
     }
     return 0
   })
-  console.log("result", result)
   return result;
 }

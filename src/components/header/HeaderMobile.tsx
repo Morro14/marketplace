@@ -1,37 +1,22 @@
-"use client";
-import { useAppSelector } from "@/src/state/hooks";
 import BurgerMenu from "./BurgerMenu";
-import { selectBasketCount } from "@/src/state/basketSlice";
-import { useTranslations } from "next-intl";
-import Image from "next/image";
-import MobileBtnTemplate from "./MobileBtnTemplate";
-import cartIcon from "@/src/assets/cart-icon-header.svg";
 import SortModal from "../products/nav/SortModal";
+import FilterModal from "../products/nav/FilterModal";
+import BasketMobileBtn from "../basket/BasketMobileBtn";
+import { db } from "@/db";
+import SortNav from "./SortNav";
 
-export default function HeaderMobile() {
-  const basketCount = useAppSelector(selectBasketCount);
-  const t = useTranslations();
+export default async function HeaderMobile() {
+  // TODO move fetching data to a dedicated component
+  const categories = await db.query.categories.findMany({
+    orderBy: (category, { asc }) => asc(category.name),
+  })
   return (
     <div className="fixed max-sm:flex hidden justify-between items-center bottom-0 w-screen bg-bg z-50 h-14 px-3">
       <BurgerMenu variant="mobile"></BurgerMenu>
       <div className="flex items-end gap-3">
-        <SortModal>
-        </SortModal>
-        <MobileBtnTemplate>
-          <div className="relative flex h-full">
-            <div className="absolute -top-3.5 left-[14px] rounded-full h-[20px] w-[20px] text-white bg-accent-red outline-2 outline-white">
-              <div className="relative top-px text-center text-sm font-sans font-bold">
-                {basketCount && basketCount < 100 ? basketCount : "..."}
-              </div>
-            </div>
-            <Image
-              className="m-auto -pl-0.5"
-              aria-selected="false"
-              src={cartIcon}
-              alt="cart-icon"
-            ></Image>
-          </div>
-        </MobileBtnTemplate>
+        <FilterModal categories={categories}></FilterModal>
+        <SortNav></SortNav>
+        <BasketMobileBtn></BasketMobileBtn>
       </div>
     </div>
   );

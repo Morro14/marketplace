@@ -45,13 +45,13 @@ export default function ProductsCatModal({
     router.replace(`/products?${params.toString()}`);
   };
   return (
-    <div className="products-cats-modal drop-shadow-lg bg-bg flex flex-col gap-13 p-12">
+    <div className="products-cats-modal drop-shadow-lg bg-bg flex flex-col ">
       {/* responsive */}
-      <h4 className="font-serif text-2xl text-primary">
+      <h4 className="font-serif 2xl:text-2xl text-lg text-primary max-sm:text-right">
         {t("Select categories to filter products")}
       </h4>
-      <div className="flex flex-col gap-3 h-45">
-        <div className="flex flex-wrap gap-2">
+      <div className="flex flex-col gap-4 2xl:h-45">
+        <div className="flex flex-wrap gap-2 max-sm:justify-end">
           {catsSelected.length === 0 ? (
             <span className="text-gray-400 italic">
               {t("Show products from all categories")}
@@ -68,7 +68,7 @@ export default function ProductsCatModal({
           )}
         </div>
         <div className="w-full h-px bg-gray-300"></div>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 max-sm:justify-end">
           {nonSelectedCats.map((cat, i) => (
             <Chip
               key={`product-cat-modal-chip-${i}`}
@@ -79,16 +79,17 @@ export default function ProductsCatModal({
           ))}
         </div>
       </div>
-      <div className="flex gap-2">
+      <div className="w-full h-px bg-gray-300"></div>
+      <div className="flex gap-2 mt-0 max-sm:justify-end">
         <button
           onClick={confirm}
-          className="bg-accent px-6 border border-primary h-8"
+          className="btn__accent px-6 rounded-lg h-7"
         >
           {t("Apply")}
         </button>
         <button
           onClick={closeModalAction}
-          className="bg-gray-light px-6 border border-primary h-8"
+          className="btn__secondary rounded-lg px-6 h-7"
         >
           {t("Cancel")}
         </button>

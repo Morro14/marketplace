@@ -58,7 +58,7 @@ export default function SortModal() {
     }>
       <div className="flex relative size-full rounded-full">
         <Image
-          className="m-auto relative top-[-3px] left-[1px]"
+          className="m-auto relative top-[-1px] left-[1px]"
           aria-selected="false"
           src={sortIcon}
           alt="sort-icon"
