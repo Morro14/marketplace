@@ -22,7 +22,7 @@ export default function SortModal({ closeAction, active }: { closeAction: () => 
     router.replace(`/products?${params.toString()}`)
   }
   return (active ? <div className="absolute w-screen h-screen">
-    <div className="fixed right-0 bottom-16 flex flex-col bg-bg starting:opacity-0 opacity-100 transition-opacity duration-150 min-w-50"
+    <div ref={modalRef} className="fixed right-0 bottom-16 flex flex-col bg-bg starting:opacity-0 opacity-100 transition-opacity duration-150 min-w-50"
     >
       {SORT_BY.toSorted().map((sort, i) =>
         <div className={`w-full flex justify-between items-center py-2 px-2 ${i < SORT_BY.length - 1 ? "border-b border-gray-light" : ""}`} key={i} onClick={(e) => handleNav(e, sort)}>
