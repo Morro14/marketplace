@@ -36,7 +36,8 @@
   --color-red-heart-light: #FFB6B1;
   --color-red-heart-light-hl: #FFC5C1;
   --color-red-heart-super-light: #FFEEEC;
-  --color-blue-black: #00162d
+  --color-blue-black: #00162d;
+  --color-black-transparent: #00000080;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -106,4 +107,8 @@ button {
 
 .payment-method-btn {
   @apply h-11 w-[150px]
+}
+
+.backdrop-modal {
+  @apply fixed flex items-center justify-center sm:bottom-0 bottom-14 left-0 bg-black-transparent w-screen h-full pointer-events-none z-10
 }

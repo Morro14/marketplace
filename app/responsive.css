@@ -5,7 +5,7 @@
 }
 
 .products-cats-modal {
-  @apply md:w-[640px] w-full 2xl:gap-13 2xl:p-12 gap-3 px-4 py-3
+  @apply sm:w-[640px] w-screen 2xl:gap-13 2xl:p-12 gap-3 px-4 py-3
 }
 
 

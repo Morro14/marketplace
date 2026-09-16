@@ -45,7 +45,7 @@ export default function ProductsCatModal({
     router.replace(`/products?${params.toString()}`);
   };
   return (
-    <div className="products-cats-modal drop-shadow-lg bg-bg flex flex-col ">
+    <div className="products-cats-modal sm:drop-shadow-lg bg-bg flex flex-col ">
       {/* responsive */}
       <h4 className="font-serif 2xl:text-2xl text-lg text-primary max-sm:text-right">
         {t("Select categories to filter products")}
@@ -81,10 +81,7 @@ export default function ProductsCatModal({
       </div>
       <div className="w-full h-px bg-gray-300"></div>
       <div className="flex gap-2 mt-0 max-sm:justify-end">
-        <button
-          onClick={confirm}
-          className="btn__accent px-6 rounded-lg h-7"
-        >
+        <button onClick={confirm} className="btn__accent px-6 rounded-lg h-7">
           {t("Apply")}
         </button>
         <button

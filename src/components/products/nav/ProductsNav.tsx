@@ -24,7 +24,7 @@ export default async function ProductsNav() {
         </div>
       </div>
       <div className="lg:hidden sm:flex max-sm:hidden max-sm:pl-px max-sm:w-full">
-        <NavIconBar></NavIconBar>
+        <NavIconBar categories={categories}></NavIconBar>
       </div>
     </div>
   );
