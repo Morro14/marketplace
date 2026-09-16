@@ -44,6 +44,7 @@ export async function getBasketProductsStock(productIds: number[]) {
 }
 
 export async function setProductBasketCount(productId: number, count: number) {
+  console.log("setProductBasketCount params", productId, count)
   const response = await fetch(`/api/basket/items/${productId}`, {
     method: "PUT",
     headers: { "content-type": "application/json" },

@@ -1,12 +1,12 @@
 "use client";
-import { closeAddModal, selectAddModal } from "@/src/state/productsSlice";
+import { closeAddModal, selectAddModal, setProducts } from "@/src/state/productsSlice";
 import { useAppDispatch, useAppSelector } from "@/src/state/hooks";
 import ProductCard from "@/src/components/products/ProductCard";
 import { useEffect, useRef } from "react";
 import ProductAddModal from "@/src/components/products/ProductAddModal";
 import type { Product } from "@/src/data/productTypes";
 import type { BasketEntryWithProduct } from "@/src/data/basketTypes";
-import { setBasket } from "@/src/state/basketSlice";
+import { BasketEntry, setBasket } from "@/src/state/basketSlice";
 import { setFavorites } from "@/src/state/favoritesSlice";
 
 export default function ProductsResults({
@@ -15,7 +15,7 @@ export default function ProductsResults({
   favorites,
 }: {
   products: Product[];
-  basket: BasketEntryWithProduct[];
+  basket: BasketEntry[];
   favorites: number[];
 }) {
   const modalRef = useRef<HTMLDialogElement | null>(null);
@@ -29,8 +29,14 @@ export default function ProductsResults({
     }
   };
   useEffect(() => {
-    dispatch(setBasket(basket));
+    dispatch(setProducts(products));
     dispatch(setFavorites(favorites));
+    const basketClone = structuredClone(basket) as BasketEntry[]
+    const basketWithProducts = basketClone.map((entry) => {
+      entry.product = products.find(p => p.id === entry.productId)
+      return entry
+    })
+    dispatch(setBasket(basketWithProducts));
   }, [basket, dispatch, products, favorites]);
   return (
     <div className="products-results h-full flex flex-wrap w-full gap-y-8 sm:gap-x-3 max-sm:justify-between">

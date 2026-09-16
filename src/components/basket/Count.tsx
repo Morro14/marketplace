@@ -55,8 +55,7 @@ export default function Count({ product }: { product: Product }) {
       } else {
         dispatch(
           setProductCount({
-            productId: product.id,
-            count: previousCount,
+            productId: product.id, count: previousCount
           }),
         );
         setInputCount(previousCount);
@@ -81,9 +80,10 @@ export default function Count({ product }: { product: Product }) {
       } else {
         status = await setProductBasketCount(product.id, nextCount);
       }
-      updateBasketProductData(dispatch, status);
+      dispatch(setProductCount(status))
       setStockExceeded(false);
     } catch (error) {
+      console.log("error", error)
       if (
         error instanceof BasketApiError &&
         error.status === 409 &&
@@ -95,10 +95,7 @@ export default function Count({ product }: { product: Product }) {
         setStockExceeded(true);
       } else {
         dispatch(
-          setProductCount({
-            productId: product.id,
-            count: previousCount,
-          }),
+          setProductCount({ productId: product.id, count: previousCount }),
         );
         setInputCount(previousCount);
       }
@@ -165,7 +162,7 @@ export default function Count({ product }: { product: Product }) {
     <div className="flex flex-col items-end gap-2">
       <div className="flex gap-4">
         <button
-          onClick={inputCount > 0 ? handleRemoveFromCardClick : () => {}}
+          onClick={inputCount > 0 ? handleRemoveFromCardClick : () => { }}
           className={`h-7 w-7 select-none stroke-primary ${inputCount > 0 ? "bg-accent hover:bg-accent-hl" : "bg-gray-light hover:bg-gray-light-hover"}`}
           disabled={inputCount <= 0}
         >

@@ -94,11 +94,11 @@ export default function ProductCard({ product }: { product: Product }) {
               {product.name}
             </div>
             {/* CATEGORIES */}
-            <div className="flex font-sans text-sm text-gray-passive">
+            <div className="flex font-sans text-sm text-gray-passive h-5 overflow-hidden">
               {product.categories.map((cat, i) => {
                 return (
                   <span
-                    className="whitespace-pre-wrap"
+                    className="text-nowrap text-ellipsis"
                     key={`product-card-${nameSlug}-cat-${i}`}
                   >
                     {catLength > 1 && i < catLength - 1

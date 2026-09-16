@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import type { Category, Product } from "../data/productTypes";
 import type { ProductSort } from "../data/productQueries";
+import { act } from "react";
 
 export type ProductFilters = {
   categories?: Category[];
@@ -13,6 +14,7 @@ export type ProductFilters = {
 interface ProductsState {
   // categories are expected as slugString[]
   filters: ProductFilters;
+  products: Product[];
   interface: {
     categoriesSelected: Category[];
     addModal: {
@@ -27,6 +29,7 @@ const initialState: ProductsState = {
   filters: {
     categories: [],
   },
+  products: [],
   interface: {
     categoriesSelected: [],
     addModal: { show: false, product: null },
@@ -41,7 +44,9 @@ const productsSlice = createSlice({
     setCategoriesConfirmed(state, action: PayloadAction<Category[]>) {
       state.filters.categories = action.payload;
     },
-
+    setProducts(state, action: PayloadAction<Product[]>) {
+      state.products = action.payload
+    },
     setCategoriesSelected(state, action: PayloadAction<Category[]>) {
       state.interface.categoriesSelected = action.payload;
     },
@@ -78,7 +83,7 @@ const productsSlice = createSlice({
     },
   },
 });
-
+export const selectProducts = (state: RootState) => state.products.products
 export const selectCategoriesConfirmed = (state: RootState) =>
   state.products.filters.categories;
 
@@ -98,6 +103,7 @@ export const {
   setPriceRange,
   setSortBy,
   setFilters,
+  setProducts,
   openAddModal,
   closeAddModal,
   resetFilters,

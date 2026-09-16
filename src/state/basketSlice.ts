@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "./store";
-import type { BasketEntryWithProduct } from "../data/basketTypes";
+import { RootState, store } from "./store";
 import { Product } from "../data/productTypes";
 
 type ProductId = number;
-const initialState: BasketEntryWithProduct[] = [];
+export type BasketEntry = { productId: number; count: number; product?: Product | undefined }
+const initialState: BasketEntry[] = [];
 
 const basketSlice = createSlice({
   name: "basket",
@@ -13,22 +13,20 @@ const basketSlice = createSlice({
     setProductCount(
       state,
       action: PayloadAction<{
+        productId: number;
         count: number;
-        product: Product;
       }>,
     ) {
+      console.log("action payload", action.payload)
       const entry = state.find(
-        (entry) => entry.productId === action.payload.product.id,
+        (entry) => entry.productId === action.payload.productId,
       );
-      // console.log("entry", entry, entry?.count);
       if (!entry) {
-        // console.log("no entry");
         state = [
           ...state,
           {
-            productId: action.payload.product.id,
+            productId: action.payload.productId,
             count: action.payload.count,
-            product: action.payload.product,
           },
         ];
         return state;
@@ -36,7 +34,12 @@ const basketSlice = createSlice({
 
       entry.count = action.payload.count;
     },
-    setBasket(state, action: PayloadAction<BasketEntryWithProduct[]>) {
+    setBasket(state, action: PayloadAction<BasketEntry[]>) {
+      // const products = store.getState().products.products
+      // const basketWithProducts = state.map((entry) => {
+      //   entry.product = products.find(p => p.id === entry.productId)
+      //   return entry
+      // })
       return action.payload;
     },
     deleteBasketEntry(state, action: PayloadAction<ProductId>) {
@@ -70,7 +73,12 @@ export const selectBasketCount = (state: RootState) => {
   return accCount.count;
 };
 export const selectTotalCost = (state: RootState) => {
-  const costs = state.basket.map((entry) => entry.count * entry.product.price);
+  const costs = state.basket.map((entry) => {
+    if (entry.product) {
+      return entry.count * entry.product.price
+    }
+    return 0
+  });
   const result = costs.reduce((prev, cur) => {
     let prev_ = prev || 0;
     let cur_ = cur || 0;
