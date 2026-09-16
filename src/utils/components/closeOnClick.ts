@@ -1,28 +1,29 @@
 import { useEffect } from "react";
 
 export function useCloseOnClick<T extends any[]>(
-  nonClickableRefs: React.RefObject<null | HTMLDivElement>[],
+  modalRefs: React.RefObject<null | HTMLElement>[],
   callback: ((...args: any) => any) | null = null,
   callBackArgs: T | [] = [],
-  firstClickBlock: boolean = true,
+  blockFirstClickOutside: boolean = true,
 ) {
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as Node;
-      let blockClick = false;
-      if (firstClickBlock) {
-        nonClickableRefs?.forEach((ref) => {
-          if (!ref.current) return;
-          if (ref.current?.contains(target)) {
-            blockClick = true;
-            return;
-          }
-        });
-        if (blockClick) return;
+      const targetIsModal = modalRefs?.some((ref) => {
+        if (!ref.current) return false;
+        const contains = ref.current?.contains(target)
+        return contains
+      });
+      if (!targetIsModal) {
+        if (blockFirstClickOutside) {
+          e.stopPropagation()
+        }
+        if (callback) {
+          callback(...callBackArgs);
+        }
+        return
       }
-      if (callback) {
-        callback(...callBackArgs);
-      }
+      return
     };
     // TODO separate key press logic
     const handleEscapePress = (e: KeyboardEvent) => {
@@ -35,5 +36,5 @@ export function useCloseOnClick<T extends any[]>(
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleEscapePress);
     };
-  }, [nonClickableRefs, callback, callBackArgs]);
+  }, [modalRefs, callback, callBackArgs]);
 }

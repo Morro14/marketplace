@@ -110,5 +110,5 @@ button {
 }
 
 .backdrop-modal {
-  @apply fixed flex items-center justify-center sm:bottom-0 bottom-14 left-0 bg-black-transparent w-screen h-full pointer-events-none z-10
+  @apply fixed flex items-center justify-center sm:bottom-0 bottom-14 left-0 bg-black-transparent w-screen h-full z-10
 }
