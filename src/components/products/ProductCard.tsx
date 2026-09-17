@@ -39,13 +39,15 @@ export default function ProductCard({ product }: { product: Product }) {
     if (isUpdatingBasket || basketCount >= product.stock) return;
     const previousCount = basketCount;
     const nextCount = previousCount + 1;
-    dispatch(setProductCount({ product, count: nextCount }));
+    dispatch(setProductCount({ productId: product.id, count: nextCount }));
     setIsUpdatingBasket(true);
     try {
       const status = await setProductBasketCount(product.id, nextCount);
-      dispatch(setProductCount({ product, count: status.count }));
+      dispatch(setProductCount(status));
     } catch (e) {
-      dispatch(setProductCount({ product, count: previousCount }));
+      dispatch(
+        setProductCount({ productId: product.id, count: previousCount }),
+      );
     } finally {
       setIsUpdatingBasket(false);
       // console.log(basketCount);
@@ -55,7 +57,7 @@ export default function ProductCard({ product }: { product: Product }) {
     if (isUpdatingBasket || basketCount >= product.stock) return;
     const previousCount = basketCount;
     const nextCount = previousCount - 1;
-    dispatch(setProductCount({ product, count: nextCount }));
+    dispatch(setProductCount({ productId: product.id, count: nextCount }));
     setIsUpdatingBasket(true);
     try {
       let status = null;
@@ -64,9 +66,11 @@ export default function ProductCard({ product }: { product: Product }) {
       } else {
         status = await setProductBasketCount(product.id, nextCount);
       }
-      dispatch(setProductCount({ product, count: status.count }));
+      dispatch(setProductCount({ productId: product.id, count: nextCount }));
     } catch {
-      dispatch(setProductCount({ product, count: previousCount }));
+      dispatch(
+        setProductCount({ productId: product.id, count: previousCount }),
+      );
     } finally {
       setIsUpdatingBasket(false);
     }
