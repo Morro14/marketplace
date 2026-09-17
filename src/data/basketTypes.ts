@@ -7,7 +7,7 @@ export type BasketEntry = typeof basketEntries.$inferSelect;
 export interface BasketEntryWithProduct {
   productId: number;
   count: number;
-  product: Product;
+  product?: Product;
 }
 
 export interface BasketCheckoutSummary {

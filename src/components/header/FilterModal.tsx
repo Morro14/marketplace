@@ -14,18 +14,14 @@ export default function FilterModal({
 }) {
   const modalRef = useRef<HTMLDivElement | null>(null);
   useCloseOnClick([modalRef], closeAction, [], false);
-  return active ? (
-    <div className="backdrop-modal">
-      <div className="absolute max-sm:right-0 max-sm:bottom-14 flex flex-col bg-bg starting:opacity-0 opacity-100 transition-opacity duration-150 md:m-auto">
-        <div ref={modalRef}>
-          <ProductsCatModal
-            cats={categories}
-            closeModalAction={() => {}}
-          ></ProductsCatModal>
-        </div>
+  return <div className={`backdrop-modal ${active ? "flex!" : "hidden!"}`}>
+    <div className="absolute max-sm:right-0 max-sm:bottom-14 flex flex-col bg-bg starting:opacity-0 opacity-100 transition-opacity duration-150 md:m-auto">
+      <div ref={modalRef}>
+        <ProductsCatModal
+          cats={categories}
+          closeModalAction={closeAction}
+        ></ProductsCatModal>
       </div>
     </div>
-  ) : (
-    ""
-  );
+  </div>
 }

@@ -1,11 +1,8 @@
 import { AppDispatch } from "@/src/state/store";
-import { setProductCount } from "@/src/state/basketSlice";
+import { BasketEntry, setProductCount } from "@/src/state/basketSlice";
 import { getBasketProductsStock, ProductBasketStatus } from "@/src/api/basket";
+import { Product } from "../data/productTypes";
 
-/**
- * Updates the Redux state with product data from a ProductBasketStatus response
- * This syncs both product information and count in one action
- */
 export function updateBasketProductData(
   dispatch: AppDispatch,
   status: ProductBasketStatus,
@@ -17,11 +14,16 @@ export function updateBasketProductData(
     }),
   );
 }
+// Add Product instances to the BasketEntry's for easier access to product data
+export function populateBasketProductData(basket: BasketEntry[], products: Product[]) {
 
-/**
- * Fetches and updates product data for all products in the basket
- * This is useful for periodic updates and checkout validation
- */
+  const basketClone = structuredClone(basket) as BasketEntry[]
+  const basketWithProducts = basketClone.map((entry) => {
+    entry.product = products.find(p => p.id === entry.productId)
+    return entry
+  })
+  return basketWithProducts
+}
 export async function fetchAndUpdateBasketProductsStock(
   productIds: number[],
   dispatch: AppDispatch,
@@ -44,11 +46,12 @@ export async function fetchAndUpdateBasketProductsStock(
   }
 }
 
-export function calcCost(price: number, count: number): number {
+export function calcCost(price: number | undefined, count: number): number {
   {
     /* const calc logic*/
   }
-  const value = price * count;
+  const price_ = price ? price : 0
+  const value = price_ * count;
   const floor = Math.floor(value);
   let result = value.toString();
   if (value !== floor) {

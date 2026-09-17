@@ -1,24 +1,24 @@
 import Image from "next/image";
 import demoImg from "@/src/assets/product-demo.jpeg";
-import { BasketEntryWithProduct } from "@/src/data/basketTypes";
 import Count from "./Count";
 import { heartEmpty, bin } from "./icons";
 import { calcCost, formatCost } from "@/src/utils/basketUtils";
 import { CURRENCY, CURRENCY_SIGNS } from "@/src/utils/appVars";
 import { useEffect, useRef, useState } from "react";
+import type { BasketEntry } from "@/src/state/basketSlice";
 
 export default function BasketEntry({
   basketEntry,
   index,
   size,
 }: {
-  basketEntry: BasketEntryWithProduct;
+  basketEntry: BasketEntry;
   index: number;
   size: number;
 }) {
   const product = basketEntry.product;
-  const entryCostVal = calcCost(product.price, basketEntry.count);
-  const entryCost = formatCost(entryCostVal);
+  const entryCostVal = calcCost(product?.price, basketEntry.count);
+  const entryCost = entryCostVal ? formatCost(entryCostVal) : "";
   const CURRENCY_SIGN = CURRENCY_SIGNS[CURRENCY];
   const [prevCost, setPrevCost] = useState(entryCostVal);
   const snapPrevCost = useRef(entryCost);
@@ -27,6 +27,7 @@ export default function BasketEntry({
   const costDivPrev = useRef<null | HTMLDivElement>(null);
   useEffect(() => {
     if (!costDiv.current || !costDivPrev.current) return;
+    if (!entryCostVal || !prevCost) return
     if (prevCost === entryCostVal) return;
     costDiv.current.style.transitionDuration = "0ms";
     costDiv.current.style.opacity = "0";
@@ -76,10 +77,10 @@ export default function BasketEntry({
         </div>
         <div className="flex flex-col justify-between pb-1.5">
           <div>
-            <div className="text-lg">{product.name}</div>
-            <div className="text-sm">{product.description}</div>
+            <div className="text-lg">{product?.name}</div>
+            <div className="text-sm">{product?.description}</div>
           </div>
-          <span className="text-gray-passive">{`${product.quantity} ${product.priceUnit}`}</span>
+          <span className="text-gray-passive">{`${product?.quantity} ${product?.priceUnit}`}</span>
           <div className="flex gap-2">
             <div className="relative top-px">{heartEmpty}</div>
             <div>{bin}</div>
@@ -88,7 +89,11 @@ export default function BasketEntry({
       </div>
       {/* RESPONSIVE */}
       <div className="flex 2xl:w-60 justify-between items-start">
-        <Count product={basketEntry.product}></Count>
+        {
+          basketEntry.product ?
+            <Count product={basketEntry.product}></Count>
+            : ""
+        }
         <div className="flex gap-1 h-auto">
           <div className="text-xl">{CURRENCY_SIGN}</div>
           <div className="basket-entry-cost text-xl w-18">

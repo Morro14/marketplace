@@ -12,7 +12,6 @@ export default function Entries({
   basket: BasketEntryWithProduct[];
 }) {
   const dispatch = useAppDispatch();
-
   useEffect(() => {
     dispatch(setBasket(basket));
   }, [basket, dispatch]);

@@ -8,6 +8,7 @@ import type { Product } from "@/src/data/productTypes";
 import type { BasketEntryWithProduct } from "@/src/data/basketTypes";
 import { BasketEntry, setBasket } from "@/src/state/basketSlice";
 import { setFavorites } from "@/src/state/favoritesSlice";
+import { populateBasketProductData } from "@/src/utils/basketUtils";
 
 export default function ProductsResults({
   products,
@@ -31,11 +32,7 @@ export default function ProductsResults({
   useEffect(() => {
     dispatch(setProducts(products));
     dispatch(setFavorites(favorites));
-    const basketClone = structuredClone(basket) as BasketEntry[]
-    const basketWithProducts = basketClone.map((entry) => {
-      entry.product = products.find(p => p.id === entry.productId)
-      return entry
-    })
+    const basketWithProducts = populateBasketProductData(basket, products);
     dispatch(setBasket(basketWithProducts));
   }, [basket, dispatch, products, favorites]);
   return (
