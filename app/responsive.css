@@ -8,7 +8,30 @@
   @apply sm:w-[640px] w-screen 2xl:gap-13 2xl:p-12 gap-3 px-4 py-3
 }
 
-
 .product-card {
   @apply sm:w-[272px] w-[174px] sm:h-[396px]
 }
+
+.basket-summary {
+  @apply sm:mt-10 mx-auto max-sm:fixed max-sm:bottom-14 max-sm:left-0 bg-gray-light sm:w-[230px] w-full h-[162px] sm:drop-shadow-xl drop-shadow-lg
+}
+
+/* @media (width <=640) { */
+.basket-summary:before {
+  position: absolute;
+  bottom: 56px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  display: block;
+  height: 20px;
+  background: linear-gradient(to bottom,
+      rgba(var(--background-site-rgb-value), 0.65) 0%,
+      rgba(var(--background-site-rgb-value), 1) 100%);
+}
+
+.basket-entries {
+  @apply overflow-y-scroll max-md:mt-[48px]
+}
+
+/* } */

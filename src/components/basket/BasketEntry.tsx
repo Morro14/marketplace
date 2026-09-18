@@ -27,7 +27,7 @@ export default function BasketEntry({
   const costDivPrev = useRef<null | HTMLDivElement>(null);
   useEffect(() => {
     if (!costDiv.current || !costDivPrev.current) return;
-    if (!entryCostVal || !prevCost) return
+    if (!entryCostVal || !prevCost) return;
     if (prevCost === entryCostVal) return;
     costDiv.current.style.transitionDuration = "0ms";
     costDiv.current.style.opacity = "0";
@@ -61,11 +61,11 @@ export default function BasketEntry({
   }, [entryCost]);
   return (
     <div
-      className={`flex justify-between p-3 gap-3 h-[162px] w-[1152px] ${index < size ? "border-b border-gray-light" : ""}`}
+      className={`basket-entry flex lg:flex-row flex-col max-lg:gap-4 justify-between p-3 lg:h-[162px] w-full ${index < size ? "border-b border-gray-light" : ""}`}
     >
       {/* RESPONSIVE */}
       <div className="flex gap-3">
-        <div className="h-full rounded-lg overflow-hidden">
+        <div className="h-full rounded-lg overflow-hidden shrink-0">
           <Image
             src={demoImg}
             loading="eager"
@@ -88,12 +88,12 @@ export default function BasketEntry({
         </div>
       </div>
       {/* RESPONSIVE */}
-      <div className="flex 2xl:w-60 justify-between items-start">
-        {
-          basketEntry.product ?
-            <Count product={basketEntry.product}></Count>
-            : ""
-        }
+      <div className="flex xl:flex-row flex-col xl:justify-between items-start xl:gap-5 gap-3 ">
+        {basketEntry.product ? (
+          <Count product={basketEntry.product}></Count>
+        ) : (
+          ""
+        )}
         <div className="flex gap-1 h-auto">
           <div className="text-xl">{CURRENCY_SIGN}</div>
           <div className="basket-entry-cost text-xl w-18">

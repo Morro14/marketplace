@@ -12,7 +12,7 @@ export default function BasketSummaryEmbedded() {
   const totalPrice = formatCost(useAppSelector(selectTotalCost));
   const CURRENCY_SIGN = CURRENCY_SIGNS[CURRENCY];
   return (
-    <div className="mt-10 w-[230px] h-[162px] bg-bg drop-shadow-xl rounded-lg flex flex-col gap-3 p-3">
+    <div className="basket-summary bg-bg  rounded-lg flex flex-col gap-3 p-3">
       {/* DELIVERY LOCATION */}
       <div className="link flex gap-2.5">
         {locIcon}

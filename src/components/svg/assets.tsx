@@ -11,8 +11,22 @@ export const heartEmpty = (
       d="M11 19C6.68968 15.5049 1 10.9611 1 6.06794C1 3.44662 3.06897 1 6 1C8.24138 1 9.44828 1.87379 11 3.79611C12.3793 1.87379 13.7586 1 16 1C18.931 1 21 3.44662 21 6.06794C21 10.9611 15.3103 15.5049 11 19Z"
       fill="white"
       stroke="#FF766D"
-      strokeOpacity="0.75"
-      strokeWidth="2"
+      strokeWidth="1"
+    />
+  </svg>
+);
+export const heartEmptyBasket = (
+  <svg
+    width="22"
+    height="21"
+    viewBox="0 0 24 23"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="size-full object-cover"
+  >
+    <path
+      d="M11 19C6.68968 15.5049 1 10.9611 1 6.06794C1 3.44662 3.06897 1 6 1C8.24138 1 9.44828 1.87379 11 3.79611C12.3793 1.87379 13.7586 1 16 1C18.931 1 21 3.44662 21 6.06794C21 10.9611 15.3103 15.5049 11 19Z"
+      shapeRendering="geometricPrecision"
     />
   </svg>
 );

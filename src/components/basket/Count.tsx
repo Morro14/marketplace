@@ -161,7 +161,7 @@ export default function Count({ product }: { product: Product }) {
   };
   return (
     <div className="flex flex-col items-end gap-2">
-      <div className="flex gap-4">
+      <div className="flex gap-4 bg-gray-light">
         <button
           onClick={inputCount > 0 ? handleRemoveFromCardClick : () => {}}
           className={`h-7 w-7 select-none stroke-primary ${inputCount > 0 ? "bg-accent hover:bg-accent-hl" : "bg-gray-light hover:bg-gray-light-hover"}`}
