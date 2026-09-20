@@ -61,34 +61,61 @@ export default function BasketEntry({
   }, [entryCost]);
   return (
     <div
-      className={`basket-entry flex lg:flex-row flex-col max-lg:gap-4 justify-between p-3 lg:h-[162px] w-full ${index < size ? "border-b border-gray-light" : ""}`}
+      className={`basket-entry flex flex-col justify-between lg:p-3 p-2 w-full ${index < size ? "border-b border-gray-light" : ""}`}
     >
       {/* RESPONSIVE */}
-      <div className="flex gap-3">
-        <div className="h-full rounded-lg overflow-hidden shrink-0">
+      <div className="flex gap-3 h-full">
+        <div className="basket-entry-image rounded-lg overflow-hidden shrink-0">
           <Image
             src={demoImg}
             loading="eager"
-            width={126}
             alt="demo-img"
-            className="object-cover h-full"
-            style={{ width: "auto" }}
+            className="object-cover size-full"
           ></Image>
         </div>
         <div className="flex flex-col justify-between pb-1.5">
           <div>
             <div className="text-lg">{product?.name}</div>
-            <div className="text-sm">{product?.description}</div>
+            <div className="text-sm/4">{product?.description}</div>
           </div>
           <span className="text-gray-passive">{`${product?.quantity} ${product?.priceUnit}`}</span>
-          <div className="flex gap-2">
+          <div className="lg:flex hidden gap-2">
             <div className="relative top-px">{heartEmpty}</div>
             <div>{bin}</div>
           </div>
+          {/* RESPONSIVE <lg */}
+          <div className="lg:hidden flex justify-between items-start gap-3 ">
+            {basketEntry.product ? (
+              <Count product={basketEntry.product}></Count>
+            ) : (
+              ""
+            )}
+            <div className="flex gap-1 h-auto">
+              <div className="text-xl">{CURRENCY_SIGN}</div>
+              <div className="basket-entry-cost text-xl w-18">
+                <div
+                  className="absolute"
+                  style={{
+                    transitionProperty: "translate, opacity",
+                    transitionDuration: "300ms",
+                  }}
+                  ref={costDivPrev}
+                >{`${snapPrevCost.current}`}</div>
+                <div
+                  className=""
+                  style={{
+                    transitionProperty: "translate, opacity",
+                    transitionDuration: "300ms",
+                  }}
+                  ref={costDiv}
+                >{`${entryCost}`}</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      {/* RESPONSIVE */}
-      <div className="flex xl:flex-row flex-col xl:justify-between items-start xl:gap-5 gap-3 ">
+      {/* RESPONSIVE >lg */}
+      <div className="lg:flex hidden xl:flex-row flex-col xl:justify-between items-start xl:gap-5 gap-3 ">
         {basketEntry.product ? (
           <Count product={basketEntry.product}></Count>
         ) : (

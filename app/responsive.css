@@ -13,25 +13,44 @@
 }
 
 .basket-summary {
-  @apply sm:mt-10 mx-auto max-sm:fixed max-sm:bottom-14 max-sm:left-0 bg-gray-light sm:w-[230px] w-full h-[162px] sm:drop-shadow-xl drop-shadow-lg
+  @apply sm:mt-[43px] mx-auto max-sm:fixed max-sm:bottom-14 max-sm:left-0 max-sm:bg-gray-light sm:w-[230px] w-full h-[162px] sm:drop-shadow-xl drop-shadow-lg
 }
 
 /* @media (width <=640) { */
-.basket-summary:before {
+.basket-summary::before {
   position: absolute;
-  bottom: 56px;
+  filter: drop-shadow(0 0 #0000);
+  top: -10px;
+  z-index: 50;
   left: 0;
   right: 0;
   width: 100%;
   display: block;
-  height: 20px;
+  height: 10px;
+  content: "";
   background: linear-gradient(to bottom,
-      rgba(var(--background-site-rgb-value), 0.65) 0%,
-      rgba(var(--background-site-rgb-value), 1) 100%);
+      #ffffff00 0%,
+      #ffffff 100%);
 }
 
 .basket-entries {
-  @apply overflow-y-scroll max-md:mt-[48px]
+  @apply overflow-y-scroll max-sm:mt-[48px]
 }
 
-/* } */
+.basket-entry {
+  @apply lg:flex-row max-lg:gap-2 lg:h-[162px] h-[150px]
+}
+
+.basket-entry-image {
+  @apply lg:h-[136px] h-[115px] lg:w-[100px] w-[90px]
+}
+
+.basket-top-bar {
+  @media (width > 640) {
+    @apply bg-gray-light rounded-t-xl text-primary-darker font-normal w-full static
+  }
+
+  @media (width <=640) {
+    @apply bg-blue-black text-white font-semibold w-screen absolute left-0
+  }
+}

@@ -6,9 +6,9 @@ import { getBasketWithProducts } from "@/src/data/basketQueries";
 export default async function Basket() {
   const basket = await getBasketWithProducts();
   return (
-    <div className="w-full flex ">
+    <div className="w-full h-full flex ">
       <div className="flex w-full sm:flex-row max-sm:flex-col sm:gap-7 gap-3">
-        <div className="flex w-full flex-col 2xl:w-[1152px] h-[calc(100dvh-218px)] overflow-y-scroll">
+        <div className="flex w-full flex-col 2xl:w-[1152px] max-sm:h-[calc(100dvh-218px)] overflow-y-scroll">
           <TopBar></TopBar>
           <Entries basket={basket}></Entries>
         </div>
