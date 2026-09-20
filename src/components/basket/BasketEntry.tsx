@@ -64,7 +64,7 @@ export default function BasketEntry({
       className={`basket-entry flex flex-col justify-between lg:p-3 p-2 w-full ${index < size ? "border-b border-gray-light" : ""}`}
     >
       {/* RESPONSIVE */}
-      <div className="flex gap-3 h-full">
+      <div className="flex gap-3 h-full justify-between w-full">
         <div className="basket-entry-image rounded-lg overflow-hidden shrink-0">
           <Image
             src={demoImg}
@@ -73,18 +73,18 @@ export default function BasketEntry({
             className="object-cover size-full"
           ></Image>
         </div>
-        <div className="flex flex-col justify-between pb-1.5">
+        <div className="flex flex-col lg:flex-row w-full justify-between lg:pb-1.5">
           <div>
             <div className="text-lg">{product?.name}</div>
-            <div className="text-sm/4">{product?.description}</div>
+            <div className="text-sm/4 text-gray-600">{product?.description}</div>
+            <span className="text-gray-passive text-sm">{`${product?.quantity} ${product?.priceUnit}`}</span>
+            <div className="lg:flex hidden gap-2">
+              <div className="relative top-px">{heartEmpty}</div>
+              <div>{bin}</div>
+            </div>
           </div>
-          <span className="text-gray-passive">{`${product?.quantity} ${product?.priceUnit}`}</span>
-          <div className="lg:flex hidden gap-2">
-            <div className="relative top-px">{heartEmpty}</div>
-            <div>{bin}</div>
-          </div>
-          {/* RESPONSIVE <lg */}
-          <div className="lg:hidden flex justify-between items-start gap-3 ">
+          {/* RESPONSIVE Count */}
+          <div className="flex flex-row items-start gap-3 max-lg:w-full max-lg:justify-between w-20">
             {basketEntry.product ? (
               <Count product={basketEntry.product}></Count>
             ) : (
@@ -92,7 +92,7 @@ export default function BasketEntry({
             )}
             <div className="flex gap-1 h-auto">
               <div className="text-xl">{CURRENCY_SIGN}</div>
-              <div className="basket-entry-cost text-xl w-18">
+              <div className="text-xl w-18">
                 <div
                   className="absolute"
                   style={{
@@ -111,35 +111,6 @@ export default function BasketEntry({
                 >{`${entryCost}`}</div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      {/* RESPONSIVE >lg */}
-      <div className="lg:flex hidden xl:flex-row flex-col xl:justify-between items-start xl:gap-5 gap-3 ">
-        {basketEntry.product ? (
-          <Count product={basketEntry.product}></Count>
-        ) : (
-          ""
-        )}
-        <div className="flex gap-1 h-auto">
-          <div className="text-xl">{CURRENCY_SIGN}</div>
-          <div className="basket-entry-cost text-xl w-18">
-            <div
-              className="absolute"
-              style={{
-                transitionProperty: "translate, opacity",
-                transitionDuration: "300ms",
-              }}
-              ref={costDivPrev}
-            >{`${snapPrevCost.current}`}</div>
-            <div
-              className=""
-              style={{
-                transitionProperty: "translate, opacity",
-                transitionDuration: "300ms",
-              }}
-              ref={costDiv}
-            >{`${entryCost}`}</div>
           </div>
         </div>
       </div>

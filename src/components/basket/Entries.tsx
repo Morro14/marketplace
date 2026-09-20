@@ -17,7 +17,7 @@ export default function Entries({
   }, [basket, dispatch]);
   const basketState = useAppSelector(selectBasket);
   return (
-    <div className="basket-entries bg-bg rounded-b-lg drop-shadow-xl">
+    <div className="basket-entries bg-bg rounded-b-lg">
       {basketState.map((item, i) => (
         <BasketEntry
           key={`basket-entry-${item.productId}`}

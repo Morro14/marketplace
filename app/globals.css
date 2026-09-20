@@ -120,3 +120,7 @@ button {
 .basket-top-bar-favorites-icon__empty path {
   @apply stroke-2 stroke-gray-mid group-hover:stroke-white transition-colors duration-150
 }
+
+.basket-count-btn {
+  @apply h-[28px] w-[28px] rounded select-none stroke-primary
+}

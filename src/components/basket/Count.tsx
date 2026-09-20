@@ -161,10 +161,10 @@ export default function Count({ product }: { product: Product }) {
   };
   return (
     <div className="flex flex-col items-end gap-2">
-      <div className="flex gap-4 bg-gray-light">
+      <div className="flex lg:gap-2 gap-1 items-end">
         <button
-          onClick={inputCount > 0 ? handleRemoveFromCardClick : () => {}}
-          className={`h-7 w-7 select-none stroke-primary ${inputCount > 0 ? "bg-accent hover:bg-accent-hl" : "bg-gray-light hover:bg-gray-light-hover"}`}
+          onClick={inputCount > 0 ? handleRemoveFromCardClick : () => { }}
+          className={`basket-count-btn ${inputCount > 0 ? "bg-accent hover:bg-accent-hl" : "bg-gray-light hover:bg-gray-light-hover"}`}
           disabled={inputCount <= 0}
         >
           {minus}
@@ -173,7 +173,7 @@ export default function Count({ product }: { product: Product }) {
           <input
             name="count"
             type="text"
-            className="text-xl font-medium w-7 text-center"
+            className="text-lg font-base w-7 text-center"
             maxLength={2}
             onBlur={handleInputBlur}
             onChange={handleInputChange}
@@ -182,7 +182,7 @@ export default function Count({ product }: { product: Product }) {
         </form>
         <button
           onClick={handleAddToCardClick}
-          className={`h-7 w-7 select-none stroke-primary ${inputCount < product.stock ? "bg-accent hover:bg-accent-hl" : "bg-gray-light hover:bg-gray-light-hover"}`}
+          className={`basket-count-btn ${inputCount < product.stock ? "bg-accent hover:bg-accent-hl" : "bg-gray-light hover:bg-gray-light-hover"}`}
           disabled={inputCount > product.stock}
         >
           {plus}
