@@ -8,7 +8,7 @@ export default function MarketLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col h-full gap-3 sm:pt-[43px] relative">
+    <div className="flex flex-col size-full gap-3 sm:pt-[43px] relative">
       <Header></Header>
       <HeaderMobile></HeaderMobile>
       <div className="content-container h-full flex flex-col gap-4 mx-auto">

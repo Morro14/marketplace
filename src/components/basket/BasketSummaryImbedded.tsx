@@ -12,41 +12,44 @@ export default function BasketSummaryEmbedded() {
   const totalPrice = formatCost(useAppSelector(selectTotalCost));
   const CURRENCY_SIGN = CURRENCY_SIGNS[CURRENCY];
   return (
-    <div className="basket-summary bg-bg lg:rounded-lg flex flex-col gap-3 p-3">
+    <div className="basket-summary justify-center flex max-lg:w-screen bg-bg lg:rounded-lg ">
       {/* DELIVERY LOCATION */}
-      <div className="content-container mx-auto">
-        <div className="link flex gap-2.5">
-          {locIcon}
-          <Link href="/add-address" className="text-sm underline">
-            {t("Delivery location")}
-          </Link>
-        </div>
-        <div className="px-1 lg:block hidden">
-          <span>{t("items", { count: basketCount })}</span>
-          <div className="flex justify-between pr-1">
-            <span className="text-xl">{t("Total")}</span>
-            <div className="flex gap-1">
-              <span className="text-2xl">{CURRENCY_SIGN}</span>
-              <span className="text-2xl text-left w-25">{totalPrice}</span>
+      <div className="sm:w-[556px] w-[352px] lg:w-[230px] flex sm:justify-start justify-center">
+        <div className="max-lg:w-[352px] lg:m-auto flex flex-col gap-2">
+          <div className="link flex gap-2.5">
+            {locIcon}
+            <Link href="/add-address" className="text-sm underline">
+              {t("Delivery location")}
+            </Link>
+          </div>
+          <div className="px-1 lg:block hidden">
+            <span>{t("items", { count: basketCount })}</span>
+            <div className="flex justify-between pr-1">
+              <span className="text-xl">{t("Total")}</span>
+              <div className="flex gap-1">
+                <span className="text-2xl">{CURRENCY_SIGN}</span>
+                <span className="text-2xl text-left w-25">{totalPrice}</span>
+              </div>
             </div>
           </div>
+          <Link href={"/checkout"}>
+            <button className="btn__accent lg:block hidden h-8 rounded-lg font-medium w-50">
+              {t("Proceed to checkout")}
+            </button>
+            <button className="btn__accent lg:hidden flex items-center justify-between h-8 rounded-lg px-2 font-medium w-full">
+              <div>
+                <span>{t("Proceed to checkout")} | </span>
+                <span className="text-sm text-gray-passive">
+                  {t("items", { count: basketCount })}
+                </span>
+              </div>
+              <div className="flex gap-1">
+                <span className="">{CURRENCY_SIGN}</span>
+                <span className="">{totalPrice}</span>
+              </div>
+            </button>
+          </Link>
         </div>
-        <Link href={"/checkout"}>
-          <button className="btn__accent lg:block hidden h-8 rounded-lg font-medium w-50">
-            {t("Proceed to checkout")}
-          </button>
-          <button className="btn__accent lg:hidden flex items-center justify-between h-8 rounded-lg px-2 font-medium w-full">
-            <div>
-              <span>{t("Proceed to checkout")} | </span>
-              <span className="text-sm text-gray-passive">{t("items", { count: basketCount })}</span>
-            </div>
-            <div className="flex gap-1">
-              <span className="">{CURRENCY_SIGN}</span>
-              <span className="">{totalPrice}</span>
-            </div>
-
-          </button>
-        </Link>
       </div>
     </div>
   );

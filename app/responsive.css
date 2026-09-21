@@ -13,7 +13,7 @@
 }
 
 .basket-summary {
-  @apply sm:mt-[43px] mx-auto max-sm:fixed max-sm:bottom-14 max-sm:left-0 sm:w-[230px] w-full lg:h-[162px] sm:drop-shadow-xl
+  @apply shrink-0 lg:mt-[43px] max-lg:fixed max-sm:bottom-14 bottom-0 max-lg:py-4 max-lg:left-0 lg:w-[230px] w-full lg:h-[162px] lg:drop-shadow-xl
 }
 
 /* @media (width <=640) { */

@@ -15,6 +15,8 @@ import {
 import { formatProductCount } from "@/src/utils/format";
 import { updateBasketProductData } from "@/src/utils/basketUtils";
 import { Product } from "@/src/data/productTypes";
+import { bin } from "@/src/components/svg/assets";
+import Image from "next/image";
 
 export default function Count({ product }: { product: Product }) {
   const basketCount = useAppSelector(selectProductCount(product.id));
@@ -72,37 +74,38 @@ export default function Count({ product }: { product: Product }) {
     const previousCount = basketCount;
     const nextCount = previousCount - 1;
     dispatch(setProductCount({ productId: product.id, count: nextCount }));
-    setIsUpdatingBasket(true);
+    // setIsUpdatingBasket(true);
     setInputCount(nextCount);
-    try {
-      let status = null;
-      if (nextCount === 0) {
-        status = await deleteProductBasket(product.id);
-      } else {
-        status = await setProductBasketCount(product.id, nextCount);
-      }
-      dispatch(setProductCount(status));
-      setStockExceeded(false);
-    } catch (error) {
-      console.log("error", error);
-      if (
-        error instanceof BasketApiError &&
-        error.status === 409 &&
-        error.data
-      ) {
-        updateBasketProductData(dispatch, error.data);
-        setInputCount(error.data.count);
-
-        setStockExceeded(true);
-      } else {
-        dispatch(
-          setProductCount({ productId: product.id, count: previousCount }),
-        );
-        setInputCount(previousCount);
-      }
-    } finally {
-      setIsUpdatingBasket(false);
-    }
+    // logic moved to the confirm dialog in BasketEntry
+    // try {
+    //   let status = null;
+    //   if (nextCount === 0) {
+    //     status = await deleteProductBasket(product.id);
+    //   } else {
+    //     status = await setProductBasketCount(product.id, nextCount);
+    //   }
+    //   dispatch(setProductCount(status));
+    //   setStockExceeded(false);
+    // } catch (error) {
+    //   console.log("error", error);
+    //   if (
+    //     error instanceof BasketApiError &&
+    //     error.status === 409 &&
+    //     error.data
+    //   ) {
+    //     updateBasketProductData(dispatch, error.data);
+    //     setInputCount(error.data.count);
+    //
+    //     setStockExceeded(true);
+    //   } else {
+    //     dispatch(
+    //       setProductCount({ productId: product.id, count: previousCount }),
+    //     );
+    //     setInputCount(previousCount);
+    //   }
+    // } finally {
+    //   setIsUpdatingBasket(false);
+    // }
   };
 
   const handleFormSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -163,11 +166,11 @@ export default function Count({ product }: { product: Product }) {
     <div className="flex flex-col items-end gap-2">
       <div className="flex lg:gap-2 gap-1 items-end">
         <button
-          onClick={inputCount > 0 ? handleRemoveFromCardClick : () => { }}
-          className={`basket-count-btn ${inputCount > 0 ? "bg-accent hover:bg-accent-hl" : "bg-gray-light hover:bg-gray-light-hover"}`}
+          onClick={inputCount > 0 ? handleRemoveFromCardClick : () => {}}
+          className={`basket-count-btn flex items-center justify-center ${inputCount > 0 ? "bg-gray-light hover:bg-gray-light-hover" : "bg-gray-light hover:bg-gray-light-hover"}`}
           disabled={inputCount <= 0}
         >
-          {minus}
+          {inputCount > 1 ? minus : bin}
         </button>
         <form ref={formRef} onSubmit={handleFormSubmit}>
           <input
@@ -182,7 +185,7 @@ export default function Count({ product }: { product: Product }) {
         </form>
         <button
           onClick={handleAddToCardClick}
-          className={`basket-count-btn ${inputCount < product.stock ? "bg-accent hover:bg-accent-hl" : "bg-gray-light hover:bg-gray-light-hover"}`}
+          className={`basket-count-btn ${inputCount < product.stock ? "bg-gray-light hover:bg-gray-light-hover" : "bg-gray-light hover:bg-gray-light-hover"}`}
           disabled={inputCount > product.stock}
         >
           {plus}

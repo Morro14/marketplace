@@ -3,7 +3,11 @@ import { RootState, store } from "./store";
 import { Product } from "../data/productTypes";
 
 type ProductId = number;
-export type BasketEntry = { productId: number; count: number; product?: Product | undefined }
+export type BasketEntry = {
+  productId: number;
+  count: number;
+  product?: Product | undefined;
+};
 const initialState: BasketEntry[] = [];
 
 const basketSlice = createSlice({
@@ -17,7 +21,6 @@ const basketSlice = createSlice({
         count: number;
       }>,
     ) {
-      console.log("action payload", action.payload)
       const entry = state.find(
         (entry) => entry.productId === action.payload.productId,
       );
@@ -47,7 +50,8 @@ const basketSlice = createSlice({
         (entry) => entry.productId === action.payload,
       );
       if (!entryIndex) return;
-      state = state.splice(entryIndex);
+      const newState = state.toSpliced(entryIndex, 1);
+      return newState;
     },
   },
 });
@@ -75,9 +79,9 @@ export const selectBasketCount = (state: RootState) => {
 export const selectTotalCost = (state: RootState) => {
   const costs = state.basket.map((entry) => {
     if (entry.product) {
-      return entry.count * entry.product.price
+      return entry.count * entry.product.price;
     }
-    return 0
+    return 0;
   });
   const result = costs.reduce((prev, cur) => {
     let prev_ = prev || 0;
