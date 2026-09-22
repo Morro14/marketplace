@@ -15,7 +15,7 @@ import {
 import { formatProductCount } from "@/src/utils/format";
 import { updateBasketProductData } from "@/src/utils/basketUtils";
 import { Product } from "@/src/data/productTypes";
-import { bin } from "@/src/components/svg/assets";
+import { bin } from "@/src/components/basket/icons";
 import Image from "next/image";
 
 export default function Count({ product }: { product: Product }) {
@@ -166,7 +166,7 @@ export default function Count({ product }: { product: Product }) {
     <div className="flex flex-col items-end gap-2">
       <div className="flex lg:gap-2 gap-1 items-end">
         <button
-          onClick={inputCount > 0 ? handleRemoveFromCardClick : () => {}}
+          onClick={inputCount > 0 ? handleRemoveFromCardClick : () => { }}
           className={`basket-count-btn flex items-center justify-center ${inputCount > 0 ? "bg-gray-light hover:bg-gray-light-hover" : "bg-gray-light hover:bg-gray-light-hover"}`}
           disabled={inputCount <= 0}
         >

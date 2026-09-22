@@ -2,7 +2,7 @@
 import { selectBasketCount, setBasket } from "@/src/state/basketSlice";
 import { useAppDispatch, useAppSelector } from "@/src/state/hooks";
 import { useTranslations } from "next-intl";
-import { bin } from "./icons";
+import { bin, heartEmpty } from "./icons";
 import { heartEmptyBasket } from "../svg/assets";
 import { useRef, useState } from "react";
 import { clearBasket } from "@/src/api/basket";
@@ -32,10 +32,10 @@ export default function TopBar() {
       <div className="flex gap-4">
         <span>{t("items", { count: basketCount })}</span>
         <div className="flex items-center gap-3">
-          <div className="basket-top-bar-favorites-icon__empty  relative top-px w-[16px] h-[16px] group">
-            {heartEmptyBasket}
-          </div>
-          <button onClick={() => dialogRef.current?.showModal()}>{bin}</button>
+          <button className="basket-top-bar-icon__empty relative top-px hover:cursor-pointer group">
+            {heartEmpty}
+          </button>
+          <button className="basket-top-bar-icon__empty group" onClick={() => dialogRef.current?.showModal()}>{bin}</button>
         </div>
       </div>
       <dialog ref={dialogRef} className="m-auto py-4 px-6">

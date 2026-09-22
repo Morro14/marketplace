@@ -12,14 +12,14 @@ export default function HeaderNavRight() {
   const basketCount = useAppSelector(selectBasketCount);
   return (
     <div className="flex gap-3 relative top-[2px] text-primary">
-      <button
-        className="flex items-center gap-3 bg-gray-light hover:bg-white
-        transition-color duration-150 lg:h-[30px] h-7 rounded-2xl font-serif font-semibold
-        px-3 border-b-3 border-primary hover:border-gray-500"
-      >
-        <span className="mt-0.5 font-sans">{t("login")}</span>
-        <Image src={loginIcon} alt="login-icon"></Image>
-      </button>
+      {/* <button */}
+      {/*   className="flex items-center gap-3 bg-gray-light hover:bg-white */}
+      {/*   transition-color duration-150 lg:h-[30px] h-7 rounded-2xl font-serif font-semibold */}
+      {/*   px-3 border-b-3 border-primary hover:border-gray-500" */}
+      {/* > */}
+      {/*   <span className="mt-0.5 font-sans">{t("login")}</span> */}
+      {/*   <Image src={loginIcon} alt="login-icon"></Image> */}
+      {/* </button> */}
       <button
         className="flex items-center gap-3 bg-gray-light hover:bg-white
         transition-color duration-150 lg:h-[30px] h-[28px] rounded-2xl font-serif font-semibold

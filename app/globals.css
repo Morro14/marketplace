@@ -113,12 +113,12 @@ button {
   @apply fixed flex items-center justify-center sm:bottom-0 bottom-14 left-0 bg-black-transparent w-screen h-full z-10
 }
 
-.basket-top-bar-favorites-icon__empty {
-  @apply cursor-pointer
+.basket-top-bar-icon__empty {
+  @apply cursor-pointer transition-colors duration-150
 }
 
-.basket-top-bar-favorites-icon__empty path {
-  @apply stroke-2 stroke-gray-mid group-hover:stroke-white transition-colors duration-150
+.basket-top-bar-icon__empty path {
+  @apply stroke-gray-passive group-hover:stroke-gray-mid transition-colors duration-150
 }
 
 .basket-count-btn {
