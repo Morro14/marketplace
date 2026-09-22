@@ -5,12 +5,17 @@ export interface ProductBasketStatus {
   count: number;
   product: Product;
 }
+// used for clearing basket
+export interface BasketStatus {
+  message: string;
+  basketId: number;
+}
 
 export class BasketApiError extends Error {
   constructor(
     public status: number,
     message: string,
-    public data?: ProductBasketStatus,
+    public data?: ProductBasketStatus | BasketStatus,
   ) {
     super(message);
     this.name = "BasketApiError";
@@ -44,7 +49,6 @@ export async function getBasketProductsStock(productIds: number[]) {
 }
 
 export async function setProductBasketCount(productId: number, count: number) {
-  console.log("setProductBasketCount params", productId, count)
   const response = await fetch(`/api/basket/items/${productId}`, {
     method: "PUT",
     headers: { "content-type": "application/json" },
@@ -81,4 +85,20 @@ export async function deleteProductBasket(productId: number) {
     );
   }
   return (await response.json()) as ProductBasketStatus;
+}
+export async function clearBasket() {
+  const response = await fetch(`/api/basket/clear`, {
+    method: "DELETE",
+  });
+  if (!response.ok) {
+    const body = (await response.json().catch(() => null)) as {
+      error?: string;
+      data?: BasketStatus;
+    } | null;
+    throw new BasketApiError(
+      response.status,
+      body?.error ?? "Unable to clear the basket",
+      body?.data,
+    );
+  }
 }

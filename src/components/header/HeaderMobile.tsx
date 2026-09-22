@@ -3,6 +3,7 @@ import BasketMobileBtn from "../basket/BasketMobileBtn";
 import { db } from "@/db";
 import SortNav from "./SortNav";
 import FilterNav from "./FilterNav";
+import HomeBtn from "./HomeBtn";
 
 export default async function HeaderMobile() {
   // TODO move fetching data to a dedicated component
@@ -10,10 +11,11 @@ export default async function HeaderMobile() {
     orderBy: (category, { asc }) => asc(category.name),
   });
   return (
-    <div className="w-screen max-sm:flex hidden bottom-0 bg-bg z-50 h-14">
-      <div className=" mx-auto justify-between items-center w-[352px]">
+    <div className="fixed w-screen max-sm:flex hidden bottom-0 bg-bg z-50 h-14">
+      <div className="flex mx-auto justify-between items-center w-[352px]">
         <BurgerMenu variant="mobile"></BurgerMenu>
         <div className="flex items-end gap-3">
+          <HomeBtn></HomeBtn>
           <FilterNav categories={categories}></FilterNav>
           <SortNav></SortNav>
           <BasketMobileBtn></BasketMobileBtn>
