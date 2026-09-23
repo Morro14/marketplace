@@ -6,6 +6,7 @@ import type { Product } from "@/src/data/productTypes";
 import { useMemo } from "react";
 import { useCloseOnClick } from "@/src/utils/components/closeOnClick";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { crossInput } from "@/src/components/svg/assets"
 
 export default function ProductSearch({ products }: { products: Product[] }) {
   const t = useTranslations();
@@ -27,7 +28,10 @@ export default function ProductSearch({ products }: { products: Product[] }) {
   const handleInputChange = (e: SyntheticEvent<HTMLInputElement>) => {
     const value = e.currentTarget?.value;
     setValue(value);
+    console.log("value", value)
     const results = fuse.search(value);
+
+    console.log("value", value)
     setInputItems(results);
   };
   const submitSearch = (event: SyntheticEvent<HTMLFormElement>) => {
@@ -47,19 +51,25 @@ export default function ProductSearch({ products }: { products: Product[] }) {
   useCloseOnClick([suggestionsRef, searchInputRef], () =>
     setShowSuggestions(false),
   );
+  const formRef = useRef<null | HTMLFormElement>(null)
   return (
-    <form className="relative min-w-[352] h-8" onSubmit={submitSearch}>
-      <input
-        type="search"
-        className="size-full px-4 border border-gray-form rounded-2xl focus:outline-accent"
-        onChange={handleInputChange}
-        onFocus={() => {
-          setShowSuggestions(true);
-        }}
-        placeholder={t("search products...")}
-        ref={searchInputRef}
-        value={value}
-      />
+    <form className="relative min-w-[352] h-8" ref={formRef} onSubmit={submitSearch}>
+      <div className="relative h-full">
+        <input
+          type="text"
+          className="size-full px-4 border border-gray-form rounded-2xl focus:outline-accent"
+          onChange={handleInputChange}
+          onFocus={() => {
+            setShowSuggestions(true);
+          }}
+          placeholder={t("search products...")}
+          ref={searchInputRef}
+          value={value}
+        />
+        <div onClick={() => { setValue(""); formRef.current?.submit() }} className="absolute flex right-2 top-[4px] w-6 h-6 group">
+          <div className="search-input-cross m-auto relative top-px left-px group-hover:cursor-pointer">{crossInput}</div>
+        </div>
+      </div>
       <div
         className={`${showSuggestions ? "block" : "hidden"} absolute z-20 top-9 left-0 h-128 overflow-y-scroll w-full`}
       >
@@ -77,7 +87,7 @@ export default function ProductSearch({ products }: { products: Product[] }) {
                 router.push(
                   `${pathname}?${new URLSearchParams({
                     ...Object.fromEntries(searchParams.entries()),
-                    name: item.item.name,
+                    name: item.item.slug,
                   }).toString()}`,
                 );
                 setShowSuggestions(false);
