@@ -54,3 +54,8 @@
     @apply bg-blue-black text-white font-semibold w-screen absolute left-0
   }
 }
+
+.checkout-page {
+
+  @apply lg:w-[891px] lg:min-h-200
+}

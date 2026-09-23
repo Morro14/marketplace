@@ -151,8 +151,12 @@ export default function BasketEntry({
             </div>
             <span className="text-gray-passive text-sm">{`${product?.quantity} ${product?.priceUnit}`}</span>
             <div className="lg:flex hidden gap-2">
-              <button className="basket-top-bar-icon__empty relative top-px group" >{heartEmpty}</button>
-              <button className="basket-top-bar-icon__empty group">{bin}</button>
+              <button className="basket-top-bar-icon__empty relative top-px group">
+                {heartEmpty}
+              </button>
+              <button className="basket-top-bar-icon__empty group">
+                {bin}
+              </button>
             </div>
           </div>
           {/* RESPONSIVE Count */}

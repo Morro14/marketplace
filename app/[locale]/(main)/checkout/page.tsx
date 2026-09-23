@@ -17,8 +17,8 @@ export default async function Checkout({
     ? formatDeliveryInfo(deliveryInfo)
     : null;
   return (
-    <div className="2xl:w-[891px] 2xl:min-h-200 flex 2xl:gap-8 bg-bg drop-shadow-lg px-8 py-4 mt-6">
-      <div className="basis-[514px] flex flex-col gap-8">
+    <div className="content-container flex lg:flex-row flex-col-reverse lg:gap-8 gap-4 bg-bg drop-shadow-lg mt-6 pb-8">
+      <div className="lg:basis-[514px] flex flex-col gap-8 px-8">
         {!deliveryInfo ? (
           <div>
             <div className="text-sm text-gray-passive">
@@ -33,7 +33,7 @@ export default async function Checkout({
             <span className="checkout-section-label">
               {t("Delivery information")}
             </span>
-            <div className="text-lg">{deliveryInfoFormatted}</div>
+            <div className="text-xl">{deliveryInfoFormatted}</div>
             <Link
               href="/add-address"
               className="link text-sm text-gray-passive underline"
@@ -45,7 +45,7 @@ export default async function Checkout({
         <Payment></Payment>
       </div>
       <div className="w-px h-full bg-gray-300"></div>
-      <div className="basis-62 h-150">
+      <div className="lg:basis-62 lg:h-150">
         <CheckoutSummary addressInfo={deliveryInfoFormatted}></CheckoutSummary>
       </div>
     </div>

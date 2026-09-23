@@ -54,7 +54,7 @@ export default function AddAddressForm({
     <Form
       action={formAction}
       onSubmit={handleSubmit}
-      className="space-y-6 pt-6 pb-12"
+      className="space-y-6 pt-6 pb-12 px-2"
     >
       <div className="flex flex-col 2xl:w-145 gap-6 ">
         <h2 className="text-2xl font-serif">{t("Add delivery information")}</h2>

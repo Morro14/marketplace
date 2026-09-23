@@ -11,14 +11,30 @@ export interface BasketStatus {
   basketId: number;
 }
 
+{
+  /* for basket product operations errors */
+}
 export class BasketApiError extends Error {
   constructor(
     public status: number,
     message: string,
-    public data?: ProductBasketStatus | BasketStatus,
+    public data?: ProductBasketStatus,
   ) {
     super(message);
     this.name = "BasketApiError";
+  }
+}
+{
+  /* for general basket errors */
+}
+export class BasketGeneralApiError extends Error {
+  constructor(
+    public status: number,
+    message: string,
+    public data?: BasketStatus,
+  ) {
+    super(message);
+    this.name = "BasketGeneralApiError";
   }
 }
 
@@ -95,7 +111,7 @@ export async function clearBasket() {
       error?: string;
       data?: BasketStatus;
     } | null;
-    throw new BasketApiError(
+    throw new BasketGeneralApiError(
       response.status,
       body?.error ?? "Unable to clear the basket",
       body?.data,

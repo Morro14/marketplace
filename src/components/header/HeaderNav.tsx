@@ -1,6 +1,9 @@
+"use  client";
 import Link from "next/link";
 import BurgerMenu from "./BurgerMenu";
 import { useTranslations } from "next-intl";
+import Tooltip from "../Tooltip";
+import { handleTooltipTouch } from "@/src/utils/components/tooltipTouch";
 
 export default function HeaderNav() {
   const t = useTranslations();
@@ -14,15 +17,31 @@ export default function HeaderNav() {
         {t("Marketplace")}
       </Link>
       <div className="gap-3 lg:flex hidden">
-        <Link className="header-nav-link" href={"/about"}>
+        {/* disabled for demo; added tooltip */}
+        <div
+          onTouchStart={handleTooltipTouch}
+          className="header-nav-link group relative"
+        >
           {t("About us")}
-        </Link>
+          <Tooltip
+            styleProps={{ top: 24 }}
+            content={t("This page is not implemented yet")}
+          ></Tooltip>
+        </div>
         <Link className="header-nav-link" href={"/products"}>
           {t("Our products")}
         </Link>
-        <Link className="header-nav-link" href={"/for-partners"}>
+        {/* disabled for demo; added tooltip */}
+        <div
+          onTouchStart={handleTooltipTouch}
+          className="header-nav-link group relative"
+        >
           {t("Become our partners")}
-        </Link>
+          <Tooltip
+            content={t("This page is not implemented yet")}
+            styleProps={{ top: 24 }}
+          ></Tooltip>
+        </div>
       </div>
     </div>
   );

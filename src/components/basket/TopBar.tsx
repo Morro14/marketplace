@@ -3,9 +3,10 @@ import { selectBasketCount, setBasket } from "@/src/state/basketSlice";
 import { useAppDispatch, useAppSelector } from "@/src/state/hooks";
 import { useTranslations } from "next-intl";
 import { bin, heartEmpty } from "./icons";
-import { heartEmptyBasket } from "../svg/assets";
 import { useRef, useState } from "react";
 import { clearBasket } from "@/src/api/basket";
+import Tooltip from "../Tooltip";
+import { handleTooltipTouch } from "@/src/utils/components/tooltipTouch";
 
 export default function TopBar() {
   const t = useTranslations("TopBar");
@@ -32,10 +33,26 @@ export default function TopBar() {
       <div className="flex gap-4">
         <span>{t("items", { count: basketCount })}</span>
         <div className="flex items-center gap-3">
-          <button className="basket-top-bar-icon__empty relative top-px hover:cursor-pointer group">
-            {heartEmpty}
+          {/* disabled for demo; added tooltip */}
+          <div
+            className="flex group relative top-px"
+            onTouchStart={handleTooltipTouch}
+          >
+            <Tooltip
+              content={t(
+                "Adding basket selection to favorites is not implemented yet",
+              )}
+            ></Tooltip>
+            <button className="basket-top-bar-icon__empty relative m-auto  hover:cursor-pointer group">
+              {heartEmpty}
+            </button>
+          </div>
+          <button
+            className="basket-top-bar-icon__empty group"
+            onClick={() => dialogRef.current?.showModal()}
+          >
+            {bin}
           </button>
-          <button className="basket-top-bar-icon__empty group" onClick={() => dialogRef.current?.showModal()}>{bin}</button>
         </div>
       </div>
       <dialog ref={dialogRef} className="m-auto py-4 px-6">

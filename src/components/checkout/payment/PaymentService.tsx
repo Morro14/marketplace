@@ -17,7 +17,7 @@ export default function PaymentService({
   const currency = useAppSelector(selectCurrency);
 
   return (
-    <div className="flex justify-between w-full">
+    <div className="flex sm:flex-row flex-col gap-2 sm:gap-0 justify-between w-full">
       <GooglePayBtn amount={amount} currency={currency} />
       <PayPalBtn amount={amount} currency={currency} />
       <StripeBtn amount={amount} currency={currency} />

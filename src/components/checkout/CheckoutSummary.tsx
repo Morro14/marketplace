@@ -16,7 +16,7 @@ export default async function CheckoutSummary({
   const basketEntriesCount = basket.length || 0;
 
   return (
-    <div className="w-full flex flex-col gap-[18px]">
+    <div className="w-full bg-gray-light pb-2 pt-4 px-8 rounded-lg flex flex-col gap-[18px]">
       <h2 className="text-2xl font-serif">{t("Checkout")}</h2>
       <div className="flex justify-between text-sm w-full">
         <span>{t("items", { count: basketEntriesCount })}</span>
@@ -30,9 +30,13 @@ export default async function CheckoutSummary({
         <span>{`${CURRENCY_SIGN} ${t(formatCost(basketSummary.costTotal))}`}</span>
       </div>
       <div className={`${!addressInfo ? "text-red-warning" : ""}`}>
-        {!addressInfo
-          ? t("Please add a delivery location address for your order")
-          : addressInfo}
+        {!addressInfo ? (
+          <span>
+            t("Please add a delivery location address for your order")
+          </span>
+        ) : (
+          <span className="lg:block hidden">addressInfo</span>
+        )}
       </div>
     </div>
   );

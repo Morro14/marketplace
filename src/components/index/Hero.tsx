@@ -3,7 +3,7 @@ import engraving from "@/src/assets/engraving-1.png";
 import Image from "next/image";
 export default function Hero() {
   return (
-    <div className="w-full flex max-sm:flex-col sm:gap-3 gap-2 sm:mt-2">
+    <div className="w-full flex max-sm:flex-col sm:gap-3 gap-2 sm:mt-2 sm:pt-0 pt-4">
       <div
         className={`h-[170px] sm:w-[274px] w-full border-3 border-primary font-serif font-bold text-2xl text-center flex relative`}
       >
