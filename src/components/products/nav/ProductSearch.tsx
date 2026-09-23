@@ -87,7 +87,7 @@ export default function ProductSearch({ products }: { products: Product[] }) {
                 router.push(
                   `${pathname}?${new URLSearchParams({
                     ...Object.fromEntries(searchParams.entries()),
-                    name: item.item.slug,
+                    name: item.item.name,
                   }).toString()}`,
                 );
                 setShowSuggestions(false);

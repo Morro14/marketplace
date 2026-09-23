@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function BurgerMenu({
   variant = "default",
@@ -11,7 +11,8 @@ export default function BurgerMenu({
 }) {
   const t = useTranslations();
   const dialogRef = useRef<null | HTMLDialogElement>(null);
-  let dialogOpen = false;
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const pos = { default: { x: "-top-4 left-0" }, mobile: { x: "bottom-8 left-0" } }
   return (
     <div className="group flex items-center p-1.5 h-7">
       <dialog
@@ -19,14 +20,13 @@ export default function BurgerMenu({
         id="menu-modal"
         closedby="any"
         ref={dialogRef}
-        onClose={() => (dialogOpen = false)}
       >
         <div
-          className="fixed right-0 top-20 flex flex-col bg-bg starting:opacity-0 opacity-100 transition-opacity duration-150"
-          onClick={() => dialogRef.current?.close()}
+          className={`fixed ${pos[variant]} flex flex-col bg-bg starting:opacity-0 opacity-100 transition-opacity duration-150`}
+          onClick={() => { dialogRef.current?.close(); setDialogOpen(false) }}
         >
-          <Link href={``} className="p-2 border-b border-gray-line">
-            {t("Link 1")}
+          <Link href="/" className="p-2 border-b border-gray-line">
+            {t("Home")}
           </Link>
           <Link href={``} className="p-2 border-b border-gray-line">
             {t("Link 2")}
@@ -44,13 +44,13 @@ export default function BurgerMenu({
       <button
         onClick={() => {
           // const dialogOpen = params.dialogRef.current.open;
-          if (dialogOpen) {
-            dialogRef.current?.close();
-            dialogOpen = false;
-          } else {
+          if (!dialogOpen && !dialogRef.current?.open) {
+            setDialogOpen(true);
             dialogRef.current?.showModal();
-            dialogOpen = true;
+          } else {
+            setDialogOpen(false)
           }
+
           // console.log("dialogOpen", dialogOpen);
           // params.setModalShow(!dialogOpen);
         }}

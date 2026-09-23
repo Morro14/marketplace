@@ -60,7 +60,8 @@ export function calcCost(price: number | undefined, count: number): number {
 
   return value;
 }
-export function formatCost(value: number): string {
+export function formatCost(value_: number | undefined): string {
+  const value = value_ ? value_ : 0
   const floor = Math.floor(value);
   let result = value.toString();
   if (value !== floor) {

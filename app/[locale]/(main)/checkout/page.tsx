@@ -17,8 +17,8 @@ export default async function Checkout({
     ? formatDeliveryInfo(deliveryInfo)
     : null;
   return (
-    <div className="content-container flex lg:flex-row flex-col-reverse lg:gap-8 gap-4 bg-bg drop-shadow-lg mt-6 pb-8">
-      <div className="lg:basis-[514px] flex flex-col gap-8 px-8">
+    <div className="content-container flex lg:flex-row flex-col-reverse bg-bg drop-shadow-lg mt-6 pb-8">
+      <div className="lg:basis-[540px] flex flex-col gap-8 px-8 pt-4">
         {!deliveryInfo ? (
           <div>
             <div className="text-sm text-gray-passive">

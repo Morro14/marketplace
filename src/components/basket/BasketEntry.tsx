@@ -160,32 +160,35 @@ export default function BasketEntry({
             </div>
           </div>
           {/* RESPONSIVE Count */}
-          <div className="flex flex-row items-start gap-3 max-lg:w-full max-lg:justify-between">
+          <div className="flex flex-row items-start gap-4 max-lg:w-full max-lg:justify-between">
             {basketEntry.product ? (
               <Count product={basketEntry.product}></Count>
             ) : (
               ""
             )}
-            <div className="flex text-lg text-primary relative gap-1 h-auto">
-              <div className="">{CURRENCY_SIGN}</div>
-              <div className="w-18">
-                <div
-                  className="absolute"
-                  style={{
-                    transitionProperty: "translate, opacity",
-                    transitionDuration: "300ms",
-                  }}
-                  ref={costDivPrev}
-                >{`${snapPrevCost.current}`}</div>
-                <div
-                  className=""
-                  style={{
-                    transitionProperty: "translate, opacity",
-                    transitionDuration: "300ms",
-                  }}
-                  ref={costDiv}
-                >{`${entryCost}`}</div>
+            <div className="flex flex-col">
+              <div className="flex text-lg text-primary relative gap-1 h-auto">
+                <div className="">{CURRENCY_SIGN}</div>
+                <div className="w-18">
+                  <div
+                    className="absolute"
+                    style={{
+                      transitionProperty: "translate, opacity",
+                      transitionDuration: "300ms",
+                    }}
+                    ref={costDivPrev}
+                  >{`${snapPrevCost.current}`}</div>
+                  <div
+                    className=""
+                    style={{
+                      transitionProperty: "translate, opacity",
+                      transitionDuration: "300ms",
+                    }}
+                    ref={costDiv}
+                  >{`${entryCost}`}</div>
+                </div>
               </div>
+              <span className="text-gray-passive text-sm">{`${CURRENCY_SIGN}${formatCost(basketEntry.product?.price)} / ${basketEntry.product?.priceUnit}`}</span>
             </div>
           </div>
         </div>

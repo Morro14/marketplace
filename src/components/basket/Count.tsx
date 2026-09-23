@@ -16,7 +16,6 @@ import { formatProductCount } from "@/src/utils/format";
 import { updateBasketProductData } from "@/src/utils/basketUtils";
 import { Product } from "@/src/data/productTypes";
 import { bin } from "@/src/components/basket/icons";
-import Image from "next/image";
 
 export default function Count({ product }: { product: Product }) {
   const basketCount = useAppSelector(selectProductCount(product.id));
@@ -164,13 +163,14 @@ export default function Count({ product }: { product: Product }) {
   };
   return (
     <div className="flex flex-col items-end gap-2">
-      <div className="flex lg:gap-2 gap-1 items-end">
+      <div className="flex lg:gap-1 gap-1 items-end border border-gray-light rounded">
         <button
           onClick={inputCount > 0 ? handleRemoveFromCardClick : () => { }}
           className={`basket-count-btn flex items-center justify-center ${inputCount > 0 ? "bg-gray-light hover:bg-gray-light-hover" : "bg-gray-light hover:bg-gray-light-hover"}`}
           disabled={inputCount <= 0}
-        >
-          {inputCount > 1 ? minus : bin}
+        ><div className="m-auto">
+            {inputCount > 1 ? minus : bin}
+          </div>
         </button>
         <form ref={formRef} onSubmit={handleFormSubmit}>
           <input
@@ -185,10 +185,11 @@ export default function Count({ product }: { product: Product }) {
         </form>
         <button
           onClick={handleAddToCardClick}
-          className={`basket-count-btn ${inputCount < product.stock ? "bg-gray-light hover:bg-gray-light-hover" : "bg-gray-light hover:bg-gray-light-hover"}`}
+          className={`basket-count-btn flex ${inputCount < product.stock ? "bg-gray-light hover:bg-gray-light-hover" : "bg-gray-light hover:bg-gray-light-hover"}`}
           disabled={inputCount > product.stock}
-        >
-          {plus}
+        ><div className="m-auto ">
+            {plus}
+          </div>
         </button>
       </div>
       {stockExceeded ? (
@@ -209,7 +210,6 @@ const plus = (
     viewBox="0 0 12 12"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className="m-auto"
   >
     <path d="M6 0L6 12" strokeWidth="2" />
     <line y1="6" x2="12" y2="6" strokeWidth="2" />
@@ -223,7 +223,6 @@ const minus = (
     viewBox="0 0 12 2"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className="m-auto"
   >
     <line y1="1" x2="12" y2="1" strokeWidth="2" />
   </svg>

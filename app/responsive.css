@@ -42,7 +42,7 @@
 }
 
 .basket-entry-image {
-  @apply lg:h-[136px] h-[115px] lg:w-[100px] w-[90px]
+  @apply lg:h-[138px] h-[115px] lg:w-[120px] w-[90px]
 }
 
 .basket-top-bar {
