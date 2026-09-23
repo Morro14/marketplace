@@ -79,3 +79,9 @@ export const bin = (
     />
   </svg>
 );
+export const crossInput = (
+  <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="3.53554" y1="3.53559" x2="10.6066" y2="10.6067" strokeWidth="2" />
+    <line x1="3.53554" y1="10.6066" x2="10.6066" y2="3.53557" strokeWidth="2" />
+  </svg>
+)

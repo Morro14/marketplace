@@ -124,3 +124,7 @@ button {
 .basket-count-btn {
   @apply h-[28px] w-[28px] rounded select-none stroke-primary
 }
+
+.search-input-cross line {
+  @apply stroke-gray-passive group-hover:stroke-gray-mid transition-colors duration-150
+}

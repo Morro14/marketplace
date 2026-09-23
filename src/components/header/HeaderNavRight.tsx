@@ -20,21 +20,21 @@ export default function HeaderNavRight() {
       {/*   <span className="mt-0.5 font-sans">{t("login")}</span> */}
       {/*   <Image src={loginIcon} alt="login-icon"></Image> */}
       {/* </button> */}
-      <button
+      <Link href="/basket"
         className="flex items-center gap-3 bg-gray-light hover:bg-white
         transition-color duration-150 lg:h-[30px] h-[28px] rounded-2xl font-serif font-semibold
         px-3 border-b-3 border-primary hover:border-gray-500"
       >
         <div className="rounded-full h-[20px] w-[20px] text-white bg-accent-red">
-          <div className="relative top-px text-center text-sm font-sans font-bold">
+          <div className="relative text-center text-sm font-sans font-bold">
             {basketCount && basketCount < 100 ? basketCount : "..."}
           </div>
         </div>
-        <Link href={"/basket"} className="flex gap-1">
+        <div className="flex gap-1">
           <span className="mt-0.5 font-sans">{t("basket")}</span>
           <Image aria-selected="false" src={basketIcon} alt="cart-icon"></Image>
-        </Link>
-      </button>
+        </div>
+      </Link>
     </div>
   );
 }
