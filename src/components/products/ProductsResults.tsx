@@ -1,11 +1,14 @@
 "use client";
-import { closeAddModal, selectAddModal, setProducts } from "@/src/state/productsSlice";
+import {
+  closeAddModal,
+  selectAddModal,
+  setProducts,
+} from "@/src/state/productsSlice";
 import { useAppDispatch, useAppSelector } from "@/src/state/hooks";
 import ProductCard from "@/src/components/products/ProductCard";
 import { useEffect, useRef } from "react";
 import ProductAddModal from "@/src/components/products/ProductAddModal";
 import type { Product } from "@/src/data/productTypes";
-import type { BasketEntryWithProduct } from "@/src/data/basketTypes";
 import { BasketEntry, setBasket } from "@/src/state/basketSlice";
 import { setFavorites } from "@/src/state/favoritesSlice";
 import { populateBasketProductData } from "@/src/utils/basketUtils";

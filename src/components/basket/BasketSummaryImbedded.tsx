@@ -36,7 +36,7 @@ export default function BasketSummaryEmbedded() {
             <button className="btn__accent lg:block hidden h-8 rounded-lg font-medium w-50">
               {t("Proceed to checkout")}
             </button>
-            <button className="btn__accent lg:hidden flex items-center justify-between h-8 rounded-lg px-2 font-medium w-full">
+            <button className="btn__accent lg:hidden flex items-center justify-between h-9 rounded-lg px-2 font-medium w-full">
               <div>
                 <span>{t("Proceed to checkout")} | </span>
                 <span className="text-sm text-gray-passive">

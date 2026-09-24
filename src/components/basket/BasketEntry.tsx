@@ -16,8 +16,11 @@ import {
   type BasketEntry,
 } from "@/src/state/basketSlice";
 import { useTranslations } from "next-intl";
-import { useAppDispatch } from "@/src/state/hooks";
+import { useAppDispatch, useAppSelector } from "@/src/state/hooks";
 import { BasketApiError, deleteProductBasket } from "@/src/api/basket";
+import { openAddModal, selectAddModal } from "@/src/state/productsSlice";
+import RemoveEntryDialog from "./RemoveEntryDialog";
+import AddToFavoritesBtn from "../favorites/AddToFavoritesBtn";
 
 export default function BasketEntry({
   basketEntry,
@@ -63,8 +66,10 @@ export default function BasketEntry({
       }
     } finally {
       setIsUpdatingBasket(false);
+      setRemoveEntry(false);
     }
   };
+  // animation
   useEffect(() => {
     if (!costDiv.current || !costDivPrev.current) return;
     if (!entryCostVal || !prevCost) return;
@@ -99,37 +104,36 @@ export default function BasketEntry({
       snapPrevCost.current = entryCost;
     }, 300);
   }, [entryCost]);
+  const selectModal = useAppSelector(selectAddModal);
+  const handleQuickViewClick = () => {
+    if (!basketEntry.product) return;
+    const dialogEl = document.getElementById(
+      "product-add-modal",
+    ) as HTMLDialogElement;
+    if (!dialogEl) return;
+    if (!selectModal.show) {
+      dispatch(openAddModal(basketEntry.product));
+      dialogEl.showModal();
+    }
+  };
+  const [removeEntry, setRemoveEntry] = useState(false);
   return (
     <div
       className={`basket-entry relative flex flex-col justify-between lg:p-3 p-2 w-full ${index < size ? "border-b border-gray-light" : ""}`}
     >
-      {basketEntry.count === 0 ? (
-        <div className="size-full absolute flex top-0 left-0 z-15 bg-[#ffffffbf]">
-          <div className="m-auto">
-            <div className="text-lg">{t("Remove the item?")}</div>
-            <div className="w-full flex justify-between">
-              <button
-                className="btn__accent px-2 h-7 rounded-lg"
-                onClick={handleRemoveFromCardClick}
-              >
-                {t("Remove")}
-              </button>
-              <button
-                onClick={() =>
-                  dispatch(
-                    setProductCount({
-                      productId: basketEntry.productId,
-                      count: 1,
-                    }),
-                  )
-                }
-                className="btn__secondary px-2 h-7 rounded-lg"
-              >
-                {t("Keep")}
-              </button>
-            </div>
-          </div>
-        </div>
+      {basketEntry.count === 0 || removeEntry ? (
+        <RemoveEntryDialog
+          confirmAction={handleRemoveFromCardClick}
+          cancelAction={() => {
+            dispatch(
+              setProductCount({
+                productId: basketEntry.productId,
+                count: 1,
+              }),
+            );
+            setRemoveEntry(false);
+          }}
+        ></RemoveEntryDialog>
       ) : (
         ""
       )}
@@ -140,7 +144,8 @@ export default function BasketEntry({
             src={demoImg}
             loading="eager"
             alt="demo-img"
-            className="object-cover size-full"
+            className="object-cover size-full cursor-pointer"
+            onClick={handleQuickViewClick}
           ></Image>
         </div>
         <div className="flex flex-col lg:flex-row grow justify-between lg:pb-1.5">
@@ -152,9 +157,15 @@ export default function BasketEntry({
             <span className="text-gray-passive text-sm">{`${product?.quantity} ${product?.priceUnit}`}</span>
             <div className="lg:flex hidden gap-2">
               <button className="basket-top-bar-icon__empty relative top-px group">
-                {heartEmpty}
+                <AddToFavoritesBtn
+                  productId={basketEntry.productId}
+                  variant="thin"
+                ></AddToFavoritesBtn>
               </button>
-              <button className="basket-top-bar-icon__empty group">
+              <button
+                onClick={() => setRemoveEntry(true)}
+                className="basket-top-bar-icon__empty group opacity-80 hover:opacity-100"
+              >
                 {bin}
               </button>
             </div>

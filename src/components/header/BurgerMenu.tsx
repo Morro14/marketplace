@@ -12,29 +12,59 @@ export default function BurgerMenu({
   const t = useTranslations();
   const dialogRef = useRef<null | HTMLDialogElement>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const pos = { default: { x: "-top-4 left-0" }, mobile: { x: "bottom-8 left-0" } }
+  const buttonRef = useRef<null | HTMLButtonElement>(null);
+  const getPos = () => {
+    if (!buttonRef.current) {
+      return { x: 0, y: 0 };
+    }
+    const result = {
+      default: {
+        x: buttonRef.current?.getBoundingClientRect().x - 6,
+        y: buttonRef.current?.getBoundingClientRect().y + 34,
+      },
+      mobile: {
+        x: buttonRef.current?.getBoundingClientRect().x,
+        y: buttonRef.current?.getBoundingClientRect().y + 34,
+      },
+    };
+    return result[variant];
+  };
   return (
-    <div className="group flex items-center p-1.5 h-7">
+    <div className="group relative flex items-center p-1.5 h-7">
       <dialog
         className=""
         id="menu-modal"
         closedby="any"
         ref={dialogRef}
+        onClose={() => setDialogOpen(false)}
       >
         <div
-          className={`fixed ${pos[variant]} flex flex-col bg-bg starting:opacity-0 opacity-100 transition-opacity duration-150`}
-          onClick={() => { dialogRef.current?.close(); setDialogOpen(false) }}
+          className={`fixed flex flex-col bg-bg min-w-40  starting:opacity-0 opacity-100 transition-opacity duration-150`}
+          style={{ left: getPos().x, top: getPos().y }}
+          onClick={() => {
+            setDialogOpen(false);
+            dialogRef.current?.close();
+          }}
         >
-          <Link href="/" className="p-2 border-b border-gray-line">
+          <Link
+            href="/"
+            className="p-2 border-b border-gray-300 hover:bg-gray-light"
+          >
             {t("Home")}
           </Link>
-          <Link href={``} className="p-2 border-b border-gray-line">
+          <Link
+            href={``}
+            className="p-2 border-b border-gray-300 hover:bg-gray-light"
+          >
             {t("Link 2")}
           </Link>
-          <Link href={``} className="p-2 border-b border-gray-line">
+          <Link
+            href={``}
+            className="p-2 border-b border-gray-300 hover:bg-gray-light"
+          >
             {t("Link 3")}
           </Link>
-          <Link href={``} className="p-2 border-b border-gray-line">
+          <Link href={``} className="p-2 hover:bg-gray-light">
             {t("Link 4")}
           </Link>
         </div>
@@ -42,13 +72,14 @@ export default function BurgerMenu({
       </dialog>
 
       <button
+        ref={buttonRef}
         onClick={() => {
           // const dialogOpen = params.dialogRef.current.open;
           if (!dialogOpen && !dialogRef.current?.open) {
             setDialogOpen(true);
             dialogRef.current?.showModal();
           } else {
-            setDialogOpen(false)
+            setDialogOpen(false);
           }
 
           // console.log("dialogOpen", dialogOpen);

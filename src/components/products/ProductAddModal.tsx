@@ -7,7 +7,11 @@ import { useState } from "react";
 import Chip from "./nav/Chip";
 import { crossMediumNoBg, heartEmpty } from "../svg/assets";
 import { useAppDispatch, useAppSelector } from "@/src/state/hooks";
-import { selectProductCount, setProductCount, deleteBasketEntry } from "@/src/state/basketSlice";
+import {
+  selectProductCount,
+  setProductCount,
+  deleteBasketEntry,
+} from "@/src/state/basketSlice";
 import { deleteProductBasket, setProductBasketCount } from "@/src/api/basket";
 import { formatProductCount } from "@/src/utils/format";
 
@@ -52,6 +56,7 @@ export default function ProductAddModal({
       setIsSaving(false);
     }
   };
+  console.log(product.id);
   return (
     <div className="flex justify-between md:w-[970px] outline outline-primary -outline-offset-8 p-4 md:h-150">
       {/* MEDIA CAROUSEL */}

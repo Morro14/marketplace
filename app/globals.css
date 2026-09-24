@@ -128,3 +128,7 @@ button {
 .search-input-cross line {
   @apply stroke-gray-passive group-hover:stroke-gray-mid transition-colors duration-150
 }
+
+.hero-carousel-arrow {
+  @apply absolute top-[74px] z-25 cursor-pointer select-none
+}
