@@ -39,6 +39,7 @@ export default function TopBar() {
             onTouchStart={handleTooltipTouch}
           >
             <Tooltip
+              styleProps={{ transform: "translate(-100%, 0)" }}
               content={t(
                 "Adding basket selection to favorites is not implemented yet",
               )}

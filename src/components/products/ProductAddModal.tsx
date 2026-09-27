@@ -50,17 +50,18 @@ export default function ProductAddModal({
         status = await setProductBasketCount(product.id, inputCount);
         dispatch(setProductCount(status));
       }
-      console.log("status", status);
       closeModalAction();
     } finally {
       setIsSaving(false);
     }
   };
-  console.log(product.id);
   return (
-    <div className="flex justify-between md:w-[970px] outline outline-primary -outline-offset-8 p-4 md:h-150">
+    <div className="product-add-modal flex lg:flex-row flex-col justify-between lg:p-4 p-2 lg:h-150">
       {/* MEDIA CAROUSEL */}
-      <div className="embla__viewport w-[464px] h-full" ref={emblaRef}>
+      <div
+        className="embla__viewport lg:w-[462px] h-full lg:rounded-xl rounded-lg"
+        ref={emblaRef}
+      >
         <div className="embla__container h-full w-full">
           <div className="embla__slide relative bg-linear-65 from-gray-200 to-gray-100"></div>
           <div className="embla__slide relative bg-linear-65 from-gray-200 to-gray-100"></div>
@@ -69,7 +70,7 @@ export default function ProductAddModal({
         </div>
       </div>
 
-      <div className="p-0 pl-0! flex flex-col gap-4 w-[464px]">
+      <div className="p-0 pl-0! flex flex-col gap-4 lg:w-[462px] max-lg:grow">
         {/* NAV */}
         <div className="flex w-full items-start justify-between">
           <div className="flex gap-1">
@@ -138,6 +139,7 @@ export default function ProductAddModal({
               onClick={handleAddToCardClick}
               className={`h-7 w-7 select-none stroke-primary ${inputCount < product.stock ? "bg-accent hover:bg-accent-hl" : "bg-gray-light hover:bg-gray-light-hover"}`}
               disabled={inputCount > product.stock}
+              autoFocus
             >
               {plus}
             </button>

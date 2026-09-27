@@ -171,13 +171,13 @@ export default function BasketEntry({
             </div>
           </div>
           {/* RESPONSIVE Count */}
-          <div className="flex flex-row items-start gap-4 max-lg:w-full max-lg:justify-between">
+          <div className="flex flex-row lg:items-start items-end gap-4 max-lg:w-full max-lg:justify-between relative">
             {basketEntry.product ? (
               <Count product={basketEntry.product}></Count>
             ) : (
               ""
             )}
-            <div className="flex flex-col">
+            <div className="flex flex-col max-lg:flex-col-reverse relative -bottom-1">
               <div className="flex text-lg text-primary relative gap-1 h-auto">
                 <div className="">{CURRENCY_SIGN}</div>
                 <div className="w-18">

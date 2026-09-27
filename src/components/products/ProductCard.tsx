@@ -1,6 +1,5 @@
 "use client";
 import type { Product } from "@/src/data/productTypes";
-import demoImg from "@/src/assets/product-demo.jpeg";
 import Image from "next/image";
 import { slugify } from "@/src/utils/general";
 import { CURRENCY, CURRENCY_SIGNS } from "@/src/utils/appVars";
@@ -16,7 +15,7 @@ import AddToFavoritesBtn from "../favorites/AddToFavoritesBtn";
 
 export default function ProductCard({ product }: { product: Product }) {
   const nameSlug = slugify(product.name);
-
+  const MEDIA_BASE_URL = process.env.NEXT_PUBLIC_GCS_MEDIA_URL_BASE;
   const catDivider = "/";
   const catLength = product.categories.length;
   const currency = CURRENCY_SIGNS[CURRENCY];
@@ -78,11 +77,12 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <div className="product-card flex flex-col h-90 sm:drop-shadow bg-bg justify-between pb-2 group rounded-lg">
       <div className="relative flex">
-        <Image
-          src={demoImg}
-          className="sm:h-[231px] h-[200px] w-full object-cover rounded-t-lg"
+        <img
+          src={`${MEDIA_BASE_URL}/media/product/${product.id}/320.webp`}
+          className="sm:h-[231px] h-[200px] w-full object-cover rounded-t-lg cursor-pointer"
           alt={`product-card-img-${nameSlug}`}
-        ></Image>
+          onClick={handleQuickViewClick}
+        ></img>
         <div className="absolute flex w-full justify-between bottom-1.5 left-0 px-1.5 ">
           <QuickViewBtn
             handleQuickViewClick={handleQuickViewClick}

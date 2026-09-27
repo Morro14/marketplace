@@ -29,7 +29,7 @@ export default function Entries({
   const selectModal = useAppSelector(selectAddModal);
   const modalRef = useRef<HTMLDialogElement | null>(null);
   return (
-    <div className="basket-entries bg-bg rounded-b-lg">
+    <div className="basket-entries bg-bg rounded-b-lg pb-40">
       <dialog
         id={`product-add-modal`}
         onClose={() => dispatch(closeAddModal())}

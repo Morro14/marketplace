@@ -3,20 +3,22 @@ import { SORT_BY } from "@/src/utils/appVars";
 import { useTranslations } from "next-intl";
 import { ProductSort } from "@/src/data/productQueries";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useRef } from "react";
+import { RefObject, useRef } from "react";
 import { useCloseOnClick } from "@/src/utils/components/closeOnClick";
 export default function SortModal({
   closeAction,
   active,
+  buttonRef,
 }: {
   closeAction: () => void;
   active: boolean;
+  buttonRef: RefObject<HTMLDivElement | null>;
 }) {
   const t = useTranslations("SortModal");
   const searchParams = useSearchParams();
   const modalRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
-  useCloseOnClick([modalRef], closeAction, [], false);
+  useCloseOnClick([modalRef, buttonRef], closeAction, [], false);
   const handleNav = (e: any, sortBy: ProductSort) => {
     if (!modalRef.current) {
       return;

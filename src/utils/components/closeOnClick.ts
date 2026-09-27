@@ -11,19 +11,19 @@ export function useCloseOnClick<T extends any[]>(
       const target = e.target as Node;
       const targetIsModal = modalRefs?.some((ref) => {
         if (!ref.current) return false;
-        const contains = ref.current?.contains(target)
-        return contains
+        const contains = ref.current?.contains(target);
+        return contains;
       });
       if (!targetIsModal) {
         if (blockFirstClickOutside) {
-          e.stopPropagation()
+          e.stopPropagation();
         }
         if (callback) {
           callback(...callBackArgs);
         }
-        return
+        return;
       }
-      return
+      return;
     };
     // TODO separate key press logic
     const handleEscapePress = (e: KeyboardEvent) => {

@@ -1,5 +1,6 @@
 "use client";
 
+import { useCloseOnClick } from "@/src/utils/components/closeOnClick";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRef, useState } from "react";
@@ -10,95 +11,93 @@ export default function BurgerMenu({
   variant?: "default" | "mobile";
 }) {
   const t = useTranslations();
-  const dialogRef = useRef<null | HTMLDialogElement>(null);
+  const dialogRef = useRef<null | HTMLDivElement>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const buttonRef = useRef<null | HTMLButtonElement>(null);
   const getPos = () => {
     if (!buttonRef.current) {
-      return { x: 0, y: 0 };
+      return { left: 0, top: 0, bottom: 0 };
     }
     const result = {
       default: {
-        x: buttonRef.current?.getBoundingClientRect().x - 6,
-        y: buttonRef.current?.getBoundingClientRect().y + 34,
+        left: buttonRef.current?.getBoundingClientRect().left - 6,
+        top: buttonRef.current?.getBoundingClientRect().top + 34,
+        bottom: "",
       },
       mobile: {
-        x: buttonRef.current?.getBoundingClientRect().x,
-        y: buttonRef.current?.getBoundingClientRect().y + 34,
+        left: "calc(50% - 176px)",
+        bottom: `${219}px`,
+        top: "",
       },
     };
     return result[variant];
   };
+  useCloseOnClick([dialogRef, buttonRef], () => setDialogOpen(false), [], true);
   return (
     <div className="group relative flex items-center p-1.5 h-7">
-      <dialog
-        className=""
-        id="menu-modal"
-        closedby="any"
-        ref={dialogRef}
-        onClose={() => setDialogOpen(false)}
-      >
+      <div className={`backdrop-modal ${dialogOpen ? "flex" : "hidden!"} `}>
         <div
-          className={`fixed flex flex-col bg-bg min-w-40  starting:opacity-0 opacity-100 transition-opacity duration-150`}
-          style={{ left: getPos().x, top: getPos().y }}
-          onClick={() => {
-            setDialogOpen(false);
-            dialogRef.current?.close();
+          ref={dialogRef}
+          className={`${dialogOpen ? "block" : "hidden"} absolute`}
+          style={{
+            left: getPos().left,
+            top: getPos().top,
+            bottom: getPos().bottom,
           }}
         >
-          <Link
-            href="/"
-            className="p-2 border-b border-gray-300 hover:bg-gray-light"
+          <div
+            className={`fixed flex flex-col bg-bg min-w-40  starting:opacity-0 opacity-100 transition-opacity duration-150`}
+            onClick={() => setDialogOpen(false)}
           >
-            {t("Home")}
-          </Link>
-          <Link
-            href={``}
-            className="p-2 border-b border-gray-300 hover:bg-gray-light"
-          >
-            {t("Link 2")}
-          </Link>
-          <Link
-            href={``}
-            className="p-2 border-b border-gray-300 hover:bg-gray-light"
-          >
-            {t("Link 3")}
-          </Link>
-          <Link href={``} className="p-2 hover:bg-gray-light">
-            {t("Link 4")}
-          </Link>
+            <Link
+              href="/"
+              className="p-2 border-b border-gray-300 hover:bg-gray-light"
+            >
+              {t("Home")}
+            </Link>
+            <Link
+              href={``}
+              className="p-2 border-b border-gray-300 hover:bg-gray-light"
+            >
+              {t("Link 2")}
+            </Link>
+            <Link
+              href={``}
+              className="p-2 border-b border-gray-300 hover:bg-gray-light"
+            >
+              {t("Link 3")}
+            </Link>
+            <Link href={``} className="p-2 hover:bg-gray-light">
+              {t("Link 4")}
+            </Link>
+          </div>
+          {/* <p>123</p> */}
         </div>
-        {/* <p>123</p> */}
-      </dialog>
+      </div>
 
       <button
         ref={buttonRef}
         onClick={() => {
-          // const dialogOpen = params.dialogRef.current.open;
-          if (!dialogOpen && !dialogRef.current?.open) {
+          if (!dialogOpen) {
             setDialogOpen(true);
-            dialogRef.current?.showModal();
           } else {
             setDialogOpen(false);
           }
-
-          // console.log("dialogOpen", dialogOpen);
-          // params.setModalShow(!dialogOpen);
         }}
         className={`space-y-1.25 ${variant === "default" ? "fill-gray-light" : "fill-gray-passive"}`}
       >
         <div
-          className={`transition duration-150 group-has-open:opacity-0 opacity-100`}
+          className={`transition duration-150 ${dialogOpen ? "opacity-0" : "opacity-100"}`}
         >
           {bar}
         </div>
         <div
-          className={`transition duration-150 ease-out relative group-has-open:-rotate-45 rotate-0`}
+          className={`transition duration-150 ease-out relative ${dialogOpen ? "-rotate-45" : "rotate-0"}`}
         >
           {bar}
         </div>
         <div
-          className={`transition duration-150 ease-out relative group-has-open:rotate-45 rotate-0 group-has-open:bottom-[9px] bottom-0`}
+          className={`transition duration-150 ease-out relative ${dialogOpen ? "rotate-45 bottom-[9px]" : "rotate-0 bottom-0"}`}
         >
           {bar}
         </div>
