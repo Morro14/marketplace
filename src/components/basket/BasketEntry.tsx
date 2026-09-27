@@ -2,7 +2,7 @@
 import Image from "next/image";
 import demoImg from "@/src/assets/product-demo.jpeg";
 import Count from "./Count";
-import { heartEmpty, bin } from "./icons";
+import { bin } from "./icons";
 import {
   calcCost,
   formatCost,
@@ -177,7 +177,8 @@ export default function BasketEntry({
             ) : (
               ""
             )}
-            <div className="flex flex-col max-lg:flex-col-reverse relative -bottom-1">
+            <div className="flex flex-col max-lg:flex-col-reverse relative">
+              {/* COST */}
               <div className="flex text-lg text-primary relative gap-1 h-auto">
                 <div className="">{CURRENCY_SIGN}</div>
                 <div className="w-18">
@@ -199,7 +200,8 @@ export default function BasketEntry({
                   >{`${entryCost}`}</div>
                 </div>
               </div>
-              <span className="text-gray-passive text-sm">{`${CURRENCY_SIGN}${formatCost(basketEntry.product?.price)} / ${basketEntry.product?.priceUnit}`}</span>
+              {/* PRICE PER UNIT */}
+              <span className="text-gray-passive relative left-[6px] text-sm">{`${CURRENCY_SIGN}${formatCost(basketEntry.product?.price)} / ${basketEntry.product?.priceUnit}`}</span>
             </div>
           </div>
         </div>

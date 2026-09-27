@@ -7,10 +7,12 @@ import { useRef, useState } from "react";
 import { clearBasket } from "@/src/api/basket";
 import Tooltip from "../Tooltip";
 import { handleTooltipTouch } from "@/src/utils/components/tooltipTouch";
+import { BasketEntryWithProduct } from "@/src/data/basketTypes";
 
-export default function TopBar() {
+export default function TopBar({ basket }: { basket: BasketEntryWithProduct[] }) {
   const t = useTranslations("TopBar");
   const basketCount = useAppSelector(selectBasketCount);
+  // const basketCount = basket.length
   const dispatch = useAppDispatch();
   const [isUpdating, setIsUpdating] = useState(false);
   const handleClearBasketClick = async () => {
@@ -31,7 +33,7 @@ export default function TopBar() {
     >
       <span className="font-serif text-lg">{t("title")}</span>
       <div className="flex gap-4">
-        <span>{t("items", { count: basketCount })}</span>
+        <span>{basketCount ? t("items", { count: basketCount }) : t("loading...")}</span>
         <div className="flex items-center gap-3">
           {/* disabled for demo; added tooltip */}
           <div

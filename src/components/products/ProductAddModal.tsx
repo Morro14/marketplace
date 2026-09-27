@@ -14,6 +14,7 @@ import {
 } from "@/src/state/basketSlice";
 import { deleteProductBasket, setProductBasketCount } from "@/src/api/basket";
 import { formatProductCount } from "@/src/utils/format";
+import AddToFavoritesBtn from "../favorites/AddToFavoritesBtn";
 
 export default function ProductAddModal({
   product,
@@ -86,7 +87,12 @@ export default function ProductAddModal({
           <div className="flex gap-2 items-center">
             <div className="h-4">
               {/* placeholder for add to favorite function*/}
-              {heartEmpty}
+              <button className="basket-top-bar-icon__empty relative group">
+                <AddToFavoritesBtn
+                  productId={product.id}
+                  variant="thin"
+                ></AddToFavoritesBtn>
+              </button>
             </div>
             <div
               onClick={closeModalAction}
@@ -116,7 +122,7 @@ export default function ProductAddModal({
           <div className="text-sm text-gray-500">{t("Unit number")}</div>
           <div className="flex gap-4 items-end">
             <button
-              onClick={inputCount > 0 ? handleRemoveFromCardClick : () => {}}
+              onClick={inputCount > 0 ? handleRemoveFromCardClick : () => { }}
               className={`h-7 w-7 select-none stroke-primary ${inputCount > 0 ? "bg-accent hover:bg-accent-hl" : "bg-gray-light hover:bg-gray-light-hover"}`}
               disabled={inputCount <= 0}
             >

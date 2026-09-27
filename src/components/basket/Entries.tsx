@@ -16,7 +16,7 @@ export default function Entries({
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(setBasket(basket));
-  }, [basket, dispatch]);
+  }, [basket]);
 
   const handleCloseModalClick = () => {
     if (!modalRef.current) return;
@@ -46,14 +46,14 @@ export default function Entries({
           ""
         )}
       </dialog>
-      {basketState.map((item, i) => (
+      {basketState ? basketState.map((item, i) => (
         <BasketEntry
           key={`basket-entry-${item.productId}`}
           basketEntry={item}
           index={i}
           size={basket.length}
         ></BasketEntry>
-      ))}
+      )) : ""}
     </div>
   );
 }

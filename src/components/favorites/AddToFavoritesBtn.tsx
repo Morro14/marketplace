@@ -124,9 +124,8 @@ export default function AddToFavoritesBtn({
   return (
     <div
       onClick={handleFavoriteClick}
-      className={`group-hover:opacity-100 ${variant === "main" ? "opacity-50" : "opacity-80"} group/heart cursor-pointer transition-opacity duration-150 ${
-        isUpdatingFavorites ? "opacity-50 cursor-not-allowed" : ""
-      }`}
+      className={`group-hover:opacity-100 ${variant === "main" ? "opacity-80" : "opacity-80"} group/heart cursor-pointer transition-opacity duration-150 ${isUpdatingFavorites ? "opacity-50 cursor-not-allowed" : ""
+        }`}
     >
       {isFavorited ? variants[variant].filled : variants[variant].empty}
     </div>

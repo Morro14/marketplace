@@ -42,7 +42,7 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={`${inika.variable} ${sourceSans.variable} text-primary h-full antialiased`}
+      className={`${inika.variable} ${sourceSans.variable} text-primary h-full antialiased scrollbar-gutter-stable`}
     >
       <body className="size-full flex flex-col mx-auto">
         <IntlProviderCustom locale={locale} messages={messages}>
