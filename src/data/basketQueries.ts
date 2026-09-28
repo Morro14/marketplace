@@ -36,7 +36,7 @@ export async function getBasketWithProducts() {
 
 function calculateCostTotal(basketEntries: BasketEntryWithProduct[]): number {
   return basketEntries.reduce(
-    (total, entry) => total + calcCost(entry.product.price, entry.count),
+    (total, entry) => total + calcCost(entry.product?.price, entry.count),
     0,
   );
 }

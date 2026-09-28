@@ -165,12 +165,11 @@ export default function Count({ product }: { product: Product }) {
     <div className="flex flex-col items-end gap-2">
       <div className="flex lg:gap-1 gap-1 items-end border border-gray-light rounded">
         <button
-          onClick={inputCount > 0 ? handleRemoveFromCardClick : () => { }}
+          onClick={inputCount > 0 ? handleRemoveFromCardClick : () => {}}
           className={`basket-count-btn flex items-center justify-center ${inputCount > 0 ? "bg-gray-light hover:bg-gray-light-hover" : "bg-gray-light hover:bg-gray-light-hover"}`}
           disabled={inputCount <= 0}
-        ><div className="m-auto">
-            {inputCount > 1 ? minus : bin}
-          </div>
+        >
+          <div className="m-auto">{inputCount > 1 ? minus : bin}</div>
         </button>
         <form ref={formRef} onSubmit={handleFormSubmit}>
           <input
@@ -187,9 +186,8 @@ export default function Count({ product }: { product: Product }) {
           onClick={handleAddToCardClick}
           className={`basket-count-btn flex ${inputCount < product.stock ? "bg-gray-light hover:bg-gray-light-hover" : "bg-gray-light hover:bg-gray-light-hover"}`}
           disabled={inputCount > product.stock}
-        ><div className="m-auto ">
-            {plus}
-          </div>
+        >
+          <div className="m-auto ">{plus}</div>
         </button>
       </div>
       {stockExceeded ? (

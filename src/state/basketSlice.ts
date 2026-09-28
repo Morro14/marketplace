@@ -22,17 +22,16 @@ const basketSlice = createSlice({
         count: number;
       }>,
     ) {
-      if (state === null) return
+      if (state === null) return;
       const entry = state.find(
         (entry) => entry.productId === action.payload.productId,
       );
       if (!entry) {
-        state.push(
-          {
-            productId: action.payload.productId,
-            count: action.payload.count,
-          })
-        return
+        state.push({
+          productId: action.payload.productId,
+          count: action.payload.count,
+        });
+        return;
       }
 
       entry.count = action.payload.count;
@@ -41,7 +40,7 @@ const basketSlice = createSlice({
       return action.payload;
     },
     deleteBasketEntry(state, action: PayloadAction<ProductId>) {
-      if (state === null) return
+      if (state === null) return;
       const entryIndex = state.findIndex(
         (entry) => entry.productId === action.payload,
       );
@@ -55,7 +54,7 @@ export const selectBasket = (state: RootState) => {
   return state.basket;
 };
 export const selectProductCount = (productId: number) => (state: RootState) => {
-  if (state.basket === null) return
+  if (state.basket === null) return 0;
   const entryExists = state.basket.find(
     (entry) => entry.productId === productId,
   );
@@ -63,7 +62,7 @@ export const selectProductCount = (productId: number) => (state: RootState) => {
   return result;
 };
 export const selectBasketCount = (state: RootState) => {
-  if (state.basket === null) return
+  if (state.basket === null) return 0;
   const accCount = state.basket.reduce(
     (prev, cur) => {
       if (!cur?.count) return prev;
@@ -75,7 +74,7 @@ export const selectBasketCount = (state: RootState) => {
   return accCount.count;
 };
 export const selectTotalCost = (state: RootState) => {
-  if (state.basket === null) return
+  if (state.basket === null) return 0;
   const costs = state.basket.map((entry) => {
     if (entry.product) {
       return entry.count * entry.product.price;
@@ -91,7 +90,7 @@ export const selectTotalCost = (state: RootState) => {
 };
 
 export const selectProduct = (productId: number) => (state: RootState) => {
-  if (state.basket === null) return
+  if (state.basket === null) return;
   const product = state.basket.find((p) => p.productId === productId)?.product;
   return product;
 };
