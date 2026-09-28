@@ -9,7 +9,11 @@ import Tooltip from "../Tooltip";
 import { handleTooltipTouch } from "@/src/utils/components/tooltipTouch";
 import { BasketEntryWithProduct } from "@/src/data/basketTypes";
 
-export default function TopBar({ basket }: { basket: BasketEntryWithProduct[] }) {
+export default function TopBar({
+  basket,
+}: {
+  basket: BasketEntryWithProduct[];
+}) {
   const t = useTranslations("TopBar");
   const basketCount = useAppSelector(selectBasketCount);
   // const basketCount = basket.length
@@ -26,6 +30,7 @@ export default function TopBar({ basket }: { basket: BasketEntryWithProduct[] })
     setIsUpdating(false);
   };
   const dialogRef = useRef<null | HTMLDialogElement>(null);
+  console.log("basket count", basketCount);
   return (
     <div
       className="basket-top-bar h-[43px] shrink-0 flex justify-between
@@ -33,7 +38,11 @@ export default function TopBar({ basket }: { basket: BasketEntryWithProduct[] })
     >
       <span className="font-serif text-lg">{t("title")}</span>
       <div className="flex gap-4">
-        <span>{basketCount ? t("items", { count: basketCount }) : t("loading...")}</span>
+        <span>
+          {basketCount !== null && basketCount >= 0
+            ? t("items", { count: basketCount })
+            : t("loading...")}
+        </span>
         <div className="flex items-center gap-3">
           {/* disabled for demo; added tooltip */}
           <div

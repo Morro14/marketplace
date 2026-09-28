@@ -62,7 +62,7 @@ export const selectProductCount = (productId: number) => (state: RootState) => {
   return result;
 };
 export const selectBasketCount = (state: RootState) => {
-  if (state.basket === null) return 0;
+  if (state.basket === null) return null;
   const accCount = state.basket.reduce(
     (prev, cur) => {
       if (!cur?.count) return prev;

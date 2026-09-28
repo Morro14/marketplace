@@ -15,12 +15,12 @@ import {
   setProductCount,
   type BasketEntry,
 } from "@/src/state/basketSlice";
-import { useTranslations } from "next-intl";
 import { useAppDispatch, useAppSelector } from "@/src/state/hooks";
 import { BasketApiError, deleteProductBasket } from "@/src/api/basket";
 import { openAddModal, selectAddModal } from "@/src/state/productsSlice";
 import RemoveEntryDialog from "./RemoveEntryDialog";
 import AddToFavoritesBtn from "../favorites/AddToFavoritesBtn";
+import { ImageLoading } from "../placeholders/ImageLoading";
 
 export default function BasketEntry({
   basketEntry,
@@ -39,7 +39,6 @@ export default function BasketEntry({
   const snapPrevCost = useRef(entryCost);
   const costDiv = useRef<null | HTMLDivElement>(null);
   const costDivPrev = useRef<null | HTMLDivElement>(null);
-  const t = useTranslations();
   const dispatch = useAppDispatch();
   const [isUpdatingBasket, setIsUpdatingBasket] = useState(false);
 
@@ -117,6 +116,7 @@ export default function BasketEntry({
     }
   };
   const [removeEntry, setRemoveEntry] = useState(false);
+  const MEDIA_BASE_URL = process.env.NEXT_PUBLIC_GCS_MEDIA_URL_BASE;
   return (
     <div
       className={`basket-entry relative flex flex-col justify-between lg:p-3 p-2 w-full ${index < size ? "border-b border-gray-light" : ""}`}
@@ -140,13 +140,15 @@ export default function BasketEntry({
       {/* RESPONSIVE */}
       <div className="flex gap-3 h-full justify-between w-full">
         <div className="basket-entry-image rounded-lg overflow-hidden shrink-0">
-          <Image
-            src={demoImg}
-            loading="eager"
-            alt="demo-img"
-            className="object-cover size-full cursor-pointer"
-            onClick={handleQuickViewClick}
-          ></Image>
+          <ImageLoading
+            imageAttrs={{
+              src: `${MEDIA_BASE_URL}/media/product/${basketEntry.productId}/640.webp`,
+              className: "object-cover size-full cursor-pointer",
+              loading: "eager",
+              alt: "demo-img",
+              onClick: handleQuickViewClick,
+            }}
+          ></ImageLoading>
         </div>
         <div className="flex flex-col lg:flex-row grow justify-between lg:pb-1.5">
           <div className="flex flex-col justify-between">
