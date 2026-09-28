@@ -7,8 +7,10 @@ import {
   setCategoriesConfirmed,
   selectCategoriesSelected,
 } from "@/src/state/productsSlice";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Category } from "@/src/data/productTypes";
+import ShowFavoritesBtn from "../../favorites/ShowFavoritesBtn";
+import { selectFavoritesCount } from "@/src/state/favoritesSlice";
 
 export default function ProductsCatModal({
   cats,
@@ -44,14 +46,15 @@ export default function ProductsCatModal({
     closeModalAction();
     router.replace(`/products?${params.toString()}`);
   };
+  const favoritesCount = useAppSelector(selectFavoritesCount);
   return (
-    <div className="products-cats-modal sm:drop-shadow-lg bg-bg flex flex-col ">
+    <div className="products-cats-modal sm:drop-shadow-2xl bg-bg flex flex-col ">
       {/* responsive */}
-      <h4 className="font-serif 2xl:text-2xl text-lg text-primary max-sm:text-right">
+      <h4 className="font-serif 2xl:text-2xl text-lg text-primary ">
         {t("Select categories to filter products")}
       </h4>
-      <div className="flex flex-col gap-4 2xl:h-45">
-        <div className="flex flex-wrap gap-2 max-sm:justify-end">
+      <div className="flex flex-col gap-3 2xl:h-45">
+        <div className="flex flex-wrap gap-2 ">
           {catsSelected.length === 0 ? (
             <span className="text-gray-400 italic">
               {t("Show products from all categories")}
@@ -68,7 +71,7 @@ export default function ProductsCatModal({
           )}
         </div>
         <div className="w-full h-px bg-gray-300"></div>
-        <div className="flex flex-wrap gap-2 max-sm:justify-end">
+        <div className="flex flex-wrap gap-2">
           {nonSelectedCats.map((cat, i) => (
             <Chip
               key={`product-cat-modal-chip-${i}`}
@@ -80,6 +83,19 @@ export default function ProductsCatModal({
         </div>
       </div>
       <div className="w-full h-px bg-gray-300"></div>
+      <div className="flex flex-col gap-4" onClick={closeModalAction}>
+        <span className="font-serif 2xl:text-2xl text-lg">
+          {t("Favorites")}
+        </span>
+        {favoritesCount > 0 ? (
+          <ShowFavoritesBtn></ShowFavoritesBtn>
+        ) : (
+          <span className="text-gray-400 italic">
+            {t("No favorite products saved")}
+          </span>
+        )}
+      </div>
+      <div className="block w-full h-px bg-gray-300"></div>
       <div className="flex gap-2 mt-0 max-sm:justify-end">
         <button onClick={confirm} className="btn__accent px-6 rounded-lg h-7">
           {t("Apply")}

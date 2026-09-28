@@ -19,8 +19,8 @@ export default async function Hero() {
         </div>
         <Image className="brightness-75" src={logo} alt="logo"></Image>
       </div>
-      <div className="sm:flex hidden relative bg-linear-65 from-gray-200 to-gray-100 grow border border-3 border-gray-300">
-        <span className="font-serif font-semibold opacity-20 mb-4 ml-6 flex items-end text-2xl ">
+      <div className="sm:flex hidden relative bg-linear-65 from-gray-200 to-gray-100 grow border-3 border-gray-300">
+        <span className="bg-linear-to-r from-white to-gray-light bg-clip-text text-5xl font-semibold font-serif text-transparent mb-4 ml-6 flex items-end">
           Promotion section
         </span>
       </div>

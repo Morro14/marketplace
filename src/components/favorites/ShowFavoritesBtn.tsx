@@ -1,7 +1,8 @@
 "use client";
 
 import { selectFavoritesCount } from "@/src/state/favoritesSlice";
-import { useAppSelector } from "@/src/state/hooks";
+import { useAppDispatch, useAppSelector } from "@/src/state/hooks";
+import { setShowFavorites } from "@/src/state/productsSlice";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -11,13 +12,16 @@ export default function ShowFavoritesBtn() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const favoritesActive = searchParams.has("favorites", "true");
+  const dispatch = useAppDispatch();
   const handleShowClick = () => {
     const params = new URLSearchParams(searchParams);
+    dispatch(setShowFavorites(true));
     params.append("favorites", "true");
     router.replace(`/products?${params.toString()}`);
   };
   const handleResetClick = () => {
     const params = new URLSearchParams(searchParams);
+    dispatch(setShowFavorites(false));
     params.delete("favorites", "true");
     router.replace(`/products?${params.toString()}`);
   };

@@ -16,6 +16,7 @@ interface ProductsState {
   products: Product[];
   interface: {
     categoriesSelected: Category[];
+    showFavorites: boolean;
     addModal: {
       show: boolean;
       product: Product | null;
@@ -30,6 +31,7 @@ const initialState: ProductsState = {
   },
   products: [],
   interface: {
+    showFavorites: false,
     categoriesSelected: [],
     addModal: { show: false, product: null },
   },
@@ -44,7 +46,7 @@ const productsSlice = createSlice({
       state.filters.categories = action.payload;
     },
     setProducts(state, action: PayloadAction<Product[]>) {
-      state.products = action.payload
+      state.products = action.payload;
     },
     setCategoriesSelected(state, action: PayloadAction<Category[]>) {
       state.interface.categoriesSelected = action.payload;
@@ -80,9 +82,12 @@ const productsSlice = createSlice({
       state.interface.addModal.show = false;
       state.interface.addModal.product = null;
     },
+    setShowFavorites(state, action: PayloadAction<boolean>) {
+      state.interface.showFavorites = action.payload;
+    },
   },
 });
-export const selectProducts = (state: RootState) => state.products.products
+export const selectProducts = (state: RootState) => state.products.products;
 export const selectCategoriesConfirmed = (state: RootState) =>
   state.products.filters.categories;
 
@@ -95,6 +100,8 @@ export const selectProductFilter = (state: RootState) => state.products.filters;
 
 export const selectAddModal = (state: RootState) =>
   state.products.interface.addModal;
+export const selectShowFavorites = (state: RootState) =>
+  state.products.interface.showFavorites;
 
 export const {
   setCategoriesConfirmed,
@@ -102,6 +109,7 @@ export const {
   setPriceRange,
   setSortBy,
   setFilters,
+  setShowFavorites,
   setProducts,
   openAddModal,
   closeAddModal,

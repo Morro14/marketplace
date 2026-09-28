@@ -12,6 +12,7 @@ import { useState } from "react";
 import { openAddModal, selectAddModal } from "@/src/state/productsSlice";
 import QuickViewBtn from "./QuickViewBtn";
 import AddToFavoritesBtn from "../favorites/AddToFavoritesBtn";
+import { ImageLoading } from "../placeholders/ImageLoading";
 
 export default function ProductCard({ product }: { product: Product }) {
   const nameSlug = slugify(product.name);
@@ -76,13 +77,15 @@ export default function ProductCard({ product }: { product: Product }) {
   };
   return (
     <div className="product-card flex flex-col h-90 sm:drop-shadow bg-bg justify-between pb-2 group rounded-lg">
-      <div className="relative flex">
-        <img
-          src={`${MEDIA_BASE_URL}/media/product/${product.id}/320.webp`}
-          className="sm:h-[231px] h-[200px] w-full object-cover rounded-t-lg cursor-pointer"
-          alt={`product-card-img-${nameSlug}`}
-          onClick={handleQuickViewClick}
-        ></img>
+      <div className="relative flex sm:h-[231px] sm:w-[272px] h-[200px] w-[174px] ">
+        <ImageLoading
+          imageAttrs={{
+            src: `${MEDIA_BASE_URL}/media/product/${product.id}/320.webp`,
+            className: "size-full object-cover rounded-t-lg cursor-pointer",
+            alt: `product-card-img-${nameSlug}`,
+            onClick: handleQuickViewClick,
+          }}
+        ></ImageLoading>
         <div className="absolute flex w-full justify-between bottom-1.5 left-0 px-1.5 ">
           <QuickViewBtn
             handleQuickViewClick={handleQuickViewClick}

@@ -29,7 +29,7 @@ export default function CatalogBtn({ categories }: { categories: Category[] }) {
         className="btn__accent flex items-center gap-2 lg:px-5 max-lg:w-8 bg-accent h-8 rounded-lg group"
       >
         <div
-          className={`${catalogOpen ? "rotate-90" : "rotate-0"} transition-transform duration-150 ease-out max-lg:mx-auto`}
+          className={`${catalogOpen ? "rotate-90" : "rotate-0"} group-hover:rotate-90 rotate-0 transition-transform duration-250 ease-out max-lg:mx-auto`}
         >
           {catalogBtnIcon}
         </div>

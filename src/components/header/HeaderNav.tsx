@@ -18,6 +18,9 @@ export default function HeaderNav() {
       </Link>
       <div className="gap-3 lg:flex hidden">
         {/* disabled for demo; added tooltip */}
+        <Link className="header-nav-link" href={"/products"}>
+          {t("Products")}
+        </Link>
         <div
           onTouchStart={handleTooltipTouch}
           className="header-nav-link group relative"
@@ -28,9 +31,6 @@ export default function HeaderNav() {
             content={t("This page is not implemented yet")}
           ></Tooltip>
         </div>
-        <Link className="header-nav-link" href={"/products"}>
-          {t("Our products")}
-        </Link>
         {/* disabled for demo; added tooltip */}
         <div
           onTouchStart={handleTooltipTouch}

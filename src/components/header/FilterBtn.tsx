@@ -4,7 +4,8 @@ import MobileBtnTemplate from "./MobileBtnTemplate";
 import filterIcon from "@/src/assets/filter-icon.svg";
 import { RefObject } from "react";
 import { useAppSelector } from "@/src/state/hooks";
-import { selectFilters } from "@/src/state/productsSlice";
+import { selectFilters, selectShowFavorites } from "@/src/state/productsSlice";
+import { selectFavoritesCount } from "@/src/state/favoritesSlice";
 
 export default function FilterBtn({
   closeAction,
@@ -18,6 +19,9 @@ export default function FilterBtn({
   buttonRef: RefObject<HTMLDivElement | null>;
 }) {
   const filters = useAppSelector(selectFilters);
+  const favoritesCount = useAppSelector(selectFavoritesCount);
+  const favoritesFlag = favoritesCount > 0 ? 1 : 0;
+  const showFavorites = useAppSelector(selectShowFavorites);
   return (
     <div ref={buttonRef}>
       <MobileBtnTemplate
@@ -31,10 +35,11 @@ export default function FilterBtn({
         }}
       >
         <div className="flex relative size-full rounded-full">
-          {filters.categories && filters.categories?.length > 0 ? (
+          {(filters.categories && filters.categories?.length > 0) ||
+          showFavorites ? (
             <div className="absolute z-11 -top-3.5 left-[14px] rounded-full h-[20px] w-[20px] text-white bg-accent-red outline-2 outline-white">
               <div className="relative top-px text-center text-sm font-sans font-bold">
-                {filters.categories?.length}
+                {filters.categories?.length || 0 + favoritesFlag}
               </div>
             </div>
           ) : (

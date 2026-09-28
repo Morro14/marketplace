@@ -20,10 +20,11 @@ export default function HeaderNavRight() {
       {/*   <span className="mt-0.5 font-sans">{t("login")}</span> */}
       {/*   <Image src={loginIcon} alt="login-icon"></Image> */}
       {/* </button> */}
-      <Link href="/basket"
+      <Link
+        href="/basket"
         className="flex items-center gap-3 bg-gray-light hover:bg-white
         transition-color duration-150 lg:h-[30px] h-[28px] rounded-2xl font-serif font-semibold
-        px-3 border-b-3 border-primary hover:border-gray-500"
+        pr-2 pl-1.5 border-b-3 border-primary hover:border-gray-500"
       >
         <div className="rounded-full h-[20px] w-[20px] text-white bg-accent-red">
           <div className="relative text-center text-sm font-sans font-bold">

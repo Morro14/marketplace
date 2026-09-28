@@ -16,11 +16,11 @@ export default function PlaceholderLoading({
   return (
     <div
       {...restAttrs}
-      className={`${className ? className : ""} w-full h-full bg-gray-light flex justify-center items-center`}
+      className={`${className ? className : ""} w-full h-full bg-gray-light flex justify-center items-center animate-pulse`}
       aria-disabled
       style={{ minWidth: minWidth, minHeight: minHeight }}
     >
-      {spinner}
+      <div className="loader"></div>
     </div>
   );
 }
