@@ -44,7 +44,7 @@ const basketSlice = createSlice({
       const entryIndex = state.findIndex(
         (entry) => entry.productId === action.payload,
       );
-      if (!entryIndex) return;
+      if (entryIndex < 0) return;
       const newState = state.toSpliced(entryIndex, 1);
       return newState;
     },

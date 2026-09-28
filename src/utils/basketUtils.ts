@@ -15,14 +15,16 @@ export function updateBasketProductData(
   );
 }
 // Add Product instances to the BasketEntry's for easier access to product data
-export function populateBasketProductData(basket: BasketEntry[], products: Product[]) {
-
-  const basketClone = structuredClone(basket) as BasketEntry[]
+export function populateBasketProductData(
+  basket: BasketEntry[],
+  products: Product[],
+) {
+  const basketClone = structuredClone(basket) as BasketEntry[];
   const basketWithProducts = basketClone.map((entry) => {
-    entry.product = products.find(p => p.id === entry.productId)
-    return entry
-  })
-  return basketWithProducts
+    entry.product = products.find((p) => p.id === entry.productId);
+    return entry;
+  });
+  return basketWithProducts;
 }
 export async function fetchAndUpdateBasketProductsStock(
   productIds: number[],
@@ -50,7 +52,7 @@ export function calcCost(price: number | undefined, count: number): number {
   {
     /* const calc logic*/
   }
-  const price_ = price ? price : 0
+  const price_ = price ? price : 0;
   const value = price_ * count;
   const floor = Math.floor(value);
   let result = value.toString();
@@ -61,7 +63,7 @@ export function calcCost(price: number | undefined, count: number): number {
   return value;
 }
 export function formatCost(value_: number | undefined): string {
-  const value = value_ ? value_ : 0
+  const value = value_ ? value_ : 0;
   const floor = Math.floor(value);
   let result = value.toString();
   if (value !== floor) {

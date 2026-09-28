@@ -73,38 +73,8 @@ export default function Count({ product }: { product: Product }) {
     const previousCount = basketCount;
     const nextCount = previousCount - 1;
     dispatch(setProductCount({ productId: product.id, count: nextCount }));
-    // setIsUpdatingBasket(true);
     setInputCount(nextCount);
-    // logic moved to the confirm dialog in BasketEntry
-    // try {
-    //   let status = null;
-    //   if (nextCount === 0) {
-    //     status = await deleteProductBasket(product.id);
-    //   } else {
-    //     status = await setProductBasketCount(product.id, nextCount);
-    //   }
-    //   dispatch(setProductCount(status));
-    //   setStockExceeded(false);
-    // } catch (error) {
-    //   console.log("error", error);
-    //   if (
-    //     error instanceof BasketApiError &&
-    //     error.status === 409 &&
-    //     error.data
-    //   ) {
-    //     updateBasketProductData(dispatch, error.data);
-    //     setInputCount(error.data.count);
-    //
-    //     setStockExceeded(true);
-    //   } else {
-    //     dispatch(
-    //       setProductCount({ productId: product.id, count: previousCount }),
-    //     );
-    //     setInputCount(previousCount);
-    //   }
-    // } finally {
-    //   setIsUpdatingBasket(false);
-    // }
+    // fetch update logic moved to the confirm dialog in BasketEntry
   };
 
   const handleFormSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -133,8 +103,13 @@ export default function Count({ product }: { product: Product }) {
         error.status === 409 &&
         error.data
       ) {
-        updateBasketProductData(dispatch, error.data);
-        setInputCount(product.stock);
+        dispatch(
+          setProductCount({
+            productId: error.data.productId,
+            count: error.data.product.stock,
+          }),
+        );
+        setInputCount(error.data.product.stock);
         setStockExceeded(true);
       } else {
         dispatch(
