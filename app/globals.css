@@ -51,6 +51,11 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Source Sans 3, Arial, Helvetica, sans-serif;
+
+}
+
+body.modal-open {
+  overflow: hidden;
 }
 
 button {
@@ -110,7 +115,7 @@ button {
 }
 
 .backdrop-modal {
-  @apply fixed flex items-center justify-center sm:bottom-0 bottom-14 left-0 bg-black-transparent w-screen h-full z-10
+  @apply fixed items-center justify-center sm:bottom-0 bottom-14 left-0 bg-black-transparent w-screen h-full z-10
 }
 
 .basket-top-bar-icon__empty {

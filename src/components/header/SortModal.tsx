@@ -5,6 +5,7 @@ import { ProductSort } from "@/src/data/productQueries";
 import { useRouter, useSearchParams } from "next/navigation";
 import { RefObject, useRef } from "react";
 import { useCloseOnClick } from "@/src/utils/components/closeOnClick";
+import Modal from "../Modal";
 export default function SortModal({
   closeAction,
   active,
@@ -29,8 +30,8 @@ export default function SortModal({
     closeAction();
     router.replace(`/products?${params.toString()}`);
   };
-  return active ? (
-    <div className="backdrop-modal">
+  return (
+    <Modal active={active}>
       <div
         ref={modalRef}
         className="fixed right-0 bottom-14 flex flex-col bg-bg starting:opacity-0 opacity-100 transition-opacity duration-150 min-w-50 p-2"
@@ -49,8 +50,6 @@ export default function SortModal({
           </div>
         ))}
       </div>
-    </div>
-  ) : (
-    ""
+    </Modal>
   );
 }

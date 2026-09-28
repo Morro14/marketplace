@@ -3,6 +3,7 @@ import { RefObject, useRef } from "react";
 import { useCloseOnClick } from "@/src/utils/components/closeOnClick";
 import ProductsCatModal from "../products/nav/ProductsCatModal";
 import { Category } from "@/src/data/productTypes";
+import Modal from "../Modal";
 export default function FilterModal({
   categories,
   closeAction,
@@ -17,7 +18,7 @@ export default function FilterModal({
   const modalRef = useRef<HTMLDivElement | null>(null);
   useCloseOnClick([modalRef, buttonRef], closeAction, [], true);
   return (
-    <div className={`backdrop-modal ${active ? "flex!" : "hidden!"}`}>
+    <Modal active={active}>
       <div className="absolute max-sm:right-0 max-sm:bottom-14 flex flex-col bg-bg starting:opacity-0 opacity-100 transition-opacity duration-150 md:m-auto">
         <div ref={modalRef}>
           <ProductsCatModal
@@ -26,6 +27,6 @@ export default function FilterModal({
           ></ProductsCatModal>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 }
