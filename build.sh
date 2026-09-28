@@ -1,4 +1,2 @@
-mkdir -p "$(dirname "$DB_FILE_NAME")"
-
-npm run db:migrate
-npm run build
+echo "DB_FILE_NAME=$DB_FILE_NAME"
+mkdir -p /var/data && npm run db:migrate && npm run build
