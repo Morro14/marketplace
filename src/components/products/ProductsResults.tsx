@@ -45,16 +45,18 @@ export default function ProductsResults({
         onClose={() => dispatch(closeAddModal())}
         closedby="any"
         ref={modalRef}
-        className="bg-bg m-auto starting:opacity-0"
+        className="bg-bg starting:opacity-0 m-auto min-w-[352px]"
       >
-        {selectModal.product ? (
-          <ProductAddModal
-            product={selectModal.product}
-            closeModalAction={handleCloseModalClick}
-          ></ProductAddModal>
-        ) : (
-          <>No product</>
-        )}
+        <div className="m-auto">
+          {selectModal.product ? (
+            <ProductAddModal
+              product={selectModal.product}
+              closeModalAction={handleCloseModalClick}
+            ></ProductAddModal>
+          ) : (
+            <>No product</>
+          )}
+        </div>
       </dialog>
       {products.map((p, i) => (
         <ProductCard product={p} key={`product-card-${i}`}></ProductCard>

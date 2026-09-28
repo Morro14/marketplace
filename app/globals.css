@@ -2,6 +2,7 @@
 @import "./responsive.css";
 @import "./styles/checkout.css";
 @import "./styles/embla.css";
+@import "./styles/animations.css";
 
 :root {
   --background: #ffffff;

@@ -53,7 +53,7 @@ export default function ProductCard({ product }: { product: Product }) {
     }
   };
   const handleRemoveFromCardClick = async () => {
-    if (isUpdatingBasket || basketCount >= product.stock) return;
+    if (isUpdatingBasket) return;
     const previousCount = basketCount;
     const nextCount = previousCount - 1;
     dispatch(setProductCount({ productId: product.id, count: nextCount }));

@@ -15,6 +15,8 @@ import {
 import { deleteProductBasket, setProductBasketCount } from "@/src/api/basket";
 import { formatProductCount } from "@/src/utils/format";
 import AddToFavoritesBtn from "../favorites/AddToFavoritesBtn";
+import Image from "next/image";
+import { ImageLoading } from "../placeholders/ImageLoading";
 
 export default function ProductAddModal({
   product,
@@ -23,6 +25,7 @@ export default function ProductAddModal({
   product: Product;
   closeModalAction: () => void;
 }) {
+  const MEDIA_BASE_URL = process.env.NEXT_PUBLIC_GCS_MEDIA_URL_BASE;
   const currency = CURRENCY_SIGNS[CURRENCY];
   const [emblaRef] = useEmblaCarousel({ loop: true });
   const basketCount = useAppSelector(selectProductCount(product.id));
@@ -64,7 +67,14 @@ export default function ProductAddModal({
         ref={emblaRef}
       >
         <div className="embla__container h-full w-full">
-          <div className="embla__slide relative bg-linear-65 from-gray-200 to-gray-100"></div>
+          <div className="embla__slide size-full">
+            <ImageLoading
+              imageAttrs={{
+                src: `${MEDIA_BASE_URL}/media/product/${product.id}/640.webp`,
+                className: "object-cover size-full",
+              }}
+            ></ImageLoading>
+          </div>
           <div className="embla__slide relative bg-linear-65 from-gray-200 to-gray-100"></div>
           <div className="embla__slide relative bg-linear-65 from-gray-200 to-gray-100"></div>
           <div className="embla__slide relative bg-linear-65 from-gray-200 to-gray-100"></div>
@@ -122,7 +132,7 @@ export default function ProductAddModal({
           <div className="text-sm text-gray-500">{t("Unit number")}</div>
           <div className="flex gap-4 items-end">
             <button
-              onClick={inputCount > 0 ? handleRemoveFromCardClick : () => { }}
+              onClick={inputCount > 0 ? handleRemoveFromCardClick : () => {}}
               className={`h-7 w-7 select-none stroke-primary ${inputCount > 0 ? "bg-accent hover:bg-accent-hl" : "bg-gray-light hover:bg-gray-light-hover"}`}
               disabled={inputCount <= 0}
             >
