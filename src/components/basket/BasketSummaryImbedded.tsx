@@ -23,7 +23,11 @@ export default function BasketSummaryEmbedded() {
             </Link>
           </div>
           <div className="px-1 lg:block hidden">
-            <span>{t("items", { count: basketCount })}</span>
+            <span>
+              {basketCount !== null && basketCount >= 0
+                ? t("items", { count: basketCount })
+                : t("loading...")}
+            </span>
             <div className="flex justify-between pr-1">
               <span className="text-xl">{t("Total")}</span>
               <div className="flex gap-1">
@@ -40,7 +44,9 @@ export default function BasketSummaryEmbedded() {
               <div>
                 <span>{t("Proceed to checkout")} | </span>
                 <span className="text-sm text-gray-passive">
-                  {t("items", { count: basketCount })}
+                  {basketCount !== null && basketCount >= 0
+                    ? t("items", { count: basketCount })
+                    : t("loading...")}
                 </span>
               </div>
               <div className="flex gap-1">

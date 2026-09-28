@@ -22,14 +22,14 @@ export default getRequestConfig(async ({ locale }) => {
   const result = {
     locale,
     messages,
-    onError(error) {
-      if (error.code !== "MISSING_MESSAGE") {
-        return;
-      }
-    },
-    getMessageFallback({ namespace, key }) {
-      return `${key}`;
-    },
+    // onError(error) {
+    //   if (error.code !== "MISSING_MESSAGE") {
+    //     return;
+    //   }
+    // },
+    // getMessageFallback({ namespace, key }) {
+    //   return `${key}`;
+    // },
   };
   return result;
 });
