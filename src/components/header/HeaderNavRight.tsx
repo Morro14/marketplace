@@ -1,7 +1,6 @@
 "use client";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import loginIcon from "@/src/assets/login-icon.svg";
 import basketIcon from "@/src/assets/cart-icon-header.svg";
 import { useAppSelector } from "@/src/state/hooks";
 import { selectBasketCount } from "@/src/state/basketSlice";

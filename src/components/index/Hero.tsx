@@ -1,12 +1,12 @@
 import adNarrow from "@/src/assets/ad-section-narrow.png";
-import logo from "@/src/assets/logo-bg.png";
+import logo from "@/src/assets/pigs-resized.jpeg";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import HeroCarousel from "../HeroCarousel";
 export default async function Hero() {
   const t = await getTranslations();
   return (
-    <div className="w-full flex max-sm:flex-col sm:gap-3 gap-2 sm:mt-2 sm:pt-0 pt-4">
+    <div className="hero-section w-full flex max-sm:flex-col sm:gap-3 gap-2 sm:mt-2 sm:pt-0 pt-4">
       <div className="sm:hidden block">
         <HeroCarousel></HeroCarousel>
       </div>
@@ -17,7 +17,12 @@ export default async function Hero() {
         <div className="absolute font-serif text-white bottom-5 text-center w-full z-25 font-bold text-base">
           {t("Integer sit amet")}
         </div>
-        <Image className="brightness-75" src={logo} alt="logo"></Image>
+        <Image
+          className="brightness-75 h-full min-w-[272px] object-cover"
+          src={logo}
+          width={272}
+          alt="logo"
+        ></Image>
       </div>
       <div className="sm:flex hidden relative bg-linear-65 from-gray-200 to-gray-100 grow border-3 border-gray-300">
         <span className="bg-linear-to-r from-white to-gray-light bg-clip-text text-5xl font-semibold font-serif text-transparent mb-4 ml-6 flex items-end">

@@ -1,19 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState = { fetching: false };
-
+const initialState = { navigationStatus: "idle" };
+type NavigateStatus = "idle" | "submitting" | "loading";
 const generalSlice = createSlice({
   name: "general",
   initialState,
   reducers: {
-    setFetching(state, action: PayloadAction<boolean>) {
-      state.fetching = action.payload
-    }
-  }
+    setNavigationStatus(state, action: PayloadAction<NavigateStatus>) {
+      state.navigationStatus = action.payload;
+    },
+  },
 });
 
-
-export const { setFetching } =
-  generalSlice.actions;
+export const { setNavigationStatus } = generalSlice.actions;
 
 export default generalSlice.reducer;

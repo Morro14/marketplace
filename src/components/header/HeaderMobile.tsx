@@ -12,6 +12,7 @@ export default async function HeaderMobile() {
   });
   return (
     <div className="fixed w-screen max-sm:flex hidden bottom-0 bg-bg z-50 h-14">
+      <div className="absolute h-1 w-full bg-accent -top-1"></div>
       <div className="flex mx-auto justify-between items-center w-[352px]">
         <BurgerMenu variant="mobile"></BurgerMenu>
         <div className="flex items-end gap-3">

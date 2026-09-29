@@ -4,8 +4,6 @@ import TopBar from "@/src/components/basket/TopBar";
 import { getBasketWithProducts } from "@/src/data/basketQueries";
 
 export default async function Basket() {
-  const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
-  await delay(1000)
   const basket = await getBasketWithProducts();
   return (
     <div className="flex w-full lg:flex-row max-lg:flex-col lg:gap-5 gap-3 pt-2">

@@ -5,7 +5,7 @@ export default async function ProductImageUpload() {
   const products = await getProducts();
   return (
     <>
-      <ProductImageUploadForm products={products}></ProductImageUploadForm>
+      {/* <ProductImageUploadForm products={products}></ProductImageUploadForm> */}
     </>
   );
 }

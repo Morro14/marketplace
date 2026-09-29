@@ -1,19 +1,20 @@
 "use client";
 
 import logoBg from "@/src/assets/logo-bg.png";
-import engraving from "@/src/assets/engraving-1.png";
+import engraving from "@/src/assets/engraving-pastoral-resized.jpg";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 
 export default function HeroCarousel() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
   const t = useTranslations();
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
   useEffect(() => {
-    if (!emblaRef) return;
-    const interval = setInterval(() => emblaApi?.scrollNext(), 1000);
-  }, [emblaRef]);
+    if (!emblaRef || !emblaApi) return;
+    const interval = setInterval(() => emblaApi.scrollNext(), 5000);
+    return () => clearInterval(interval);
+  }, [emblaApi]);
   const arrowLeft = (
     <svg
       width="11"
@@ -62,7 +63,7 @@ export default function HeroCarousel() {
             <Image
               src={engraving}
               alt="logo-bg"
-              className="absolute object-cover border-none size-full"
+              className="absolute object-cover border-none size-full grayscale-90"
             ></Image>
           </div>
           <div className="hero-carousel__slide">

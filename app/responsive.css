@@ -62,3 +62,7 @@
 .product-add-modal {
   @apply lg:w-[970px] sm:w-[556px] w-[352px] max-lg:h-150 max-lg:gap-4
 }
+
+.hero-section {
+  @apply sm:h-[170px]
+}
